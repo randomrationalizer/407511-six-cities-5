@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Маргарита Еремина](https://up.htmlacademy.ru/react/5/user/407511).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Елисеев](https://htmlacademy.ru/profile/id60200).
 
 ---
 
