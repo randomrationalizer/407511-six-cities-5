@@ -7,3 +7,13 @@ export const CardType = {
   NEIGHBOURHOOD: `near-places`,
   FAVORITES: `favorites`
 };
+
+export const MAX_RATING = 5;
+
+export const RatingValueToTitle = {
+  "1": `terribly`,
+  "2": `badly`,
+  "3": `not bad`,
+  "4": `good`,
+  "5": `perfect`
+};

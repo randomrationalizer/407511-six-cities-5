@@ -1,6 +1,6 @@
 import moment from "moment";
+import {MAX_RATING} from "../const";
 
-const MAX_RATING = 5;
 
 export const getRatingInPercent = (ratingValue) => {
   return Math.floor(100 * ratingValue / MAX_RATING);
@@ -19,9 +19,16 @@ export const formatDate = (date) => {
   return moment(date).format(`YYYY-MM-DD`);
 };
 
+// Возвращает дату в виде строки в формате: January 2020
+export const humanizeDate = (date) => {
+  return moment(date).format(`MMMM YYYY`);
+};
 
 // Сравнение для сортировки отзывов в хронологическом порядке
-const sortByDate = (first, second) => {
+export const sortByDate = (a, b) => {
+  let first = a.date;
+  let second = b.date;
+
   if (!(first instanceof Date)) {
     first = new Date(first);
   }
@@ -29,5 +36,12 @@ const sortByDate = (first, second) => {
   if (!(second instanceof Date)) {
     second = new Date(second);
   }
-  return first.startDate.getTime() - second.startDate.getTime();
+  return first.getTime() - second.getTime();
+};
+
+export const getDescriptionSentences = (text) => {
+  let description = text.split(`. `);
+  description[description.length - 1] = description[description.length - 1].replace(`.`, ``);
+
+  return description;
 };

@@ -9,21 +9,21 @@ export const reviews = [
         author: `John`,
         avatar: getPhoto(),
         rating: 4,
-        date: `January 2020`,
+        date: `2020-01-05`,
         text: generateDescription()
       },
       {
         author: `Ronald`,
         avatar: getPhoto(),
         rating: 5,
-        date: `January 2020`,
+        date: `2020-03-05`,
         text: generateDescription()
       },
       {
         author: `Reuel`,
         avatar: getPhoto(),
         rating: 5,
-        date: `January 2020`,
+        date: `2020-08-05`,
         text: generateDescription()
       },
     ]
@@ -36,14 +36,14 @@ export const reviews = [
         author: `Arthur`,
         avatar: getPhoto(),
         rating: 1,
-        date: `January 2020`,
+        date: `2020-01-05`,
         text: generateDescription()
       },
       {
         author: `Stanislaw`,
         avatar: getPhoto(),
         rating: 3,
-        date: `January 2020`,
+        date: `2020-05-05`,
         text: generateDescription()
       }
     ]
@@ -56,28 +56,28 @@ export const reviews = [
         author: `Robert`,
         avatar: getPhoto(),
         rating: 5,
-        date: `April 2019`,
+        date: `2019-04-05`,
         text: generateDescription()
       },
       {
         author: `Isaac`,
         avatar: getPhoto(),
         rating: 5,
-        date: `March 2019`,
+        date: `2019-03-05`,
         text: generateDescription()
       },
       {
         author: `Max`,
         avatar: getPhoto(),
         rating: 2,
-        date: `August 2019`,
+        date: `2019-08-05`,
         text: generateDescription()
       },
       {
         author: `Andrew`,
         avatar: getPhoto(),
         rating: 1,
-        date: `January 2020`,
+        date: `2020-01-05`,
         text: generateDescription()
       }
     ]
@@ -90,7 +90,7 @@ export const reviews = [
         author: `Cate`,
         avatar: getPhoto(),
         rating: 5,
-        date: `January 2020`,
+        date: `2020-01-05`,
         text: generateDescription()
       }
     ]

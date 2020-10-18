@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
-import Card from "../card/card";
+import Card from "../offer-card/offer-card";
 import {CardType} from "../../const";
 import {nanoid} from "nanoid";
 

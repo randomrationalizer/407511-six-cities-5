@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
-import Card from "../card/card";
+import Card from "../offer-card/offer-card";
 import {CardType} from "../../const";
 
 

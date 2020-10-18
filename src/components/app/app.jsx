@@ -6,7 +6,7 @@ import {reviewsPropTypes} from "../../reviews-prop-types";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
-import Room from "../room/room";
+import OfferDetails from "../offer-details/offer-details";
 
 const App = (props) => {
   const {offers, reviews, favorites, cities, currentCity} = props;
@@ -18,9 +18,9 @@ const App = (props) => {
         <Route exact path="/">
           <Main
             offers={offers}
-            onOfferHover={(card) => {
+            onOfferHover={() => {
               // в дальнейшем будет подсветка пина на карте
-              console.log(`наведение на карточку ` + card.id);
+              // console.log(`наведение на карточку ` + card.id);
             }}
             // handleCardHover
             favorites={favorites}
@@ -40,7 +40,7 @@ const App = (props) => {
         <Route exact path="/offer/:id"
           render={({match}) =>
             offersIds.includes(match.params.id) ? (
-              <Room
+              <OfferDetails
                 offerId={match.params.id}
                 offers={offers}
                 reviews={reviews}
