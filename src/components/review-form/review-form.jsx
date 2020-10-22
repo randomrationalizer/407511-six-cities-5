@@ -49,7 +49,7 @@ class ReviewForm extends PureComponent {
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           {Object.entries(RatingValueToTitle).sort((a, b) => b[0] - a[0]).map(([value, title]) =>
-            <React.Fragment key={nanoid()}>
+            <React.Fragment key={value}>
               <input
                 onChange={(evt) => {
                   evt.preventDefault();

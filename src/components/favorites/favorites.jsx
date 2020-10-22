@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import Card from "../offer-card/offer-card";
 import {CardType} from "../../const";
-import {nanoid} from "nanoid";
 
 const Favorites = (props) => {
   const {offers, favorites} = props;
@@ -43,7 +42,7 @@ const Favorites = (props) => {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {uniqueCities.map((city) =>
-                <li key={nanoid()} className="favorites__locations-items">
+                <li key={city} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
                       <a className="locations__item-link" href="#">

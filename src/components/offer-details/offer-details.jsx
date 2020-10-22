@@ -5,7 +5,6 @@ import {offersPropTypes} from "../../offers-prop-types";
 import {reviewsPropTypes} from "../../reviews-prop-types";
 import {getRatingInPercent, capitalize, formatDate, humanizeDate, sortByDate, getDescriptionSentences} from "../../util/offer";
 import {CardType} from "../../const";
-import {nanoid} from "nanoid";
 import Card from "../offer-card/offer-card";
 import ReviewForm from "../review-form/review-form";
 
@@ -54,8 +53,8 @@ class OfferDetails extends PureComponent {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {photos.length === 0 ? `` : photos.map((photo) =>
-                  <div key={nanoid()} className="property__image-wrapper">
+                {photos.length === 0 ? `` : photos.map((photo, index) =>
+                  <div key={index} className="property__image-wrapper">
                     <img className="property__image" src={photo.src} alt={photo.description} />
                   </div>
                 )}
@@ -101,7 +100,7 @@ class OfferDetails extends PureComponent {
                   <h2 className="property__inside-title">What&apos;s inside</h2>
                   <ul className="property__inside-list">
                     {options.map((option) =>
-                      <li key={nanoid()} className="property__inside-item">{option}</li>
+                      <li key={option} className="property__inside-item">{option}</li>
                     )}
                   </ul>
                 </div>
@@ -116,8 +115,8 @@ class OfferDetails extends PureComponent {
                     </span>
                   </div>
                   <div className="property__description">
-                    {getDescriptionSentences(description).map((sentence) =>
-                      <p key={nanoid()} className="property__text">{`${sentence}.`}</p>
+                    {getDescriptionSentences(description).map((sentence, index) =>
+                      <p key={index} className="property__text">{`${sentence}.`}</p>
                     )}
                   </div>
                 </div>
@@ -126,8 +125,8 @@ class OfferDetails extends PureComponent {
                     Reviews &middot; <span className="reviews__amount">{this.state.reviews.length}</span>
                   </h2>
                   {!isAnyReviews ? `` : <ul className="reviews__list">
-                    {this.state.reviews.sort(sortByDate).map((review) =>
-                      <li key={nanoid()} className="reviews__item">
+                    {this.state.reviews.sort(sortByDate).map((review, index) =>
+                      <li key={`${review.author}-${index}`} className="reviews__item">
                         <div className="reviews__user user">
                           <div className="reviews__avatar-wrapper user__avatar-wrapper">
                             <img className="reviews__avatar user__avatar" src={review.avatar} width="54" height="54" alt="Reviews avatar" />

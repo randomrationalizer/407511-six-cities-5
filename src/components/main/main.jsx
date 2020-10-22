@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import OffersList from "../offers-list/offers-list";
-import {nanoid} from "nanoid";
 
 const Main = (props) => {
   const {offers, favorites, cities, currentCity, onOfferHover} = props;
@@ -39,7 +38,7 @@ const Main = (props) => {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {cities.map((city) =>
-                <li key={nanoid()} className="locations__item">
+                <li key={city} className="locations__item">
                   <a className={`locations__item-link tabs__item ${city === currentCity ? `tabs__item--active` : ``}`} href="#">
                     <span>{city}</span>
                   </a>
