@@ -1,7 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {RatingValueToTitle} from "../../const";
-import {nanoid} from "nanoid";
 
 const DEFAULT_STATE = {
   author: `user`,
@@ -16,10 +15,12 @@ class ReviewForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = DEFAULT_STATE;
-    this._handleFormFieldChange = this._handleFormFieldChange.bind(this);
+    this.handleFormFieldChange = this.handleFormFieldChange.bind(this);
   }
 
-  _handleFormFieldChange(name, value) {
+  handleFormFieldChange(evt) {
+    const {name, value} = evt.target;
+
     this.setState({
       [name]: value
     });
@@ -29,10 +30,7 @@ class ReviewForm extends PureComponent {
     const {onFormSubmit} = this.props;
 
     return (
-      <form
-        className="reviews__form form"
-        action="#"
-        method="post"
+      <form className="reviews__form form" action="#" method="post"
         onSubmit={(evt) => {
           evt.preventDefault();
           onFormSubmit({
@@ -51,10 +49,7 @@ class ReviewForm extends PureComponent {
           {Object.entries(RatingValueToTitle).sort((a, b) => b[0] - a[0]).map(([value, title]) =>
             <React.Fragment key={value}>
               <input
-                onChange={(evt) => {
-                  evt.preventDefault();
-                  this._handleFormFieldChange(evt.target.name, evt.target.value);
-                }}
+                onChange={this.handleFormFieldChange}
                 className="form__rating-input visually-hidden"
                 name="rating"
                 value={value}
@@ -80,10 +75,7 @@ class ReviewForm extends PureComponent {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          onChange={(evt) => {
-            evt.preventDefault();
-            this._handleFormFieldChange(evt.target.name, evt.target.value);
-          }}
+          onChange={this.handleFormFieldChange}
           value={this.state.review}
           required
         >
