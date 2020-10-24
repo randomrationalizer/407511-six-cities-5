@@ -8,12 +8,13 @@ import {getRatingInPercent} from "../../util/mock";
 import {OfferType} from "../../const";
 import Card from "../offer-card/offer-card";
 import ReviewForm from "../review-form/review-form";
+import logo from "../../../public/img/logo.svg";
 
 class OfferDetails extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: this.props.reviews.find((item) => item.propertyId === this.props.offerId).reviews
+      reviews: props.reviews.find((item) => item.propertyId === props.offerId).reviews
     };
   }
 
@@ -32,7 +33,7 @@ class OfferDetails extends PureComponent {
             <div className="header__wrapper">
               <div className="header__left">
                 <Link className="header__logo-link" to={`/`}>
-                  <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                  <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
                 </Link>
               </div>
               <nav className="header__nav">
@@ -54,7 +55,7 @@ class OfferDetails extends PureComponent {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {photos.length === 0 ? `` : photos.map((photo, index) =>
+                {photos.length !== 0 && photos.map((photo, index) =>
                   <div key={index} className="property__image-wrapper">
                     <img className="property__image" src={photo.src} alt={photo.description} />
                   </div>
@@ -63,9 +64,9 @@ class OfferDetails extends PureComponent {
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
-                {isPremial ? <div className="property__mark">
+                {isPremial && <div className="property__mark">
                   <span>Premium</span>
-                </div> : ``}
+                </div>}
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
                   <button className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``} button`} type="button">
@@ -125,7 +126,7 @@ class OfferDetails extends PureComponent {
                   <h2 className="reviews__title">
                     Reviews &middot; <span className="reviews__amount">{this.state.reviews.length}</span>
                   </h2>
-                  {!isAnyReviews ? `` : <ul className="reviews__list">
+                  {isAnyReviews && <ul className="reviews__list">
                     {this.state.reviews.sort(sortByDate).map((review, index) =>
                       <li key={`${review.author}-${index}`} className="reviews__item">
                         <div className="reviews__user user">

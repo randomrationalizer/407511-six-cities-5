@@ -23,9 +23,9 @@ const Card = (props) => {
         }
       }}
     >
-      {isPremial ? <div className="place-card__mark">
+      {isPremial && <div className="place-card__mark">
         <span>Premium</span>
-      </div> : ``}
+      </div>}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <a href={`/offer/${id}`}>
           <img

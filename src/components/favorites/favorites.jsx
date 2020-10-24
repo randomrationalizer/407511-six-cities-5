@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import Card from "../offer-card/offer-card";
 import {OfferType} from "../../const";
+import logo from "../../../public/img/logo.svg";
 
 const Favorites = (props) => {
   const {offers, favorites} = props;
@@ -18,7 +19,7 @@ const Favorites = (props) => {
           <div className="header__wrapper">
             <div className="header__left">
               <Link className="header__logo-link" to={`/`}>
-                <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
             <nav className="header__nav">
@@ -68,7 +69,7 @@ const Favorites = (props) => {
       </main>
       <footer className="footer container">
         <Link className="footer__logo-link" to={`/`}>
-          <img className="footer__logo" src="/img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          <img className="footer__logo" src={logo} alt="6 cities logo" width="64" height="33" />
         </Link>
       </footer>
     </div>
