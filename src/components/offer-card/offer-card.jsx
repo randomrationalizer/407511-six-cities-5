@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
-import {getRatingInPercent, capitalize} from "../../util/offer";
-import {CardType} from "../../const";
+import {capitalize} from "../../util/offer";
+import {getRatingInPercent} from "../../util/mock";
+import {OfferType} from "../../const";
 
 
 const Card = (props) => {
   const {onCardHover, offer, activeCard, cardType, isFavorite} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
-  const isFavoritesCard = cardType === CardType.FAVORITES ? true : false;
+  const isFavoritesCard = cardType === OfferType.FAVORITES ? true : false;
 
   return (
-    <article className={`${cardType}__${cardType === CardType.MAIN ? `place-` : ``}card place-card`}
+    <article className={`${cardType}__${cardType === OfferType.MAIN ? `place-` : ``}card place-card`}
       onMouseOver={(evt) => {
-        if (cardType !== CardType.MAIN) {
+        if (cardType !== OfferType.MAIN) {
           return;
         }
         evt.preventDefault();

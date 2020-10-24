@@ -4,8 +4,9 @@ import App from "./components/app/app";
 import {offers} from "./mocks/offers";
 import {reviews} from "./mocks/reviews";
 import {favorites} from "./mocks/favorites";
-import {CITIES, CURRENT_CITY} from "./const";
+import {CITIES} from "./const";
 
+const DEFAULT_CITY = `Amsterdam`;
 
 ReactDOM.render(
     <App
@@ -13,7 +14,7 @@ ReactDOM.render(
       reviews={reviews}
       favorites={favorites}
       cities={CITIES}
-      currentCity={CURRENT_CITY}
+      currentCity={DEFAULT_CITY}
     />,
     document.querySelector(`#root`)
 );

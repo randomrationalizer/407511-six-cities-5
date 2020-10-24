@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import Card from "../offer-card/offer-card";
-import {CardType} from "../../const";
+import {OfferType} from "../../const";
 
 const Favorites = (props) => {
   const {offers, favorites} = props;
@@ -54,7 +54,7 @@ const Favorites = (props) => {
                     {favoriteOffers.filter((offer) => offer.city === city).map((item) =>
                       <Card
                         key={item.id}
-                        cardType={CardType.FAVORITES}
+                        cardType={OfferType.FAVORITES}
                         offer={item}
                         isFavorite={true}
                       />

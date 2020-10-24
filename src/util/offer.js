@@ -1,10 +1,5 @@
 import moment from "moment";
-import {MAX_RATING} from "../const";
 
-
-export const getRatingInPercent = (ratingValue) => {
-  return Math.floor(100 * ratingValue / MAX_RATING);
-};
 
 export const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -12,10 +7,6 @@ export const capitalize = (str) => {
 
 // Возвращает дату в виде строки в формате: 2019-04-24
 export const formatDate = (date) => {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
   return moment(date).format(`YYYY-MM-DD`);
 };
 

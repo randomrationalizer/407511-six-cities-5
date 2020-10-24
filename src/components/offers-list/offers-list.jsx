@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import Card from "../offer-card/offer-card";
-import {CardType} from "../../const";
+import {OfferType} from "../../const";
 
 
 class OffersList extends PureComponent {
@@ -29,7 +29,7 @@ class OffersList extends PureComponent {
               });
             }}
             activeCard={this.state.activeCard}
-            cardType={CardType.MAIN}
+            cardType={OfferType.MAIN}
             isFavorite={favorites.includes(offer.id)}
           />
         )}

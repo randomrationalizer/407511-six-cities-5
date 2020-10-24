@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-import {CITIES, OFFER_TYPES} from "./const";
+import {CITIES} from "./const";
+
+const OFFER_TYPES = [`apartment`, `room`, `house`, `hotel`];
 
 export const offersPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,

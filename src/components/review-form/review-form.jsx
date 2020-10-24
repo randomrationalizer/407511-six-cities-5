@@ -1,6 +1,5 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {RatingValueToTitle} from "../../const";
 
 const DEFAULT_STATE = {
   author: `user`,
@@ -8,6 +7,14 @@ const DEFAULT_STATE = {
   date: ``,
   rating: ``,
   review: ``
+};
+
+const RatingValueToTitle = {
+  "1": `terribly`,
+  "2": `badly`,
+  "3": `not bad`,
+  "4": `good`,
+  "5": `perfect`
 };
 
 

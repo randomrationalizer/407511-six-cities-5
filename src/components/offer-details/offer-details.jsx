@@ -3,8 +3,9 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offers-prop-types";
 import {reviewsPropTypes} from "../../reviews-prop-types";
-import {getRatingInPercent, capitalize, formatDate, humanizeDate, sortByDate, getDescriptionSentences} from "../../util/offer";
-import {CardType} from "../../const";
+import {capitalize, formatDate, humanizeDate, sortByDate, getDescriptionSentences} from "../../util/offer";
+import {getRatingInPercent} from "../../util/mock";
+import {OfferType} from "../../const";
 import Card from "../offer-card/offer-card";
 import ReviewForm from "../review-form/review-form";
 
@@ -167,7 +168,7 @@ class OfferDetails extends PureComponent {
                 {neighbourhoodOffers.map((offer) =>
                   <Card
                     key={offer.id}
-                    cardType={CardType.NEIGHBOURHOOD}
+                    cardType={OfferType.NEIGHBOURHOOD}
                     offer={offer}
                     isFavorite={favorites.includes(offer.id)}
                   />
