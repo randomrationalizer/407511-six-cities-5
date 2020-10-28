@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {offersPropTypes} from "../../offers-prop-types";
-import OffersList from "../offers-list/offers-list";
+import {offersPropTypes} from "../offer/offer.prop";
+import OffersList from "../offer/offers-list/offers-list";
 import logo from "../../../public/img/logo.svg";
 
 const Main = (props) => {

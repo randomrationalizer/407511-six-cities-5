@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {offersPropTypes} from "../../offers-prop-types";
-import Card from "../offer-card/offer-card";
+import {offersPropTypes} from "../offer/offer.prop";
+import Card from "../offer/offer-card/offer-card";
 import {OfferType} from "../../const";
 import logo from "../../../public/img/logo.svg";
 

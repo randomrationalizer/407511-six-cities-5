@@ -1,14 +1,14 @@
 import React, {PureComponent} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {offersPropTypes} from "../../offers-prop-types";
-import {reviewsPropTypes} from "../../reviews-prop-types";
-import {capitalize, formatDate, humanizeDate, sortByDate, getDescriptionSentences} from "../../util/offer";
-import {getRatingInPercent} from "../../util/mock";
-import {OfferType} from "../../const";
+import {offersPropTypes} from "../offer.prop";
+import {reviewsPropTypes} from "../../../reviews-prop-types";
+import {capitalize, formatDate, humanizeDate, sortByDate, getDescriptionSentences} from "../util";
+import {getRatingInPercent} from "../../../mocks/util";
+import {OfferType} from "../../../const";
 import Card from "../offer-card/offer-card";
-import ReviewForm from "../review-form/review-form";
-import logo from "../../../public/img/logo.svg";
+import ReviewForm from "../../review-form/review-form";
+import logo from "../../../../public/img/logo.svg";
 
 class OfferDetails extends PureComponent {
   constructor(props) {

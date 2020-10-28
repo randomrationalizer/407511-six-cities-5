@@ -1,12 +1,12 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
-import {offersPropTypes} from "../../offers-prop-types";
+import {offersPropTypes} from "../offer/offer.prop";
 import {reviewsPropTypes} from "../../reviews-prop-types";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
-import OfferDetails from "../offer-details/offer-details";
+import OfferDetails from "../offer/offer-details/offer-details";
 
 const App = (props) => {
   const {offers, reviews, favorites, cities, currentCity} = props;

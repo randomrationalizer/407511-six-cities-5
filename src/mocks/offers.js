@@ -1,4 +1,4 @@
-import {getPhoto, generateDescription} from "../util/mock.js";
+import {getPhoto, generateDescription} from "./util.js";
 
 
 export const offers = [

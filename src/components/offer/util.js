@@ -1,4 +1,5 @@
 import moment from "moment";
+import {OfferType} from "../../const";
 
 
 export const capitalize = (str) => {
@@ -35,4 +36,12 @@ export const getDescriptionSentences = (text) => {
   description[description.length - 1] = description[description.length - 1].replace(`.`, ``);
 
   return description;
+};
+
+export const isFavoritesCard = (type) => {
+  return type === OfferType.FAVORITES;
+};
+
+export const isMainPageCard = (type) => {
+  return type === OfferType.MAIN;
 };

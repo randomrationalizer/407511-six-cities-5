@@ -1,18 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {offersPropTypes} from "../../offers-prop-types";
-import {capitalize} from "../../util/offer";
-import {getRatingInPercent} from "../../util/mock";
-import {OfferType} from "../../const";
+import {offersPropTypes} from "../offer.prop";
+import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
+import {getRatingInPercent} from "../../../mocks/util";
+import {OfferType} from "../../../const";
+
+const offerTypeToImageSize = {
+  [OfferType.MAIN]: {
+    width: 260,
+    height: 200
+  },
+  [OfferType.NEIGHBOURHOOD]: {
+    width: 260,
+    height: 200
+  },
+  [OfferType.FAVORITES]: {
+    width: 150,
+    height: 110
+  }
+};
 
 
 const Card = (props) => {
   const {onCardHover, offer, activeCard, cardType, isFavorite} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
-  const isFavoritesCard = cardType === OfferType.FAVORITES ? true : false;
 
   return (
-    <article className={`${cardType}__${cardType === OfferType.MAIN ? `place-` : ``}card place-card`}
+    <article className={`${cardType}__${isMainPageCard(cardType) ? `place-` : ``}card place-card`}
       onMouseOver={(evt) => {
         if (cardType !== OfferType.MAIN) {
           return;
@@ -31,13 +45,13 @@ const Card = (props) => {
           <img
             className="place-card__image"
             src={`${photos[0].src}`}
-            width={isFavoritesCard ? `150` : `260`}
-            height={isFavoritesCard ? `110` : `200`}
+            width={offerTypeToImageSize[cardType].width}
+            height={offerTypeToImageSize[cardType].height}
             alt={`${photos[0].description}`}
           />
         </a>
       </div>
-      <div className={`${isFavoritesCard ? `${cardType}__card-info` : ``} place-card__info`}>
+      <div className={`${isFavoritesCard(cardType) ? `${cardType}__card-info` : ``} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
