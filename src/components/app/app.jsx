@@ -20,9 +20,7 @@ const App = (props) => {
             offers={offers}
             onOfferHover={() => {
               // в дальнейшем будет подсветка пина на карте
-              // console.log(`наведение на карточку ` + card.id);
             }}
-            // handleCardHover
             favorites={favorites}
             cities={cities}
             currentCity={currentCity}

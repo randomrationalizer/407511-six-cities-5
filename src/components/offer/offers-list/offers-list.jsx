@@ -9,7 +9,7 @@ class OffersList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activeCard: this.props.offers[0]
+      activeCard: null
     };
   }
 
@@ -28,7 +28,6 @@ class OffersList extends PureComponent {
                 return {activeCard: newActiveCard};
               });
             }}
-            activeCard={this.state.activeCard}
             cardType={OfferType.MAIN}
             isFavorite={favorites.includes(offer.id)}
           />

@@ -22,20 +22,29 @@ const offerTypeToImageSize = {
 
 
 const Card = (props) => {
-  const {onCardHover, offer, activeCard, cardType, isFavorite} = props;
+  const {onCardHover, offer, cardType, isFavorite} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
+
+  const handleMouseEnter = () => {
+    if (cardType !== OfferType.MAIN) {
+      return;
+    }
+
+    onCardHover(offer);
+  };
+
+  const handleMouseLeave = () => {
+    if (cardType !== OfferType.MAIN) {
+      return;
+    }
+
+    onCardHover(null);
+  };
 
   return (
     <article className={`${cardType}__${isMainPageCard(cardType) ? `place-` : ``}card place-card`}
-      onMouseOver={(evt) => {
-        if (cardType !== OfferType.MAIN) {
-          return;
-        }
-        evt.preventDefault();
-        if (activeCard !== offer) {
-          onCardHover(offer);
-        }
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremial && <div className="place-card__mark">
         <span>Premium</span>
@@ -82,7 +91,6 @@ const Card = (props) => {
 Card.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
-  activeCard: offersPropTypes,
   cardType: PropTypes.string.isRequired,
   isFavorite: PropTypes.bool.isRequired
 };
