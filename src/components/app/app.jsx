@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
 import {offersPropTypes} from "../offer/offer.prop";
-import {reviewsPropTypes} from "../../reviews-prop-types";
+import {reviewsPropTypes} from "../reviews/review.prop";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
@@ -39,11 +39,10 @@ const App = (props) => {
           render={({match}) =>
             offersIds.includes(match.params.id) ? (
               <OfferDetails
-                key={match.params.id}
-                offerId={match.params.id}
-                offers={offers}
-                reviews={reviews}
+                offer={offers.find((offer) => offer.id === match.params.id)}
+                reviews={reviews.find((item) => item.propertyId === match.params.id).reviews}
                 favorites={favorites}
+                neighbourhoodOffers={offers.slice(0, 3)}
               />
             ) : (
               <Redirect to="/404" />
