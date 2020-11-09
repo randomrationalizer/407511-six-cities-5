@@ -39,6 +39,7 @@ const App = (props) => {
           render={({match}) =>
             offersIds.includes(match.params.id) ? (
               <OfferDetails
+                key={match.params.id}
                 offerId={match.params.id}
                 offers={offers}
                 reviews={reviews}

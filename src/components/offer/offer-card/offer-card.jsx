@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
@@ -50,7 +51,7 @@ const Card = (props) => {
         <span>Premium</span>
       </div>}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <a href={`/offer/${id}`}>
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`${photos[0].src}`}
@@ -58,7 +59,7 @@ const Card = (props) => {
             height={offerTypeToImageSize[cardType].height}
             alt={`${photos[0].description}`}
           />
-        </a>
+        </Link>
       </div>
       <div className={`${isFavoritesCard(cardType) ? `${cardType}__card-info` : ``} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -80,7 +81,7 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`/offer/${id}`}>{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
       </div>

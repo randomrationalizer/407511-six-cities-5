@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-const DEFAULT_STATE = {
+const defaultState = {
   author: `user`,
   avatar: `https://www.fillmurray.com/g/300/300`,
   date: ``,
@@ -21,7 +21,7 @@ const RatingValueToTitle = {
 class ReviewForm extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = DEFAULT_STATE;
+    this.state = defaultState;
     this.handleFormFieldChange = this.handleFormFieldChange.bind(this);
   }
 
@@ -48,7 +48,7 @@ class ReviewForm extends PureComponent {
             text: this.state.review
           });
           this.setState(() => (
-            DEFAULT_STATE
+            defaultState
           ));
         }}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>

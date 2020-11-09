@@ -1,5 +1,4 @@
 const path = require('path');
-const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
 module.exports = {
     entry: './src/index.js',
@@ -23,18 +22,16 @@ module.exports = {
                 },
             },
             {
-              test: /\.(png|svg|jpg|gif)$/,
-              use: [
-                'file-loader',
-              ],
+              test: /\.(png|svg|jpe?g|gif)$/,
+              loader: 'file-loader',
+              options: {
+                  name: 'assets/[name]-[contenthash:4].[ext]'
+              },
             },
         ],
     },
     resolve: {
         extensions: ['.js', '.jsx']
     },
-    devtool: 'source-map',
-    plugins: [
-      new MomentLocalesPlugin()
-    ]
+    devtool: 'source-map'
 };

@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {OfferType} from "../../const";
 
 
@@ -8,27 +8,17 @@ export const capitalize = (str) => {
 
 // Возвращает дату в виде строки в формате: 2019-04-24
 export const formatDate = (date) => {
-  return moment(date).format(`YYYY-MM-DD`);
+  return dayjs(date).format(`YYYY-MM-DD`);
 };
 
 // Возвращает дату в виде строки в формате: January 2020
 export const humanizeDate = (date) => {
-  return moment(date).format(`MMMM YYYY`);
+  return dayjs(date).format(`MMMM YYYY`);
 };
 
 // Сравнение для сортировки отзывов в хронологическом порядке
 export const sortByDate = (a, b) => {
-  let first = a.date;
-  let second = b.date;
-
-  if (!(first instanceof Date)) {
-    first = new Date(first);
-  }
-
-  if (!(second instanceof Date)) {
-    second = new Date(second);
-  }
-  return first.getTime() - second.getTime();
+  return dayjs(a.date) - dayjs(b.date);
 };
 
 export const getDescriptionSentences = (text) => {

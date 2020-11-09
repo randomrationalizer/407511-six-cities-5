@@ -18,6 +18,10 @@ class OfferDetails extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    window.scroll(0, 0);
+  }
+
   render() {
     const {offerId, offers, favorites} = this.props;
     const currentOffer = offers.find((offer) => offer.id === offerId);
@@ -55,8 +59,8 @@ class OfferDetails extends PureComponent {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {photos.length !== 0 && photos.map((photo, index) =>
-                  <div key={index} className="property__image-wrapper">
+                {photos.length !== 0 && photos.map((photo) =>
+                  <div key={photo.src} className="property__image-wrapper">
                     <img className="property__image" src={photo.src} alt={photo.description} />
                   </div>
                 )}
@@ -117,8 +121,8 @@ class OfferDetails extends PureComponent {
                     </span>
                   </div>
                   <div className="property__description">
-                    {getDescriptionSentences(description).map((sentence, index) =>
-                      <p key={index} className="property__text">{`${sentence}.`}</p>
+                    {getDescriptionSentences(description).map((sentence) =>
+                      <p key={sentence} className="property__text">{`${sentence}.`}</p>
                     )}
                   </div>
                 </div>
@@ -127,8 +131,8 @@ class OfferDetails extends PureComponent {
                     Reviews &middot; <span className="reviews__amount">{this.state.reviews.length}</span>
                   </h2>
                   {isAnyReviews && <ul className="reviews__list">
-                    {this.state.reviews.sort(sortByDate).map((review, index) =>
-                      <li key={`${review.author}-${index}`} className="reviews__item">
+                    {this.state.reviews.sort(sortByDate).map((review) =>
+                      <li key={`${review.author}-${review.text}`} className="reviews__item">
                         <div className="reviews__user user">
                           <div className="reviews__avatar-wrapper user__avatar-wrapper">
                             <img className="reviews__avatar user__avatar" src={review.avatar} width="54" height="54" alt="Reviews avatar" />
@@ -187,7 +191,7 @@ OfferDetails.propTypes = {
   offerId: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewsPropTypes).isRequired,
-  favorites: PropTypes.array.isRequired,
+  favorites: PropTypes.array.isRequired
 };
 
 export default OfferDetails;
