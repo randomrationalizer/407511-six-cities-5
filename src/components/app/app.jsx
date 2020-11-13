@@ -71,7 +71,7 @@ App.propTypes = {
   reviews: PropTypes.arrayOf(reviewsPropTypes).isRequired,
   favorites: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
-  currentCity: PropTypes.string.isRequired
+  currentCity: PropTypes.object.isRequired
 };
 
 export default App;

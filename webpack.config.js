@@ -28,6 +28,10 @@ module.exports = {
                   name: 'assets/[name]-[contenthash:4].[ext]'
               },
             },
+            {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader']
+            }
         ],
     },
     resolve: {

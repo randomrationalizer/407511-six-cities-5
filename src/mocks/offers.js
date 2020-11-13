@@ -6,6 +6,10 @@ export const offers = [
     id: `1`,
     title: `Beautiful & luxurious apartment at great location `,
     city: `Amsterdam`,
+    coords: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198
+    },
     price: 6000,
     type: `apartment`,
     description: generateDescription(),
@@ -39,6 +43,10 @@ export const offers = [
     id: `2`,
     title: `Nice, cozy, warm big bed room`,
     city: `Amsterdam`,
+    coords: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198
+    },
     price: 20,
     type: `room`,
     description: generateDescription(),
@@ -80,6 +88,10 @@ export const offers = [
     id: `3`,
     title: `Canal View Prinsengracht`,
     city: `Amsterdam`,
+    coords: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198
+    },
     price: 200,
     type: `hotel`,
     description: generateDescription(),
@@ -105,6 +117,10 @@ export const offers = [
     id: `4`,
     title: ` Wood and stone place`,
     city: `Amsterdam`,
+    coords: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198
+    },
     price: 1000,
     type: `house`,
     description: generateDescription(),
