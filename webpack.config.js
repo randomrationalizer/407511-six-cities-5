@@ -20,11 +20,18 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                 },
-            }
+            },
+            {
+              test: /\.(png|svg|jpe?g|gif)$/,
+              loader: 'file-loader',
+              options: {
+                  name: 'assets/[name]-[contenthash:4].[ext]'
+              },
+            },
         ],
     },
     resolve: {
         extensions: ['.js', '.jsx']
     },
-    devtool: 'source-map',
+    devtool: 'source-map'
 };
