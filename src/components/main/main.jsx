@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
+import {cityPropTypes} from "../map/city.prop";
 import OffersList from "../offer/offers-list/offers-list";
+import Map from "../map/map";
+import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
 
 const Main = (props) => {
   const {offers, favorites, cities, currentCity, onOfferHover} = props;
-  const currentOffers = offers.filter((offer) => offer.city === currentCity);
+  const currentOffers = offers.filter((offer) => offer.city === currentCity.name);
 
   return (
     <div className="page page--gray page--main">
@@ -40,7 +43,7 @@ const Main = (props) => {
             <ul className="locations__list tabs__list">
               {cities.map((city) =>
                 <li key={city} className="locations__item">
-                  <a className={`locations__item-link tabs__item ${city === currentCity ? `tabs__item--active` : ``}`} href="#">
+                  <a className={`locations__item-link tabs__item ${city === currentCity.name ? `tabs__item--active` : ``}`} href="#">
                     <span>{city}</span>
                   </a>
                 </li>
@@ -52,7 +55,7 @@ const Main = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
+              <b className="places__found">{currentOffers.length} places to stay in {currentCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -77,7 +80,12 @@ const Main = (props) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                offers={offers}
+                activeCard={offers[1]} // временно
+                mapType={MapType.MAIN}
+                city={currentCity}
+              />
             </div>
           </div>
         </div>
@@ -91,7 +99,7 @@ Main.propTypes = {
   onOfferHover: PropTypes.func.isRequired,
   favorites: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
-  currentCity: PropTypes.string.isRequired
+  currentCity: cityPropTypes.isRequired
 };
 
 export default Main;

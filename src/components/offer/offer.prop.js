@@ -7,6 +7,10 @@ export const offersPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   city: PropTypes.oneOf(cities).isRequired,
+  coords: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }).isRequired,
   price: PropTypes.number.isRequired,
   type: PropTypes.oneOf(offerTypes).isRequired,
   description: PropTypes.string.isRequired,

@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
 import {offersPropTypes} from "../offer/offer.prop";
+import {cityPropTypes} from "../map/city.prop";
 import {reviewsPropTypes} from "../reviews/review.prop";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
@@ -71,7 +72,7 @@ App.propTypes = {
   reviews: PropTypes.arrayOf(reviewsPropTypes).isRequired,
   favorites: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
-  currentCity: PropTypes.string.isRequired
+  currentCity: cityPropTypes.isRequired
 };
 
 export default App;

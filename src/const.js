@@ -5,3 +5,8 @@ export const OfferType = {
   NEIGHBOURHOOD: `near-places`,
   FAVORITES: `favorites`
 };
+
+export const MapType = {
+  MAIN: `cities`,
+  PROPERTY: `property`
+};
