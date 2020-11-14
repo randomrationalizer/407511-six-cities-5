@@ -19,7 +19,8 @@ class Map extends PureComponent {
     this.map = leaflet.map(`map`, {
       center: coordinates,
       zoom: ZOOM_VALUE,
-      zoomControl: false,
+      scrollWheelZoom: false,
+      zoomControl: true,
       marker: true
     });
 
@@ -61,6 +62,12 @@ class Map extends PureComponent {
   componentDidMount() {
     this.renderMap();
     this.renderPins();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.activeCard !== prevProps.activeCard) {
+      this.renderPins();
+    }
   }
 
   componentWillUnmount() {
