@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
+import {cityPropTypes} from "../map/city.prop";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import pinIcon from "../../../public/img/pin.svg";
@@ -11,21 +12,18 @@ const pinSize = [27, 39];
 
 
 class Map extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
 
   renderMap() {
-    const {city} = this.props;
+    const coordinates = Object.values(this.props.city.coords);
 
     this.map = leaflet.map(`map`, {
-      center: city.coords,
+      center: coordinates,
       zoom: ZOOM_VALUE,
       zoomControl: false,
       marker: true
     });
 
-    this.map.setView(city.coords, ZOOM_VALUE);
+    this.map.setView(coordinates, ZOOM_VALUE);
 
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -84,8 +82,8 @@ class Map extends PureComponent {
 Map.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   mapType: PropTypes.string.isRequired,
-  activeCard: PropTypes.any,
-  city: PropTypes.object.isRequired
+  activeCard: offersPropTypes,
+  city: cityPropTypes.isRequired
 };
 
 export default Map;

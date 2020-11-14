@@ -8,7 +8,10 @@ import {cities} from "./const";
 
 const defaultCity = {
   name: `Amsterdam`,
-  coords: [52.38333, 4.9]
+  coords: {
+    latitude: 52.38333,
+    longitude: 4.9
+  },
 };
 
 ReactDOM.render(

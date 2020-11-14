@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
+import {cityPropTypes} from "../map/city.prop";
 import OffersList from "../offer/offers-list/offers-list";
 import Map from "../map/map";
 import {MapType} from "../../const";
@@ -98,7 +99,7 @@ Main.propTypes = {
   onOfferHover: PropTypes.func.isRequired,
   favorites: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
-  currentCity: PropTypes.object.isRequired
+  currentCity: cityPropTypes.isRequired
 };
 
 export default Main;
