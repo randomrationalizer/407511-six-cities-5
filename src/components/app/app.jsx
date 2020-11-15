@@ -19,9 +19,6 @@ const App = (props) => {
         <Route exact path="/">
           <Main
             offers={offers}
-            onOfferHover={() => {
-              // в дальнейшем будет подсветка пина на карте
-            }}
             favorites={favorites}
             cities={cities}
             currentCity={currentCity}
