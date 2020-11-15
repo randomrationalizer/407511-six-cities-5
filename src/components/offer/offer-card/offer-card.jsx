@@ -2,66 +2,46 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
-import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
+import {capitalize} from "../util";
 import {getRatingInPercent} from "../../../mocks/util";
-import {OfferType} from "../../../const";
-
-const offerTypeToImageSize = {
-  [OfferType.MAIN]: {
-    width: 260,
-    height: 200
-  },
-  [OfferType.NEIGHBOURHOOD]: {
-    width: 260,
-    height: 200
-  },
-  [OfferType.FAVORITES]: {
-    width: 150,
-    height: 110
-  }
-};
 
 
-const Card = (props) => {
-  const {onCardHover, offer, cardType, isFavorite} = props;
+const OfferCard = (props) => {
+  const {onCardHover, offer, isFavorite, cardClassName, cardInfoClassName, imageWrapperClassName, imageSize} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
 
   const handleMouseEnter = () => {
-    if (cardType !== OfferType.MAIN) {
-      return;
+    if (onCardHover) {
+      onCardHover(offer);
     }
-
-    onCardHover(offer);
   };
 
   const handleMouseLeave = () => {
-    if (cardType !== OfferType.MAIN) {
-      return;
+    if (onCardHover) {
+      onCardHover(null);
     }
-
-    onCardHover(null);
   };
 
   return (
-    <article className={`${cardType}__${isMainPageCard(cardType) ? `place-` : ``}card place-card`}
+    <article className={`${cardClassName} place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {isPremial && <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${imageWrapperClassName} place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`${photos[0].src}`}
-            width={offerTypeToImageSize[cardType].width}
-            height={offerTypeToImageSize[cardType].height}
+            width={imageSize.width}
+            height={imageSize.height}
             alt={`${photos[0].description}`}
           />
         </Link>
       </div>
-      <div className={`${isFavoritesCard(cardType) ? `${cardType}__card-info` : ``} place-card__info`}>
+      <div className={`${cardInfoClassName ? `${cardInfoClassName}` : ``} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -89,11 +69,17 @@ const Card = (props) => {
   );
 };
 
-Card.propTypes = {
+OfferCard.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
-  cardType: PropTypes.string.isRequired,
-  isFavorite: PropTypes.bool.isRequired
+  isFavorite: PropTypes.bool.isRequired,
+  cardClassName: PropTypes.string.isRequired,
+  cardInfoClassName: PropTypes.string,
+  imageWrapperClassName: PropTypes.string.isRequired,
+  imageSize: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
+  }).isRequired
 };
 
-export default Card;
+export default OfferCard;

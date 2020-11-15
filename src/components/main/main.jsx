@@ -2,10 +2,11 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {cityPropTypes} from "../map/city.prop";
-import OffersList from "../offer/offers-list/offers-list";
 import Map from "../map/map";
+import OffersListCities from "../offer/offers-list-cities/offers-list-cities";
 import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
+
 
 class Main extends PureComponent {
   constructor(props) {
@@ -87,7 +88,7 @@ class Main extends PureComponent {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <OffersList
+                <OffersListCities
                   offers={currentOffers}
                   favorites={favorites}
                   onOfferHover={this.handleOfferHover}
