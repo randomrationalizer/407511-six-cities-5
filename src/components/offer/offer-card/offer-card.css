@@ -1,0 +1,24 @@
+.place-card {
+  --image-width: 260px;
+  --image-height: 200px;
+}
+
+.place-card__image {
+  width: var(--image-width);
+  height: var(--image-height);
+}
+
+.place-card.card-favorites {
+  --image-width: 150px;
+  --image-height: 100px;
+}
+
+.place-card.card-nearby {
+  --image-width: 260px;
+  --image-height: 200px;
+}
+
+.place-card.card-main {
+  --image-width: 260px;
+  --image-height: 200px;
+}

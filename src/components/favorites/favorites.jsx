@@ -2,9 +2,10 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
-import Card from "../offer/offer-card/offer-card";
 import {OfferType} from "../../const";
+import OffersList from "../offer/offers-list/offers-list";
 import logo from "../../../public/img/logo.svg";
+
 
 const Favorites = (props) => {
   const {offers, favorites} = props;
@@ -52,14 +53,11 @@ const Favorites = (props) => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {favoriteOffers.filter((offer) => offer.city === city).map((item) =>
-                      <Card
-                        key={item.id}
-                        cardType={OfferType.FAVORITES}
-                        offer={item}
-                        isFavorite={true}
-                      />
-                    )}
+                    <OffersList
+                      offers={favoriteOffers.filter((offer) => offer.city === city)}
+                      favorites={favorites}
+                      offerType={OfferType.FAVORITES}
+                    />
                   </div>
                 </li>
               )}

@@ -4,14 +4,16 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
 import {capitalize, getDescriptionSentences} from "../util";
 import {getRatingInPercent} from "../../../mocks/util";
-import {OfferType} from "../../../const";
-import Card from "../offer-card/offer-card";
+import {MapType, OfferType} from "../../../const";
+import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
+import OffersList from "../../offer/offers-list/offers-list";
 import logo from "../../../../public/img/logo.svg";
+
 
 const OfferDetails = (props) => {
   const {offer, favorites, reviews, neighbourhoodOffers} = props;
-  const {id, title, price, type, description, bedrooms, guests, rating, photos, options, owner, isPremial} = offer;
+  const {id, title, price, city, coords, type, description, bedrooms, guests, rating, photos, options, owner, isPremial} = offer;
   const isFavorite = favorites.includes(id);
 
   return (
@@ -115,20 +117,22 @@ const OfferDetails = (props) => {
               />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map
+            offers={neighbourhoodOffers}
+            activeCard={offer}
+            mapType={MapType.PROPERTY}
+            city={Object.assign({}, {name: city, coords})}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {neighbourhoodOffers.map((card) =>
-                <Card
-                  key={card.id}
-                  cardType={OfferType.NEIGHBOURHOOD}
-                  offer={card}
-                  isFavorite={favorites.includes(card.id)}
-                />
-              )}
+              <OffersList
+                offers={neighbourhoodOffers}
+                favorites={favorites}
+                offerType={OfferType.NEARBY}
+              />
             </div>
           </section>
         </div>

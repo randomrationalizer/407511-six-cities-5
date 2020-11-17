@@ -5,13 +5,26 @@ import {offersPropTypes} from "../offer.prop";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
 import {getRatingInPercent} from "../../../mocks/util";
 import {OfferType} from "../../../const";
+import "./offer-card.css";
+
+const offerTypeToArticleClassName = {
+  [OfferType.MAIN]: `cities__place-card place-card`,
+  [OfferType.NEARBY]: `near-places__card place-card`,
+  [OfferType.FAVORITES]: `favorites__card place-card`
+};
+
+const offerTypeToCardClassName = {
+  [OfferType.MAIN]: `card-main`,
+  [OfferType.NEARBY]: `card-nearby`,
+  [OfferType.FAVORITES]: `card-favorites`
+};
 
 const offerTypeToImageSize = {
   [OfferType.MAIN]: {
     width: 260,
     height: 200
   },
-  [OfferType.NEIGHBOURHOOD]: {
+  [OfferType.NEARBY]: {
     width: 260,
     height: 200
   },
@@ -22,12 +35,15 @@ const offerTypeToImageSize = {
 };
 
 
-const Card = (props) => {
-  const {onCardHover, offer, cardType, isFavorite} = props;
+const OfferCard = (props) => {
+  const {onCardHover, offer, isFavorite, offerType} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
+  const imageSize = offerTypeToImageSize[offerType];
+  const articleClassName = offerTypeToArticleClassName[offerType];
+  const cardClassName = offerTypeToCardClassName[offerType];
 
   const handleMouseEnter = () => {
-    if (cardType !== OfferType.MAIN) {
+    if (!isMainPageCard(offerType)) {
       return;
     }
 
@@ -35,7 +51,7 @@ const Card = (props) => {
   };
 
   const handleMouseLeave = () => {
-    if (cardType !== OfferType.MAIN) {
+    if (!isMainPageCard(offerType)) {
       return;
     }
 
@@ -43,25 +59,25 @@ const Card = (props) => {
   };
 
   return (
-    <article className={`${cardType}__${isMainPageCard(cardType) ? `place-` : ``}card place-card`}
+    <article className={`${articleClassName} ${cardClassName}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {isPremial && <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${offerType}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`${photos[0].src}`}
-            width={offerTypeToImageSize[cardType].width}
-            height={offerTypeToImageSize[cardType].height}
+            width={imageSize.width}
+            height={imageSize.height}
             alt={`${photos[0].description}`}
           />
         </Link>
       </div>
-      <div className={`${isFavoritesCard(cardType) ? `${cardType}__card-info` : ``} place-card__info`}>
+      <div className={`${isFavoritesCard(offerType) ? `${offerType}__card-info` : ``} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -89,11 +105,11 @@ const Card = (props) => {
   );
 };
 
-Card.propTypes = {
+OfferCard.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
-  cardType: PropTypes.string.isRequired,
-  isFavorite: PropTypes.bool.isRequired
+  isFavorite: PropTypes.bool.isRequired,
+  offerType: PropTypes.string.isRequired
 };
 
-export default Card;
+export default OfferCard;

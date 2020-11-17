@@ -2,7 +2,7 @@ export const cities = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `
 
 export const OfferType = {
   MAIN: `cities`,
-  NEIGHBOURHOOD: `near-places`,
+  NEARBY: `near-places`,
   FAVORITES: `favorites`
 };
 
