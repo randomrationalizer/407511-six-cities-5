@@ -2,7 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
-import OffersListFavorites from "../offer/offers-list-favorites/offers-list-favorites";
+import {OfferType} from "../../const";
+import OffersList from "../offer/offers-list/offers-list";
 import logo from "../../../public/img/logo.svg";
 
 
@@ -51,10 +52,13 @@ const Favorites = (props) => {
                       </a>
                     </div>
                   </div>
-                  <OffersListFavorites
-                    offers={favoriteOffers.filter((offer) => offer.city === city)}
-                    favorites={favorites}
-                  />
+                  <div className="favorites__places">
+                    <OffersList
+                      offers={favoriteOffers.filter((offer) => offer.city === city)}
+                      favorites={favorites}
+                      offerType={OfferType.FAVORITES}
+                    />
+                  </div>
                 </li>
               )}
             </ul>

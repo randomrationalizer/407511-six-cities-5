@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {cityPropTypes} from "../map/city.prop";
 import Map from "../map/map";
-import OffersListCities from "../offer/offers-list-cities/offers-list-cities";
+import {OfferType} from "../../const";
+import OffersList from "../offer/offers-list/offers-list";
 import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
 
@@ -88,11 +89,14 @@ class Main extends PureComponent {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <OffersListCities
-                  offers={currentOffers}
-                  favorites={favorites}
-                  onOfferHover={this.handleOfferHover}
-                />
+                <div className="cities__places-list places__list tabs__content">
+                  <OffersList
+                    offers={currentOffers}
+                    favorites={favorites}
+                    onOfferHover={this.handleOfferHover}
+                    offerType={OfferType.MAIN}
+                  />
+                </div>
               </section>
               <div className="cities__right-section">
                 <Map

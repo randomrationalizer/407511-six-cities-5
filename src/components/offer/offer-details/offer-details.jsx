@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
 import {capitalize, getDescriptionSentences} from "../util";
 import {getRatingInPercent} from "../../../mocks/util";
-import {MapType} from "../../../const";
+import {MapType, OfferType} from "../../../const";
 import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
-import OffersListNearby from "../offers-list-nearby/offers-list-nearby";
+import OffersList from "../../offer/offers-list/offers-list";
 import logo from "../../../../public/img/logo.svg";
 
 
@@ -127,10 +127,13 @@ const OfferDetails = (props) => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersListNearby
-              offers={neighbourhoodOffers}
-              favorites={favorites}
-            />
+            <div className="near-places__list places__list">
+              <OffersList
+                offers={neighbourhoodOffers}
+                favorites={favorites}
+                offerType={OfferType.NEARBY}
+              />
+            </div>
           </section>
         </div>
       </main>

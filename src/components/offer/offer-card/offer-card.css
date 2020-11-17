@@ -1,0 +1,13 @@
+.place-card__image {
+  --image-width: 260px;
+  --image-height: 200px;
+  --favorites-image-width: 150px;
+  --favorites-image-height: 110px;
+  width: var(--image-width);
+  height: var(--image-height);
+}
+
+.favorites__card .place-card__image {
+  width: var(--favorites-image-width);
+  height: var(--favorites-image-height);
+}

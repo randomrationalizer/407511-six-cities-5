@@ -10,18 +10,3 @@ export const MapType = {
   MAIN: `cities`,
   PROPERTY: `property`
 };
-
-export const offerTypeToImageSize = {
-  [OfferType.MAIN]: {
-    width: 260,
-    height: 200
-  },
-  [OfferType.NEARBY]: {
-    width: 260,
-    height: 200
-  },
-  [OfferType.FAVORITES]: {
-    width: 150,
-    height: 110
-  }
-};
