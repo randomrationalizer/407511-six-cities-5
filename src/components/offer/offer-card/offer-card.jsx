@@ -7,10 +7,16 @@ import {getRatingInPercent} from "../../../mocks/util";
 import {OfferType} from "../../../const";
 import "./offer-card.css";
 
-const offerTypeToClassName = {
-  [OfferType.MAIN]: `cities__place-card`,
-  [OfferType.NEARBY]: `near-places__card`,
-  [OfferType.FAVORITES]: `favorites__card`
+const offerTypeToArticleClassName = {
+  [OfferType.MAIN]: `cities__place-card place-card`,
+  [OfferType.NEARBY]: `near-places__card place-card`,
+  [OfferType.FAVORITES]: `favorites__card place-card`
+};
+
+const offerTypeToCardClassName = {
+  [OfferType.MAIN]: `card-main`,
+  [OfferType.NEARBY]: `card-nearby`,
+  [OfferType.FAVORITES]: `card-favorites`
 };
 
 const offerTypeToImageSize = {
@@ -32,8 +38,9 @@ const offerTypeToImageSize = {
 const OfferCard = (props) => {
   const {onCardHover, offer, isFavorite, offerType} = props;
   const {id, title, type, price, rating, photos, isPremial} = offer;
-  const cardClassName = offerTypeToClassName[offerType];
   const imageSize = offerTypeToImageSize[offerType];
+  const articleClassName = offerTypeToArticleClassName[offerType];
+  const cardClassName = offerTypeToCardClassName[offerType];
 
   const handleMouseEnter = () => {
     if (!isMainPageCard(offerType)) {
@@ -52,7 +59,7 @@ const OfferCard = (props) => {
   };
 
   return (
-    <article className={`${cardClassName} place-card`}
+    <article className={`${articleClassName} ${cardClassName}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
