@@ -5,10 +5,10 @@ export const offers = [
   {
     id: `1`,
     title: `Beautiful & luxurious apartment at great location `,
-    city: `Amsterdam`,
+    city: `Paris`,
     coords: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198
+      latitude: 48.864716,
+      longitude: 2.349014
     },
     price: 6000,
     type: `apartment`,

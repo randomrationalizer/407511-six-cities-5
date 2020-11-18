@@ -1,26 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {createStore} from "redux";
+import {Provider} from "react-redux";
+import {reducer} from "./state/reduser";
 import App from "./components/app/app";
-import {offers} from "./mocks/offers";
 import {reviews} from "./mocks/reviews";
 import {favorites} from "./mocks/favorites";
-import {cities} from "./const";
 
-const defaultCity = {
-  name: `Amsterdam`,
-  coords: {
-    latitude: 52.38333,
-    longitude: 4.9
-  },
-};
+
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+);
 
 ReactDOM.render(
-    <App
-      offers={offers}
-      reviews={reviews}
-      favorites={favorites}
-      cities={cities}
-      currentCity={defaultCity}
-    />,
+    <Provider store={store}>
+      <App
+        reviews={reviews}
+        favorites={favorites}
+      />
+    </Provider>,
     document.querySelector(`#root`)
 );

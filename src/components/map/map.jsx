@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
-import {cityPropTypes} from "../map/city.prop";
+import {cityPropTypes} from "../cities/city.prop";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import pinIcon from "../../../public/img/pin.svg";
@@ -68,6 +68,16 @@ class Map extends PureComponent {
     if (this.props.activeCard !== prevProps.activeCard) {
       this.renderPins();
     }
+
+    if (this.props.city.name !== prevProps.city.name) {
+      this.updateMap();
+      this.renderPins();
+    }
+  }
+
+  updateMap() {
+    this.map.remove();
+    this.renderMap();
   }
 
   componentWillUnmount() {
