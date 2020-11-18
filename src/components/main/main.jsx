@@ -7,6 +7,7 @@ import Map from "../map/map";
 import {OfferType} from "../../const";
 import OffersList from "../offer/offers-list/offers-list";
 import CitiesList from "../cities/cities-list/cities-list";
+import Sort from "../sort/sort-section/sort-section";
 import {ActionCreator} from "../../store/action";
 import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
@@ -29,7 +30,7 @@ class Main extends PureComponent {
   }
 
   render() {
-    const {favorites, cities, currentCity, cityOffers, onCurrentCityChange} = this.props;
+    const {favorites, cities, currentCity, cityOffers, onCurrentCityChange, currentSort, onCurrentSortChange} = this.props;
 
     return (
       <div className="page page--gray page--main">
@@ -72,21 +73,10 @@ class Main extends PureComponent {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{cityOffers.length} places to stay in {currentCity.name}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
-                    Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                    <li className="places__option" tabIndex="0">Price: low to high</li>
-                    <li className="places__option" tabIndex="0">Price: high to low</li>
-                    <li className="places__option" tabIndex="0">Top rated first</li>
-                  </ul>
-                </form>
+                <Sort
+                  currentSort={currentSort}
+                  onSortChange={onCurrentSortChange}
+                />
                 <div className="cities__places-list places__list tabs__content">
                   <OffersList
                     offers={cityOffers}
@@ -117,18 +107,25 @@ Main.propTypes = {
   cities: PropTypes.arrayOf(cityPropTypes).isRequired,
   currentCity: cityPropTypes.isRequired,
   cityOffers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  onCurrentCityChange: PropTypes.func.isRequired
+  onCurrentCityChange: PropTypes.func.isRequired,
+  currentSort: PropTypes.string.isRequired,
+  onCurrentSortChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   currentCity: state.currentCity,
   cityOffers: state.cityOffers,
-  cities: state.cities
+  cities: state.cities,
+  currentSort: state.currentSort
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCurrentCityChange(city) {
     dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.getCityOffers());
+  },
+  onCurrentSortChange(sort) {
+    dispatch(ActionCreator.changeSort(sort));
     dispatch(ActionCreator.getCityOffers());
   }
 });
