@@ -7,7 +7,7 @@ import Map from "../map/map";
 import {OfferType} from "../../const";
 import OffersList from "../offer/offers-list/offers-list";
 import CitiesList from "../cities/cities-list/cities-list";
-import {ActionCreator} from "../../state/action";
+import {ActionCreator} from "../../store/action";
 import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
 

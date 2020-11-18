@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-// import {cities} from "../../const";
 
 const offerTypes = [`apartment`, `room`, `house`, `hotel`];
 
