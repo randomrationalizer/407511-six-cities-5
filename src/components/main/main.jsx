@@ -1,10 +1,13 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
-import {cityPropTypes} from "../map/city.prop";
+import {cityPropTypes} from "../cities/city.prop";
 import Map from "../map/map";
 import {OfferType} from "../../const";
 import OffersList from "../offer/offers-list/offers-list";
+import CitiesList from "../cities/cities-list/cities-list";
+import {ActionCreator} from "../../state/action";
 import {MapType} from "../../const";
 import logo from "../../../public/img/logo.svg";
 
@@ -26,8 +29,7 @@ class Main extends PureComponent {
   }
 
   render() {
-    const {offers, favorites, cities, currentCity} = this.props;
-    const currentOffers = offers.filter((offer) => offer.city === currentCity.name);
+    const {favorites, cities, currentCity, cityOffers, onCurrentCityChange} = this.props;
 
     return (
       <div className="page page--gray page--main">
@@ -58,22 +60,18 @@ class Main extends PureComponent {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                {cities.map((city) =>
-                  <li key={city} className="locations__item">
-                    <a className={`locations__item-link tabs__item ${city === currentCity.name ? `tabs__item--active` : ``}`} href="#">
-                      <span>{city}</span>
-                    </a>
-                  </li>
-                )}
-              </ul>
+              <CitiesList
+                cities={cities}
+                currentCity={currentCity}
+                onCityChange={onCurrentCityChange}
+              />
             </section>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{currentOffers.length} places to stay in {currentCity.name}</b>
+                <b className="places__found">{cityOffers.length} places to stay in {currentCity.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -91,7 +89,7 @@ class Main extends PureComponent {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   <OffersList
-                    offers={currentOffers}
+                    offers={cityOffers}
                     favorites={favorites}
                     onOfferHover={this.handleOfferHover}
                     offerType={OfferType.MAIN}
@@ -100,7 +98,7 @@ class Main extends PureComponent {
               </section>
               <div className="cities__right-section">
                 <Map
-                  offers={offers}
+                  offers={cityOffers}
                   activeCard={this.state.activeCard}
                   mapType={MapType.MAIN}
                   city={currentCity}
@@ -115,10 +113,25 @@ class Main extends PureComponent {
 }
 
 Main.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   favorites: PropTypes.array.isRequired,
-  cities: PropTypes.array.isRequired,
-  currentCity: cityPropTypes.isRequired
+  cities: PropTypes.arrayOf(cityPropTypes).isRequired,
+  currentCity: cityPropTypes.isRequired,
+  cityOffers: PropTypes.arrayOf(offersPropTypes).isRequired,
+  onCurrentCityChange: PropTypes.func.isRequired
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity,
+  cityOffers: state.cityOffers,
+  cities: state.cities
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onCurrentCityChange(city) {
+    dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.getCityOffers());
+  }
+});
+
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

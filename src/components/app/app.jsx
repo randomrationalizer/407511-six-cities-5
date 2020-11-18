@@ -1,16 +1,17 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 import {offersPropTypes} from "../offer/offer.prop";
-import {cityPropTypes} from "../map/city.prop";
 import {reviewsPropTypes} from "../reviews/review.prop";
 import Main from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import OfferDetails from "../offer/offer-details/offer-details";
 
+
 const App = (props) => {
-  const {offers, reviews, favorites, cities, currentCity} = props;
+  const {offers, reviews, favorites} = props;
   const offersIds = offers.map((offer) => offer.id);
 
   return (
@@ -18,10 +19,7 @@ const App = (props) => {
       <Switch>
         <Route exact path="/">
           <Main
-            offers={offers}
             favorites={favorites}
-            cities={cities}
-            currentCity={currentCity}
           />
         </Route>
         <Route exact path="/login">
@@ -67,9 +65,12 @@ const App = (props) => {
 App.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewsPropTypes).isRequired,
-  favorites: PropTypes.array.isRequired,
-  cities: PropTypes.array.isRequired,
-  currentCity: cityPropTypes.isRequired
+  favorites: PropTypes.array.isRequired
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  offers: state.allOffers
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

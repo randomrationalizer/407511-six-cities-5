@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
-import {cities} from "../../const";
+// import {cities} from "../../const";
 
 const offerTypes = [`apartment`, `room`, `house`, `hotel`];
 
 export const offersPropTypes = PropTypes.shape({
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  city: PropTypes.oneOf(cities).isRequired,
+  city: PropTypes.string.isRequired,
   coords: PropTypes.shape({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
