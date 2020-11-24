@@ -3,22 +3,23 @@ import PropTypes from "prop-types";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {offersPropTypes} from "../offer/offer.prop";
-import {reviewsPropTypes} from "../reviews/review.prop";
-import Main from "../main/main";
+import MainPage from "../main/main";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import OfferDetails from "../offer/offer-details/offer-details";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
+const MainPageWrapped = withActiveItem(MainPage);
 
 const App = (props) => {
-  const {offers, reviews, favorites} = props;
+  const {offers, favorites} = props;
   const offersIds = offers.map((offer) => offer.id);
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main
+          <MainPageWrapped
             favorites={favorites}
           />
         </Route>
@@ -36,7 +37,6 @@ const App = (props) => {
             offersIds.includes(match.params.id) ? (
               <OfferDetails
                 offer={offers.find((offer) => offer.id === match.params.id)}
-                reviews={reviews.find((item) => item.propertyId === match.params.id).reviews}
                 favorites={favorites}
                 neighbourhoodOffers={offers.slice(0, 3)}
               />
@@ -64,12 +64,12 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  reviews: PropTypes.arrayOf(reviewsPropTypes).isRequired,
   favorites: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.allOffers
+  offers: state.allOffers,
+  favorites: state.favorites
 });
 
 export {App};

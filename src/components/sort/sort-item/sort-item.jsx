@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {sortTypeToTitle} from "../util";
+import {isEnterEvent} from "../../../utils";
 
 
 const SortItem = (props) => {
@@ -14,11 +15,16 @@ const SortItem = (props) => {
     onSortItemClick(sortType);
   };
 
+  const handleKeyDown = (evt) => {
+    isEnterEvent(evt, handleSortClick);
+  };
+
   return (
     <li
       className={`places__option ${isActive ? `places__option--active` : ``}`}
       tabIndex="0"
       onClick={handleSortClick}
+      onKeyDown={handleKeyDown}
     >
       {sortTypeToTitle[sortType]}
     </li>

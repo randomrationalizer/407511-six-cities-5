@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {cityPropTypes} from "../cities/city.prop";
@@ -12,6 +13,11 @@ const pinSize = [27, 39];
 
 
 class Map extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.pins = [];
+
+  }
 
   renderMap() {
     const coordinates = Object.values(this.props.city.coords);
@@ -34,7 +40,7 @@ class Map extends PureComponent {
   }
 
   renderPins() {
-    const {activeCard, offers} = this.props;
+    const {activeCardId, offers} = this.props;
 
     const pin = leaflet.icon({
       iconUrl: pinIcon,
@@ -47,7 +53,7 @@ class Map extends PureComponent {
     });
 
     offers.map((offer) => {
-      if (activeCard && offer.id === activeCard.id) {
+      if (activeCardId && offer.id === activeCardId) {
         return leaflet
           .marker(Object.values(offer.coords), {icon: activePin})
           .addTo(this.map);
@@ -65,7 +71,7 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.activeCard !== prevProps.activeCard) {
+    if (this.props.activeCardId !== prevProps.activeCardId) {
       this.renderPins();
     }
 
@@ -99,8 +105,13 @@ class Map extends PureComponent {
 Map.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   mapType: PropTypes.string.isRequired,
-  activeCard: offersPropTypes,
+  activeCardId: PropTypes.string,
   city: cityPropTypes.isRequired
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  offers: state.cityOffers
+});
+
+export {Map};
+export default connect(mapStateToProps, null)(Map);

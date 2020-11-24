@@ -47,7 +47,7 @@ const OfferCard = (props) => {
       return;
     }
 
-    onCardHover(offer);
+    onCardHover(offer.id);
   };
 
   const handleMouseLeave = () => {
