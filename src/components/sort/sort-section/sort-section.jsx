@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SortList from "../sort-list/sort-list";
 import {sortTypeToTitle} from "../util";
+import {isEnterEvent} from "../../../utils";
 
 
 class Sort extends PureComponent {
@@ -12,6 +13,7 @@ class Sort extends PureComponent {
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   handleClick() {
@@ -20,13 +22,22 @@ class Sort extends PureComponent {
     }));
   }
 
+  handleKeyDown(evt) {
+    isEnterEvent(evt, this.handleClick);
+  }
+
   render() {
     const {onSortChange, currentSort} = this.props;
 
     return (
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
-        <span onClick={this.handleClick} className="places__sorting-type" tabIndex="0">
+        <span
+          className="places__sorting-type"
+          tabIndex="0"
+          onClick={this.handleClick}
+          onKeyDown={this.handleKeyDown}
+        >
           {sortTypeToTitle[currentSort]}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
