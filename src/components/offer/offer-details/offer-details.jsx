@@ -12,7 +12,7 @@ import logo from "../../../../public/img/logo.svg";
 
 
 const OfferDetails = (props) => {
-  const {offer, favorites, reviews, neighbourhoodOffers} = props;
+  const {offer, favorites, neighbourhoodOffers} = props;
   const {id, title, price, city, coords, type, description, bedrooms, guests, rating, photos, options, owner, isPremial} = offer;
   const isFavorite = favorites.includes(id);
 
@@ -113,13 +113,13 @@ const OfferDetails = (props) => {
                 </div>
               </div>
               <ReviewsSection
-                reviews={reviews}
+                id={id}
               />
             </div>
           </div>
           <Map
             offers={neighbourhoodOffers}
-            activeCard={offer}
+            activeCardId={id}
             mapType={MapType.PROPERTY}
             city={Object.assign({}, {name: city, coords})}
           />
@@ -143,7 +143,6 @@ const OfferDetails = (props) => {
 
 OfferDetails.propTypes = {
   offer: offersPropTypes.isRequired,
-  reviews: PropTypes.array,
   favorites: PropTypes.array.isRequired,
   neighbourhoodOffers: PropTypes.arrayOf(offersPropTypes),
 };

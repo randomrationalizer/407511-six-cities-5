@@ -7,6 +7,10 @@ import OfferCard from "../offer-card/offer-card";
 const OffersList = (props) => {
   const {offers, favorites, onOfferHover, offerType} = props;
 
+  const handleCardHover = (newActiveCardId) => {
+    onOfferHover(newActiveCardId);
+  };
+
   return (
     <Fragment>
       {offers.map((offer) =>
@@ -15,7 +19,7 @@ const OffersList = (props) => {
           offer={offer}
           offerType={offerType}
           isFavorite={favorites.includes(offer.id)}
-          onCardHover={(newActiveCard) => onOfferHover(newActiveCard)}
+          onCardHover={handleCardHover}
         />
       )}
     </Fragment>
@@ -29,4 +33,4 @@ OffersList.propTypes = {
   offerType: PropTypes.string.isRequired
 };
 
-export default OffersList;
+export default React.memo(OffersList);

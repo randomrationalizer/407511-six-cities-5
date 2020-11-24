@@ -30,3 +30,8 @@ export const sortOffers = (offers, currentSort) => {
       return offers;
   }
 };
+
+export const getPropertyReviews = (id, allReviews) => {
+  const propertyReviews = allReviews.find((property) => property.propertyId === id);
+  return propertyReviews ? propertyReviews.reviews : [];
+};

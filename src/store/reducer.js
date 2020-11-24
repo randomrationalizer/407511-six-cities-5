@@ -1,7 +1,9 @@
 import {extend} from "../utils";
 import {ActionType} from "./action";
-import {filterOffers, sortOffers} from "../core";
+import {filterOffers, getPropertyReviews, sortOffers} from "../core";
 import {offers} from "../mocks/offers";
+import {reviews} from "../mocks/reviews";
+import {favorites} from "../mocks/favorites";
 import {cities, SortType} from "../const";
 
 const defaultCity = cities[3];
@@ -12,7 +14,9 @@ const initialState = {
   allOffers: offers,
   cityOffers: filterOffers(offers, defaultCity),
   cities,
-  currentSort: defaultSort
+  currentSort: defaultSort,
+  reviews,
+  favorites
 };
 
 
@@ -33,6 +37,27 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         currentSort: action.payload
       });
+
+    case ActionType.ADD_REVIEW:
+      const {offerId, newReview} = action.payload;
+      const index = state.reviews.findIndex((property) => property.propertyId === offerId);
+
+      let updatedOffer = {
+        propertyId: offerId,
+        reviews: [...getPropertyReviews(offerId, state.reviews), newReview]
+      };
+      let updatedReviews = {};
+
+      if (index === -1) {
+        updatedReviews = [...state.reviews, updatedOffer];
+      } else {
+        updatedReviews = [...state.reviews.slice(0, index), updatedOffer, ...state.reviews.slice(index + 1)];
+      }
+
+      return extend(state, {
+        reviews: updatedReviews
+      });
+
   }
 
   return state;
