@@ -53,3 +53,10 @@ export const MapType = {
   MAIN: `cities`,
   PROPERTY: `property`
 };
+
+export const SortType = {
+  DEFAULT: `DEFAULT`,
+  PRICE_UP: `PRICE_UP`,
+  PRICE_DOWN: `PRICE_DOWN`,
+  RATING_DOWN: `RATING_DOWN`
+};

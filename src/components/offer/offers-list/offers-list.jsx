@@ -15,9 +15,7 @@ const OffersList = (props) => {
           offer={offer}
           offerType={offerType}
           isFavorite={favorites.includes(offer.id)}
-          onCardHover={(newActiveCard) => {
-            onOfferHover(newActiveCard);
-          }}
+          onCardHover={(newActiveCard) => onOfferHover(newActiveCard)}
         />
       )}
     </Fragment>

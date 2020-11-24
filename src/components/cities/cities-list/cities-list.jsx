@@ -14,9 +14,7 @@ const CitiesList = (props) => {
           key={city.name}
           city={city}
           isActive={city.name === currentCity.name}
-          onCityClick={(newCity) => {
-            onCityChange(newCity);
-          }}
+          onCityClick={(newCity) => onCityChange(newCity)}
         />
       )}
     </ul>
