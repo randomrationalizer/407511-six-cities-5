@@ -60,3 +60,8 @@ export const SortType = {
   PRICE_DOWN: `PRICE_DOWN`,
   RATING_DOWN: `RATING_DOWN`
 };
+
+export const KeyCode = {
+  ENTER: 13,
+  SPACE: 32
+};

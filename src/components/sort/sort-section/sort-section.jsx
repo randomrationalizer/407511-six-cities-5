@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import SortList from "../sort-list/sort-list";
 import {sortTypeToTitle} from "../util";
 import {ActionCreator} from "../../../store/action";
-import {isEnterEvent} from "../../../utils";
+import {checkKeyDownEvent} from "../../../utils";
 
 
 const SortSection = (props) => {
@@ -16,7 +16,7 @@ const SortSection = (props) => {
   };
 
   const handleKeyDown = (evt) => {
-    isEnterEvent(evt, onActiveChange);
+    checkKeyDownEvent(evt, onActiveChange);
   };
 
   return (
