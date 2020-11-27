@@ -1,26 +1,23 @@
-import {extend} from "../utils";
-import {ActionType} from "./action";
-import {filterOffers, getPropertyReviews, sortOffers} from "../core";
-import {offers} from "../mocks/offers";
-import {reviews} from "../mocks/reviews";
-import {favorites} from "../mocks/favorites";
-import {cities, SortType} from "../const";
+import {extend} from "../../../utils";
+import {ActionType} from "../../action";
+import {filterOffers, getPropertyReviews, sortOffers, getCitiesData} from "../../../core";
+import {reviews} from "../../../mocks/reviews";
+import {cities, SortType} from "../../../const";
 
-const defaultCity = cities[3];
+const defaultCityIndex = 0;
 const defaultSort = SortType.DEFAULT;
 
 const initialState = {
-  currentCity: defaultCity,
-  allOffers: offers,
-  cityOffers: filterOffers(offers, defaultCity),
-  cities,
+  currentCity: {},
+  allOffers: [],
+  cityOffers: [],
+  cities: [],
   currentSort: defaultSort,
-  reviews,
-  favorites
+  reviews
 };
 
 
-const reducer = (state = initialState, action) => {
+const appData = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.GET_CITY_OFFERS:
       const currentOffers = sortOffers(filterOffers(state.allOffers, state.currentCity), state.currentSort);
@@ -28,9 +25,18 @@ const reducer = (state = initialState, action) => {
         cityOffers: currentOffers
       });
 
-    case ActionType.CHANGE_CITY:
+    case ActionType.GET_CITIES:
+      const citiesData = getCitiesData(state.allOffers, cities);
       return extend(state, {
-        currentCity: action.payload
+        cities: citiesData
+      });
+
+    case ActionType.CHANGE_CITY:
+      const cityName = action.payload;
+      const newCity = cityName ? state.cities.find((city) => city.name === cityName) : state.cities[defaultCityIndex];
+
+      return extend(state, {
+        currentCity: newCity
       });
 
     case ActionType.CHANGE_SORT_TYPE:
@@ -58,9 +64,13 @@ const reducer = (state = initialState, action) => {
         reviews: updatedReviews
       });
 
+    case ActionType.LOAD_OFFERS:
+      return extend(state, {
+        allOffers: action.payload
+      });
   }
 
   return state;
 };
 
-export {reducer};
+export {appData};

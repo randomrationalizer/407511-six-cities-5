@@ -75,7 +75,7 @@ ReviewForm.propTypes = {
   onReviewFormSubmit: PropTypes.func.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   comment: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.number.isRequired
 };
 
 export default ReviewForm;

@@ -12,7 +12,7 @@ const SortSectionWrapped = withActiveState(SortSection);
 
 
 const OffersContainer = (props) => {
-  const {offers, favorites, onOfferHover, activeCardId, city} = props;
+  const {offers, onOfferHover, activeCardId, city} = props;
   const suffix = offers.length === 1 ? `` : `s`;
 
   return (
@@ -25,7 +25,6 @@ const OffersContainer = (props) => {
           <div className="cities__places-list places__list tabs__content">
             <OffersList
               offers={offers}
-              favorites={favorites}
               onOfferHover={onOfferHover}
               offerType={OfferType.MAIN}
             />
@@ -44,10 +43,9 @@ const OffersContainer = (props) => {
 };
 
 OffersContainer.propTypes = {
-  favorites: PropTypes.array.isRequired,
   city: cityPropTypes.isRequired,
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  activeCardId: PropTypes.string,
+  activeCardId: PropTypes.number,
   onOfferHover: PropTypes.func.isRequired
 };
 

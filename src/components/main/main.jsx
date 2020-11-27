@@ -11,7 +11,7 @@ import logo from "../../../public/img/logo.svg";
 
 
 const MainPage = (props) => {
-  const {favorites, currentCity, cityOffers, activeItem, onActiveItemChange} = props;
+  const {currentCity, cityOffers, activeItem, onActiveItemChange} = props;
   const isAnyOffers = cityOffers.length ? true : false;
 
   return (
@@ -20,7 +20,7 @@ const MainPage = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to={`/`} className="header__logo-link header__logo-link--active">
+              <Link to="/" className="header__logo-link header__logo-link--active">
                 <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -51,14 +51,13 @@ const MainPage = (props) => {
         {isAnyOffers ?
           <OffersContainer
             offers={cityOffers}
-            favorites={favorites}
             onOfferHover={onActiveItemChange}
             activeCardId={activeItem}
             city={currentCity}
           />
           :
           <OffersEmptyContainer
-            city={currentCity}
+            city={currentCity.name}
           />
         }
       </main>
@@ -67,17 +66,16 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  favorites: PropTypes.array.isRequired,
   currentCity: cityPropTypes.isRequired,
   cityOffers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  activeItem: PropTypes.string,
+  activeItem: PropTypes.number,
   onActiveItemChange: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
-  cityOffers: state.cityOffers,
-  currentSort: state.currentSort
+const mapStateToProps = ({DATA}) => ({
+  currentCity: DATA.currentCity,
+  cityOffers: DATA.cityOffers,
+  currentSort: DATA.currentSort
 });
 
 export {MainPage};

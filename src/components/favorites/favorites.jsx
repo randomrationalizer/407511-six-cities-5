@@ -8,9 +8,8 @@ import logo from "../../../public/img/logo.svg";
 
 
 const Favorites = (props) => {
-  const {offers, favorites} = props;
-  const favoriteOffers = favorites.map((id) => offers.find((offer) => offer.id === id));
-  const cities = favoriteOffers.slice().map((offer) => offer.city).sort();
+  const {favorites} = props;
+  const cities = favorites.slice().map((offer) => offer.city.name).sort();
   const uniqueCities = [...new Set(cities)];
 
   return (
@@ -19,7 +18,7 @@ const Favorites = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={`/`}>
+              <Link className="header__logo-link" to="/">
                 <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -54,7 +53,7 @@ const Favorites = (props) => {
                   </div>
                   <div className="favorites__places">
                     <OffersList
-                      offers={favoriteOffers.filter((offer) => offer.city === city)}
+                      offers={favorites.filter((offer) => offer.city.name === city)}
                       favorites={favorites}
                       offerType={OfferType.FAVORITES}
                     />
@@ -66,7 +65,7 @@ const Favorites = (props) => {
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to={`/`}>
+        <Link className="footer__logo-link" to="/">
           <img className="footer__logo" src={logo} alt="6 cities logo" width="64" height="33" />
         </Link>
       </footer>
@@ -75,8 +74,7 @@ const Favorites = (props) => {
 };
 
 Favorites.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  favorites: PropTypes.array.isRequired
+  favorites: PropTypes.arrayOf(offersPropTypes)
 };
 
 export default Favorites;
