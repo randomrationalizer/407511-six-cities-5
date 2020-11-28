@@ -8,40 +8,39 @@ import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import OfferDetails from "../offer/offer-details/offer-details";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {AppRoute} from "../../const";
 
 const MainPageWrapped = withActiveItem(MainPage);
 
 const App = (props) => {
-  const {offers, favorites} = props;
+  const {offers} = props;
   const offersIds = offers.map((offer) => offer.id);
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <MainPageWrapped
-            favorites={favorites}
-          />
+        <Route exact path={AppRoute.MAIN}>
+          <MainPageWrapped />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
-        <Route exact path="/favorites">
-          <Favorites
-            offers={offers}
-            favorites={favorites}
-          />
-        </Route>
-        <Route exact path="/offer/:id"
+        <Route exact path={AppRoute.FAVORITES}
+          render={() => (
+            <Favorites
+              favorites={offers.filter((offer) => offer.is_favorite)}
+            />
+          )}
+        />
+        <Route exact path={`${AppRoute.OFFERS}/:id`}
           render={({match}) =>
-            offersIds.includes(match.params.id) ? (
+            offersIds.includes(parseInt(match.params.id, 10)) ? (
               <OfferDetails
-                offer={offers.find((offer) => offer.id === match.params.id)}
-                favorites={favorites}
+                offer={offers.find((offer) => offer.id === parseInt(match.params.id, 10))}
                 neighbourhoodOffers={offers.slice(0, 3)}
               />
             ) : (
-              <Redirect to="/404" />
+              <Redirect to={AppRoute.NOT_FOUND} />
             )
           }
         />
@@ -63,13 +62,11 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  favorites: PropTypes.array.isRequired
+  offers: PropTypes.arrayOf(offersPropTypes).isRequired
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.allOffers,
-  favorites: state.favorites
+const mapStateToProps = ({DATA}) => ({
+  offers: DATA.allOffers
 });
 
 export {App};

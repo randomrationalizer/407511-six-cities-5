@@ -12,9 +12,11 @@ import logo from "../../../../public/img/logo.svg";
 
 
 const OfferDetails = (props) => {
-  const {offer, favorites, neighbourhoodOffers} = props;
-  const {id, title, price, city, coords, type, description, bedrooms, guests, rating, photos, options, owner, isPremial} = offer;
-  const isFavorite = favorites.includes(id);
+  const {offer, neighbourhoodOffers} = props;
+  const {id, title, price, city, type, description, bedrooms, rating, images, goods, host} = offer;
+  const guestsCount = offer.max_adults;
+  const isFavorite = offer.is_favorite;
+  const isPremial = offer.is_premium;
 
   return (
     <div className="page">
@@ -22,7 +24,7 @@ const OfferDetails = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={`/`}>
+              <Link className="header__logo-link" to="/">
                 <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -45,9 +47,9 @@ const OfferDetails = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {photos.length !== 0 && photos.map((photo) =>
-                <div key={photo.src} className="property__image-wrapper">
-                  <img className="property__image" src={photo.src} alt={photo.description} />
+              {images.length !== 0 && images.map((image, i) =>
+                <div key={image} className="property__image-wrapper">
+                  <img className="property__image" src={image} alt={`Property photo ${i}`} />
                 </div>
               )}
             </div>
@@ -81,7 +83,7 @@ const OfferDetails = (props) => {
                   {`${bedrooms} Bedrooms`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {`Max ${guests} adults`}
+                  {`Max ${guestsCount} adults`}
                 </li>
               </ul>
               <div className="property__price">
@@ -91,7 +93,7 @@ const OfferDetails = (props) => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {options.map((option) =>
+                  {goods.map((option) =>
                     <li key={option} className="property__inside-item">{option}</li>
                   )}
                 </ul>
@@ -99,11 +101,11 @@ const OfferDetails = (props) => {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper ${owner.isHighRated ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
-                    <img className="property__avatar user__avatar" src={owner.avatar} width="74" height="74" alt="Host avatar" />
+                  <div className={`property__avatar-wrapper ${host.is_pro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
+                    <img className="property__avatar user__avatar" src={host.avatar_url} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {owner.name}
+                    {host.name}
                   </span>
                 </div>
                 <div className="property__description">
@@ -121,7 +123,7 @@ const OfferDetails = (props) => {
             offers={neighbourhoodOffers}
             activeCardId={id}
             mapType={MapType.PROPERTY}
-            city={Object.assign({}, {name: city, coords})}
+            city={city}
           />
         </section>
         <div className="container">
@@ -130,7 +132,6 @@ const OfferDetails = (props) => {
             <div className="near-places__list places__list">
               <OffersList
                 offers={neighbourhoodOffers}
-                favorites={favorites}
                 offerType={OfferType.NEARBY}
               />
             </div>
@@ -143,7 +144,6 @@ const OfferDetails = (props) => {
 
 OfferDetails.propTypes = {
   offer: offersPropTypes.isRequired,
-  favorites: PropTypes.array.isRequired,
   neighbourhoodOffers: PropTypes.arrayOf(offersPropTypes),
 };
 

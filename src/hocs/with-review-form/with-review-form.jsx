@@ -58,7 +58,7 @@ const withReviewForm = (Component) => {
 
   WithReviewForm.propTypes = {
     onFormSubmit: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.number.isRequired
   };
 
   return WithReviewForm;

@@ -12,7 +12,7 @@ const City = (props) => {
       return;
     }
 
-    onCityClick(city);
+    onCityClick(city.name);
   };
 
 

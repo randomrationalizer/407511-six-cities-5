@@ -20,7 +20,8 @@ class Map extends PureComponent {
   }
 
   renderMap() {
-    const coordinates = Object.values(this.props.city.coords);
+    const {latitude, longitude} = this.props.city.location;
+    const coordinates = [latitude, longitude];
 
     this.map = leaflet.map(`map`, {
       center: coordinates,
@@ -53,14 +54,15 @@ class Map extends PureComponent {
     });
 
     offers.map((offer) => {
+      const coords = [offer.location.latitude, offer.location.longitude];
       if (activeCardId && offer.id === activeCardId) {
         return leaflet
-          .marker(Object.values(offer.coords), {icon: activePin})
+          .marker(coords, {icon: activePin})
           .addTo(this.map);
       }
 
       return leaflet
-        .marker(Object.values(offer.coords), {icon: pin})
+        .marker(coords, {icon: pin})
         .addTo(this.map);
     });
   }
@@ -105,12 +107,12 @@ class Map extends PureComponent {
 Map.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   mapType: PropTypes.string.isRequired,
-  activeCardId: PropTypes.string,
+  activeCardId: PropTypes.number,
   city: cityPropTypes.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.cityOffers
+const mapStateToProps = ({DATA}) => ({
+  offers: DATA.cityOffers
 });
 
 export {Map};

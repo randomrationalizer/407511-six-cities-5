@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import SortList from "../sort-list/sort-list";
 import {sortTypeToTitle} from "../util";
-import {ActionCreator} from "../../../store/action";
+import {changeSort, getCityOffers} from "../../../store/action";
 import {checkKeyDownEvent} from "../../../utils";
 
 
@@ -49,14 +49,14 @@ SortSection.propTypes = {
   onActiveChange: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  currentSort: state.currentSort
+const mapStateToProps = ({DATA}) => ({
+  currentSort: DATA.currentSort
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSortChange(sort) {
-    dispatch(ActionCreator.changeSort(sort));
-    dispatch(ActionCreator.getCityOffers());
+    dispatch(changeSort(sort));
+    dispatch(getCityOffers());
   }
 });
 

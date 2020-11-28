@@ -5,7 +5,7 @@ import {reviewsPropTypes} from "../review.prop";
 import {sortByDate} from "../../offer/util";
 import ReviewForm from "../review-form/review-form";
 import Review from "../review/review";
-import {ActionCreator} from "../../../store/action";
+import {addReview} from "../../../store/action";
 import {getPropertyReviews} from "../../../core";
 import withReviewForm from "../../../hocs/with-review-form/with-review-form";
 
@@ -35,27 +35,27 @@ const ReviewsSection = (props) => {
         )}
       </ul>}
       <ReviewFormWrapped
+        key={`${id}-${offerReviews.length}`}
         onFormSubmit={handleReviewAdd}
         id={id}
       />
     </section>
   );
-
 };
 
 ReviewsSection.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   reviews: PropTypes.arrayOf(reviewsPropTypes),
   onFormSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  reviews: state.reviews
+const mapStateToProps = ({DATA}) => ({
+  reviews: DATA.reviews
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFormSubmit(id, review) {
-    dispatch(ActionCreator.addReview(id, review));
+    dispatch(addReview(id, review));
   }
 });
 

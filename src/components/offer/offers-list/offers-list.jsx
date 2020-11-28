@@ -5,7 +5,7 @@ import OfferCard from "../offer-card/offer-card";
 
 
 const OffersList = (props) => {
-  const {offers, favorites, onOfferHover, offerType} = props;
+  const {offers, onOfferHover, offerType} = props;
 
   const handleCardHover = (newActiveCardId) => {
     onOfferHover(newActiveCardId);
@@ -18,7 +18,6 @@ const OffersList = (props) => {
           key={offer.id}
           offer={offer}
           offerType={offerType}
-          isFavorite={favorites.includes(offer.id)}
           onCardHover={handleCardHover}
         />
       )}
@@ -28,7 +27,6 @@ const OffersList = (props) => {
 
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  favorites: PropTypes.array.isRequired,
   onOfferHover: PropTypes.func,
   offerType: PropTypes.string.isRequired
 };

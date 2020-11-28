@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
 import {getRatingInPercent} from "../../../mocks/util";
-import {OfferType} from "../../../const";
+import {OfferType, AppRoute} from "../../../const";
 import "./offer-card.css";
 
 const offerTypeToArticleClassName = {
@@ -36,8 +36,12 @@ const offerTypeToImageSize = {
 
 
 const OfferCard = (props) => {
-  const {onCardHover, offer, isFavorite, offerType} = props;
-  const {id, title, type, price, rating, photos, isPremial} = offer;
+  const {onCardHover, offer, offerType} = props;
+  const {id, title, type, price, rating} = offer;
+  const isFavorite = offer.is_favorite;
+  const isPremial = offer.is_premium;
+  const previewImage = offer.preview_image;
+
   const imageSize = offerTypeToImageSize[offerType];
   const articleClassName = offerTypeToArticleClassName[offerType];
   const cardClassName = offerTypeToCardClassName[offerType];
@@ -67,13 +71,13 @@ const OfferCard = (props) => {
         <span>Premium</span>
       </div>}
       <div className={`${offerType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+        <Link to={`${AppRoute.OFFERS}/${id}`}>
           <img
             className="place-card__image"
-            src={`${photos[0].src}`}
+            src={previewImage}
             width={imageSize.width}
             height={imageSize.height}
-            alt={`${photos[0].description}`}
+            alt={title}
           />
         </Link>
       </div>
@@ -97,7 +101,7 @@ const OfferCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          <Link to={`${AppRoute.OFFERS}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
       </div>
@@ -108,7 +112,6 @@ const OfferCard = (props) => {
 OfferCard.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
   offerType: PropTypes.string.isRequired
 };
 
