@@ -5,7 +5,8 @@ export const ActionType = {
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   ADD_REVIEW: `ADD_REVIEW`,
   LOAD_OFFERS: `LOAD_OFFERS`,
-  REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`
+  REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
+  GET_USER_INFO: `GET_USER_INFO`
 };
 
 export const getCityOffers = () => ({
@@ -42,4 +43,9 @@ export const getCities = () => ({
 export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRE_AUTHORIZATION,
   payload: status
+});
+
+export const getUserInfo = (userInfo) => ({
+  type: ActionType.GET_USER_INFO,
+  payload: userInfo
 });
