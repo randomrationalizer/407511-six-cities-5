@@ -60,7 +60,7 @@ class LoginPage extends PureComponent {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    // required
+                    required
                   />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
@@ -71,7 +71,7 @@ class LoginPage extends PureComponent {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    // required
+                    required
                   />
                 </div>
                 <button className="login__submit form__submit button" type="submit">Sign in</button>
