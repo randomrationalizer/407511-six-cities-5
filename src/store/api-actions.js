@@ -9,17 +9,17 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then((authData) => {
+    .then(({data}) => {
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(getUserInfo(authData.data));
+      dispatch(getUserInfo(data));
     })
     .catch(() => {})
 );
 
 export const login = ({email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
-    .then((authData) => {
+    .then(({data}) => {
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(getUserInfo(authData.data));
+      dispatch(getUserInfo(data));
     })
 );
