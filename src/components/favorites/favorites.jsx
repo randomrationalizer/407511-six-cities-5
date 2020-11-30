@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {OfferType} from "../../const";
 import OffersList from "../offer/offers-list/offers-list";
+import UserNav from "../user-menu/user-nav/user-nav";
 import logo from "../../../public/img/logo.svg";
 
 
@@ -22,17 +23,7 @@ const Favorites = (props) => {
                 <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <UserNav />
           </div>
         </div>
       </header>

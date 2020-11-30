@@ -8,7 +8,8 @@ import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import OfferDetails from "../offer/offer-details/offer-details";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {AppRoute} from "../../const";
+import PrivateRoute from "../private-route/private-route";
+import {AppRoute, AuthorizationStatus} from "../../const";
 
 const MainPageWrapped = withActiveItem(MainPage);
 
@@ -22,10 +23,16 @@ const App = (props) => {
         <Route exact path={AppRoute.MAIN}>
           <MainPageWrapped />
         </Route>
-        <Route exact path={AppRoute.LOGIN}>
-          <Login />
-        </Route>
-        <Route exact path={AppRoute.FAVORITES}
+        <PrivateRoute exact path={AppRoute.LOGIN}
+          renderCondition={AuthorizationStatus.NO_AUTH}
+          redirectPath={AppRoute.MAIN}
+          render={() => (
+            <Login />
+          )}
+        />
+        <PrivateRoute exact path={AppRoute.FAVORITES}
+          renderCondition={AuthorizationStatus.AUTH}
+          redirectPath={AppRoute.LOGIN}
           render={() => (
             <Favorites
               favorites={offers.filter((offer) => offer.is_favorite)}

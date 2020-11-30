@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import UserNav from "../user-menu/user-nav/user-nav";
 import logo from "../../../public/img/logo.svg";
 
 
@@ -36,17 +37,7 @@ class LoginPage extends PureComponent {
                   <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
                 </Link>
               </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__login">Sign in</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <UserNav />
             </div>
           </div>
         </header>
@@ -69,7 +60,7 @@ class LoginPage extends PureComponent {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    required=""
+                    required
                   />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
@@ -80,7 +71,8 @@ class LoginPage extends PureComponent {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    required="" />
+                    required
+                  />
                 </div>
                 <button className="login__submit form__submit button" type="submit">Sign in</button>
               </form>
