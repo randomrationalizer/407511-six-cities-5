@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {AppRoute} from "../../../const";
@@ -31,4 +32,9 @@ ProfileLink.propTypes = {
   userInfo: PropTypes.object.isRequired
 };
 
-export default ProfileLink;
+const mapStateToProps = ({USER}) => ({
+  userInfo: USER.userInfo
+});
+
+export {ProfileLink};
+export default connect(mapStateToProps, null)(ProfileLink);

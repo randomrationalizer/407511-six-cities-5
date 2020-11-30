@@ -2,10 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
+import {AppRoute, AuthorizationStatus} from "../../const";
 
+
+const redirectCondition = {
+  [AppRoute.LOGIN]: AuthorizationStatus.AUTH,
+  [AppRoute.FAVORITES]: AuthorizationStatus.NO_AUTH
+};
+
+const redirectPath = {
+  [AppRoute.LOGIN]: AppRoute.MAIN,
+  [AppRoute.FAVORITES]: AppRoute.LOGIN
+};
 
 const PrivateRoute = (props) => {
-  const {render, path, exact, redirectPath, renderCondition, authorizationStatus} = props;
+  const {render, path, exact, authorizationStatus} = props;
 
   return (
     <Route
@@ -13,9 +24,9 @@ const PrivateRoute = (props) => {
       path={path}
       render={(routeProps) => {
         return (
-          authorizationStatus === renderCondition
+          authorizationStatus !== redirectCondition[path]
             ? render(routeProps)
-            : <Redirect to={redirectPath} />
+            : <Redirect to={redirectPath[path]} />
         );
       }}
     />
@@ -26,8 +37,6 @@ PrivateRoute.propTypes = {
   render: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   exact: PropTypes.bool.isRequired,
-  redirectPath: PropTypes.string.isRequired,
-  renderCondition: PropTypes.string.isRequired,
   authorizationStatus: PropTypes.string.isRequired
 };
 

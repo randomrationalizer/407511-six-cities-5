@@ -7,7 +7,7 @@ import {AuthorizationStatus} from "../../../const";
 
 
 const UserNav = (props) => {
-  const {authorizationStatus, userInfo} = props;
+  const {authorizationStatus} = props;
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
 
   return (
@@ -15,7 +15,7 @@ const UserNav = (props) => {
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           {isAuthorized ?
-            <ProfileLink userInfo={userInfo} />
+            <ProfileLink />
             :
             <ProfileLinkUnauthorized />
           }
