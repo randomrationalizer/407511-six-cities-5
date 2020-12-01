@@ -31,11 +31,40 @@ export const sortOffers = (offers, currentSort) => {
   }
 };
 
-export const getPropertyReviews = (id, allReviews) => {
-  const propertyReviews = allReviews.find((property) => property.propertyId === id);
-  return propertyReviews ? propertyReviews.reviews : [];
-};
-
 export const getCitiesData = (offers, cityNames) => {
   return cityNames.map((cityName) => offers.find((offer) => offer.city.name === cityName).city);
+};
+
+export const updateOffer = (updatedOffer, allOffers) => {
+  const index = allOffers.findIndex((offer) => offer.id === updatedOffer.id);
+  let updatedOffers = {};
+
+  if (index === -1) {
+    updatedOffers = allOffers;
+  } else {
+    updatedOffers = [
+      ...allOffers.slice(0, index),
+      updatedOffer,
+      ...allOffers.slice(index + 1)
+    ];
+  }
+
+  return updatedOffers;
+};
+
+export const updateFavorites = (updatedOffer, favorites) => {
+  const index = favorites.findIndex((offer) => offer.id === updatedOffer.id);
+
+  let updatedFavorites = {};
+
+  if (index === -1) {
+    updatedFavorites = [...favorites, updatedOffer];
+  } else {
+    updatedFavorites = [
+      ...favorites.slice(0, index),
+      ...favorites.slice(index + 1)
+    ];
+  }
+
+  return updatedFavorites;
 };

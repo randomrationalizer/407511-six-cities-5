@@ -1,13 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import dayjs from "dayjs";
 
 
 const defaultState = {
-  author: `user`,
-  avatar: `https://www.fillmurray.com/g/300/300`,
   rating: 0,
-  date: ``,
   review: ``
 };
 
@@ -32,11 +28,8 @@ const withReviewForm = (Component) => {
     handleFormSubmit() {
       const {onFormSubmit, id} = this.props;
       onFormSubmit(id, {
-        author: this.state.author,
-        avatar: this.state.avatar,
-        rating: Number(this.state.rating),
-        date: dayjs().format(),
-        text: this.state.review
+        comment: this.state.review,
+        rating: Number(this.state.rating)
       });
       this.setState(() => (
         defaultState
@@ -50,7 +43,7 @@ const withReviewForm = (Component) => {
           {...this.props}
           onFieldChange={this.handleFieldChange}
           onReviewFormSubmit={this.handleFormSubmit}
-          comment={this.state}
+          review={this.state}
         />
       );
     }
@@ -63,5 +56,6 @@ const withReviewForm = (Component) => {
 
   return WithReviewForm;
 };
+
 
 export default withReviewForm;

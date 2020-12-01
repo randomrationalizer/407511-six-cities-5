@@ -11,7 +11,8 @@ const RatingValueToTitle = {
 
 
 const ReviewForm = (props) => {
-  const {onReviewFormSubmit, onFieldChange, comment} = props;
+  const {onReviewFormSubmit, onFieldChange, review} = props;
+  const submitBtnRef = React.createRef();
 
   const handleFormFieldChange = (evt) => {
     const {name, value} = evt.target;
@@ -21,6 +22,7 @@ const ReviewForm = (props) => {
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
     onReviewFormSubmit();
+    submitBtnRef.current.disabled = true;
   };
 
   return (
@@ -37,7 +39,7 @@ const ReviewForm = (props) => {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              checked={comment.rating === value ? true : ``}
+              checked={review.rating === value ? true : ``}
               required
             />
             <label
@@ -58,14 +60,20 @@ const ReviewForm = (props) => {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormFieldChange}
-        value={comment.text}
+        value={review.comment}
         required
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button
+          ref={submitBtnRef}
+          className="reviews__submit form__submit button"
+          type="submit"
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
@@ -74,7 +82,7 @@ const ReviewForm = (props) => {
 ReviewForm.propTypes = {
   onReviewFormSubmit: PropTypes.func.isRequired,
   onFieldChange: PropTypes.func.isRequired,
-  comment: PropTypes.object.isRequired,
+  review: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired
 };
 

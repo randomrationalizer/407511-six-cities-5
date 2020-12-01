@@ -1,27 +1,20 @@
 import React, {Fragment} from "react";
-import PropTypes from "prop-types";
-import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
-import {connect} from "react-redux";
-import {offersPropTypes} from "../offer/offer.prop";
-import MainPage from "../main/main";
-import Favorites from "../favorites/favorites";
+import {Router, Route, Switch, Link} from "react-router-dom";
+import MainPage from "../main/main-page/main-page";
+import FavoritesPage from "../favorites/favorites-page/favorites-page";
 import Login from "../login/login";
-import OfferDetails from "../offer/offer-details/offer-details";
-import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import OfferPage from "../offer/offer-page/offer-page";
 import PrivateRoute from "../private-route/private-route";
 import {AppRoute} from "../../const";
+import browserHistory from "../../browser-history";
 
-const MainPageWrapped = withActiveItem(MainPage);
 
-const App = (props) => {
-  const {offers} = props;
-  const offersIds = offers.map((offer) => offer.id);
-
+const App = () => {
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPageWrapped />
+          <MainPage />
         </Route>
         <PrivateRoute exact path={AppRoute.LOGIN}
           render={() => (
@@ -30,22 +23,15 @@ const App = (props) => {
         />
         <PrivateRoute exact path={AppRoute.FAVORITES}
           render={() => (
-            <Favorites
-              favorites={offers.filter((offer) => offer.is_favorite)}
-            />
+            <FavoritesPage />
           )}
         />
         <Route exact path={`${AppRoute.OFFERS}/:id`}
-          render={({match}) =>
-            offersIds.includes(parseInt(match.params.id, 10)) ? (
-              <OfferDetails
-                offer={offers.find((offer) => offer.id === parseInt(match.params.id, 10))}
-                neighbourhoodOffers={offers.slice(0, 3)}
-              />
-            ) : (
-              <Redirect to={AppRoute.NOT_FOUND} />
-            )
-          }
+          render={({match}) => (
+            <OfferPage
+              id={parseInt(match.params.id, 10)}
+            />
+          )}
         />
         <Route
           render={() => (
@@ -60,17 +46,9 @@ const App = (props) => {
           )}
         />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 
-App.propTypes = {
-  offers: PropTypes.arrayOf(offersPropTypes).isRequired
-};
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.allOffers
-});
-
-export {App};
-export default connect(mapStateToProps)(App);
+export default App;

@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
 
 
 const withActiveState = (Component) => {
@@ -7,7 +8,7 @@ const withActiveState = (Component) => {
       super(props);
 
       this.state = {
-        isActive: false
+        isActive: false || props.isActive
       };
 
       this.handleActiveChange = this.handleActiveChange.bind(this);
@@ -30,7 +31,12 @@ const withActiveState = (Component) => {
     }
   }
 
+  WithActiveState.propTypes = {
+    isActive: PropTypes.bool
+  };
+
   return WithActiveState;
 };
+
 
 export default withActiveState;

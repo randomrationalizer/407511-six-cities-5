@@ -1,5 +1,4 @@
 import React, {PureComponent} from "react";
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {cityPropTypes} from "../cities/city.prop";
@@ -111,9 +110,4 @@ Map.propTypes = {
   city: cityPropTypes.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.cityOffers
-});
-
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;

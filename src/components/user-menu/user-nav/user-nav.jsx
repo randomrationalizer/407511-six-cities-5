@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import ProfileLink from "../profile-link/profile-link";
 import ProfileLinkUnauthorized from "../profile-link-unauthorized/profile-link-unauthorized";
 import {AuthorizationStatus} from "../../../const";
+import {getAuthorizationStatus} from "../../../store/selectors";
 
 
 const UserNav = (props) => {
@@ -26,13 +27,11 @@ const UserNav = (props) => {
 };
 
 UserNav.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  userInfo: PropTypes.object
+  authorizationStatus: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  userInfo: USER.userInfo
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 export {UserNav};

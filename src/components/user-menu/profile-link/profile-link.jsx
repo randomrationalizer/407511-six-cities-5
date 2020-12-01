@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {AppRoute} from "../../../const";
+import {getUserInfo} from "../../../store/selectors";
 
 const avatarSize = {
   width: 54,
@@ -32,8 +33,8 @@ ProfileLink.propTypes = {
   userInfo: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({USER}) => ({
-  userInfo: USER.userInfo
+const mapStateToProps = (state) => ({
+  userInfo: getUserInfo(state)
 });
 
 export {ProfileLink};

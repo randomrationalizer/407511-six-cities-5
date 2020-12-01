@@ -5,16 +5,17 @@ import {reviewsPropTypes} from "../review.prop";
 import {sortByDate} from "../../offer/util";
 import ReviewForm from "../review-form/review-form";
 import Review from "../review/review";
-import {addReview} from "../../../store/action";
-import {getPropertyReviews} from "../../../core";
+import {postNewReview} from "../../../store/api-actions";
+import {getOfferReviews, getAuthorizationStatus} from "../../../store/selectors";
 import withReviewForm from "../../../hocs/with-review-form/with-review-form";
+import {AuthorizationStatus} from "../../../const";
 
 const ReviewFormWrapped = withReviewForm(ReviewForm);
 
 
 const ReviewsSection = (props) => {
-  const {id, reviews, onFormSubmit} = props;
-  const offerReviews = getPropertyReviews(id, reviews);
+  const {id, offerReviews, onFormSubmit, authorizationStatus} = props;
+  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
   const isAnyReviews = offerReviews.length ? true : false;
 
   const handleReviewAdd = (offerId, newReview) => {
@@ -29,33 +30,40 @@ const ReviewsSection = (props) => {
       {isAnyReviews && <ul className="reviews__list">
         {offerReviews.sort(sortByDate).map((review) =>
           <Review
-            key={`${review.author}-${review.text}`}
+            key={`${review.user.name}-${review.comment}`}
             review={review}
           />
         )}
       </ul>}
-      <ReviewFormWrapped
-        key={`${id}-${offerReviews.length}`}
-        onFormSubmit={handleReviewAdd}
-        id={id}
-      />
+
+      {isAuthorized ?
+        <ReviewFormWrapped
+          key={`${id}-${offerReviews.length}`}
+          onFormSubmit={handleReviewAdd}
+          id={id}
+        />
+        :
+        ``
+      }
     </section>
   );
 };
 
 ReviewsSection.propTypes = {
   id: PropTypes.number.isRequired,
-  reviews: PropTypes.arrayOf(reviewsPropTypes),
-  onFormSubmit: PropTypes.func.isRequired
+  offerReviews: PropTypes.arrayOf(reviewsPropTypes),
+  onFormSubmit: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  reviews: DATA.reviews
+const mapStateToProps = (state) => ({
+  offerReviews: getOfferReviews(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFormSubmit(id, review) {
-    dispatch(addReview(id, review));
+    dispatch(postNewReview(id, review));
   }
 });
 

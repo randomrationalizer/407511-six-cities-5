@@ -52,6 +52,11 @@ export const OfferType = {
   FAVORITES: `favorites`
 };
 
+export const OfferPageType = {
+  CARD: `CARD`,
+  DETAILS: `DETAILS`
+};
+
 export const MapType = {
   MAIN: `cities`,
   PROPERTY: `property`
@@ -84,8 +89,8 @@ export const AppRoute = {
 
 export const APIRoute = {
   OFFERS: `/hotels`,
-  NEARBY: `/nearby`,
-  IS_FAVORITE: `/status`,
+  NEARBY: `nearby`,
+  FAVORITES: `/favorite`,
   REVIEWS: `/comments`,
   LOGIN: `/login`
 };
