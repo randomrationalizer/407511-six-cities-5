@@ -2,8 +2,9 @@ import React, {PureComponent, createRef} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {login} from "../../store/api-actions";
 import UserNav from "../user-menu/user-nav/user-nav";
+import {login} from "../../store/api-actions";
+import {setErrorMessage} from "../../store/action";
 import logo from "../../../public/img/logo.svg";
 
 
@@ -18,12 +19,14 @@ class LoginPage extends PureComponent {
   }
 
   handleSubmit(evt) {
-    const {onFormSubmit} = this.props;
+    const {onFormSubmit, setLoginError} = this.props;
     evt.preventDefault();
+
     onFormSubmit({
       email: this.loginRef.current.value,
       password: this.passwordRef.current.value
-    });
+    })
+      .catch((err) => setLoginError(err));
   }
 
   render() {
@@ -92,15 +95,18 @@ class LoginPage extends PureComponent {
 }
 
 LoginPage.propTypes = {
-  onFormSubmit: PropTypes.func.isRequired
+  onFormSubmit: PropTypes.func.isRequired,
+  setLoginError: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onFormSubmit(authData) {
-    dispatch(login(authData));
+    return dispatch(login(authData));
+  },
+  setLoginError(err) {
+    dispatch(setErrorMessage(err.message));
   }
 });
 
 export {LoginPage};
 export default connect(null, mapDispatchToProps)(LoginPage);
-

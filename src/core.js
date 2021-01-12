@@ -4,6 +4,10 @@ export const filterOffers = (allOffers, city) => {
   return allOffers.filter((offer) => offer.city.name === city.name);
 };
 
+export const getOfferById = (allOffers, id) => {
+  return allOffers.find((offer) => offer.id === id);
+};
+
 const sortPriceDown = (first, second) => {
   return second.price - first.price;
 };

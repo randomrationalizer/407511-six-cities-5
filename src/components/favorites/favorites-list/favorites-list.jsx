@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {offersPropTypes} from "../../offer/offer.prop";
 import {OfferType} from "../../../const";
 import OffersList from "../../offer/offers-list/offers-list";
-import {getFavorites} from "../../../store/selectors";
 
 
 const FavoritesList = (props) => {
@@ -13,27 +11,33 @@ const FavoritesList = (props) => {
   const uniqueCities = [...new Set(cities)];
 
   return (
-    <ul className="favorites__list">
-      {uniqueCities.map((city) =>
-        <li key={city} className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{city}</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            <OffersList
-              offers={favorites.filter((offer) => offer.city.name === city)}
-              favorites={favorites}
-              offerType={OfferType.FAVORITES}
-            />
-          </div>
-        </li>
-      )}
-    </ul>
-
+    <main className="page__main page__main--favorites">
+      <div className="page__favorites-container container">
+        <section className="favorites">
+          <h1 className="favorites__title">Saved listing</h1>
+          <ul className="favorites__list">
+            {uniqueCities.map((city) =>
+              <li key={city} className="favorites__locations-items">
+                <div className="favorites__locations locations locations--current">
+                  <div className="locations__item">
+                    <a className="locations__item-link" href="#">
+                      <span>{city}</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="favorites__places">
+                  <OffersList
+                    offers={favorites.filter((offer) => offer.city.name === city)}
+                    favorites={favorites}
+                    offerType={OfferType.FAVORITES}
+                  />
+                </div>
+              </li>
+            )}
+          </ul>
+        </section>
+      </div>
+    </main>
   );
 };
 
@@ -41,9 +45,4 @@ FavoritesList.propTypes = {
   favorites: PropTypes.arrayOf(offersPropTypes)
 };
 
-const mapStateToProps = (state) => ({
-  favorites: getFavorites(state)
-});
-
-export {FavoritesList};
-export default connect(mapStateToProps, null)(FavoritesList);
+export default FavoritesList;

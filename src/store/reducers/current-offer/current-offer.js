@@ -1,6 +1,5 @@
 import {extend} from "../../../utils";
 import {ActionType} from "../../action";
-import {updateOffer} from "../../../core";
 
 
 const initialState = {
@@ -17,20 +16,12 @@ const currentOffer = (state = initialState, action) => {
         offer: action.payload
       });
 
-    case ActionType.UPDATE_CURRENT_OFFER:
-      return extend(state, {
-        offer: extend(state.offer, action.payload)
-      });
+    case ActionType.RESET_CURRENT_OFFER:
+      return extend(state, initialState);
 
     case ActionType.LOAD_NEARBY_OFFERS:
       return extend(state, {
         nearbyOffers: action.payload
-      });
-
-    case ActionType.UPDATE_NEARBY_OFFERS:
-      const updatedOffer = action.payload;
-      return extend(state, {
-        nearbyOffers: updateOffer(updatedOffer, state.nearbyOffers)
       });
 
     case ActionType.LOAD_OFFER_REVIEWS:

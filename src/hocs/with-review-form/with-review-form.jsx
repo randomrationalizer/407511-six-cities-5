@@ -1,10 +1,13 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {checkCommentValidity, checkRatingValidity} from "../../components/reviews/util";
 
 
 const defaultState = {
   rating: 0,
-  review: ``
+  review: ``,
+  isCommentValid: false,
+  isRatingValid: false
 };
 
 
@@ -20,9 +23,21 @@ const withReviewForm = (Component) => {
     }
 
     handleFieldChange(name, value) {
-      this.setState({
-        [name]: value
-      });
+      if (name === `review`) {
+        const isCommentValid = checkCommentValidity(value);
+        this.setState({
+          [name]: value,
+          isCommentValid
+        });
+      }
+
+      if (name === `rating`) {
+        const isRatingValid = checkRatingValidity(value);
+        this.setState({
+          [name]: value,
+          isRatingValid
+        });
+      }
     }
 
     handleFormSubmit() {
@@ -31,9 +46,6 @@ const withReviewForm = (Component) => {
         comment: this.state.review,
         rating: Number(this.state.rating)
       });
-      this.setState(() => (
-        defaultState
-      ));
     }
 
 
@@ -43,7 +55,8 @@ const withReviewForm = (Component) => {
           {...this.props}
           onFieldChange={this.handleFieldChange}
           onReviewFormSubmit={this.handleFormSubmit}
-          review={this.state}
+          review={{comment: this.state.review, rating: this.state.rating}}
+          isValid={this.state.isCommentValid && this.state.isRatingValid}
         />
       );
     }

@@ -6,6 +6,7 @@ import {updateFavorites} from "../../../core";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isAuthRequestComplete: false,
   userInfo: {},
   favorites: []
 };
@@ -31,6 +32,11 @@ const user = (state = initialState, action) => {
       const updatedOffer = action.payload;
       return extend(state, {
         favorites: updateFavorites(updatedOffer, state.favorites)
+      });
+
+    case ActionType.CHANGE_AUTH_REQUEST_COMPLETE_STATUS:
+      return extend(state, {
+        isAuthRequestComplete: action.payload
       });
   }
 

@@ -1,38 +1,49 @@
 import React, {Fragment} from "react";
-import {Router, Route, Switch, Link} from "react-router-dom";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import {Route, Switch, Link, BrowserRouter} from "react-router-dom";
 import MainPage from "../main/main-page/main-page";
 import FavoritesPage from "../favorites/favorites-page/favorites-page";
-import Login from "../login/login";
+import LoginPage from "../login/login";
 import OfferPage from "../offer/offer-page/offer-page";
 import PrivateRoute from "../private-route/private-route";
+import withErrorMessage from "../../hocs/with-error-message/with-error-message";
+import {checkAuth} from "../../store/api-actions";
+import {changeAuthRequestCompleteStatus} from "../../store/action";
 import {AppRoute} from "../../const";
-import browserHistory from "../../browser-history";
 
 
-const App = () => {
+const OfferPageWrapped = withErrorMessage(OfferPage);
+const MainPageWrapped = withErrorMessage(MainPage);
+const FavoritesPageWrapped = withErrorMessage(FavoritesPage);
+const LoginPageWrapped = withErrorMessage(LoginPage);
+
+const App = (props) => {
+  const {checkAuthorization, setAuthRequestComplete} = props;
+  checkAuthorization()
+    .catch(() => {
+      setAuthRequestComplete();
+    });
+
   return (
-    <Router history={browserHistory}>
+    <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPage />
+          <MainPageWrapped />
         </Route>
         <PrivateRoute exact path={AppRoute.LOGIN}
           render={() => (
-            <Login />
+            <LoginPageWrapped />
           )}
         />
         <PrivateRoute exact path={AppRoute.FAVORITES}
           render={() => (
-            <FavoritesPage />
+            <FavoritesPageWrapped />
           )}
         />
-        <Route exact path={`${AppRoute.OFFERS}/:id`}
-          render={({match}) => (
-            <OfferPage
-              id={parseInt(match.params.id, 10)}
-            />
-          )}
-        />
+        <Route exact path={`${AppRoute.OFFERS}/:id`}>
+          <OfferPageWrapped />
+        </Route>
         <Route
           render={() => (
             <Fragment>
@@ -46,9 +57,24 @@ const App = () => {
           )}
         />
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 };
 
 
-export default App;
+App.propTypes = {
+  checkAuthorization: PropTypes.func.isRequired,
+  setAuthRequestComplete: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  checkAuthorization() {
+    return dispatch(checkAuth());
+  },
+  setAuthRequestComplete() {
+    dispatch(changeAuthRequestCompleteStatus(true));
+  }
+});
+
+export {App};
+export default connect(null, mapDispatchToProps)(App);

@@ -3,26 +3,33 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import MainOffersSection from "../main-offers-section/main-offers-section";
+import UserNav from "../../user-menu/user-nav/user-nav";
+import Preloader from "../../preloader/preloader";
 import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 import {getAllOffersData} from "../../../store/api-actions";
+import {changeLoadFinishStatus, setErrorMessage} from "../../../store/action";
+import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
 import logo from "../../../../public/img/logo.svg";
-import UserNav from "../../user-menu/user-nav/user-nav";
-import {getOffersLoadStatus} from "../../../store/selectors";
 
 const MainOffersSectionWrapped = withActiveItem(MainOffersSection);
 
 class MainPage extends PureComponent {
 
   componentDidMount() {
-    const {getOffers, isLoaded} = this.props;
+    const {getOffers, isOffersLoaded, setLoadError} = this.props;
 
-    if (isLoaded === false) {
-      getOffers();
+    if (!isOffersLoaded) {
+      getOffers()
+      .catch((err) => setLoadError(err));
     }
   }
 
   render() {
-    const {isLoaded} = this.props;
+    const {isOffersLoaded, isLoadFinished} = this.props;
+
+    if (!isLoadFinished) {
+      return <Preloader />;
+    }
 
     return (
       <div className="page page--gray page--main">
@@ -39,10 +46,8 @@ class MainPage extends PureComponent {
           </div>
         </header>
 
-        {isLoaded ?
+        {isOffersLoaded &&
           <MainOffersSectionWrapped/>
-          :
-          <p>Loading...</p>
         }
       </div>
     );
@@ -51,16 +56,23 @@ class MainPage extends PureComponent {
 
 MainPage.propTypes = {
   getOffers: PropTypes.func.isRequired,
-  isLoaded: PropTypes.bool.isRequired
+  isOffersLoaded: PropTypes.bool.isRequired,
+  isLoadFinished: PropTypes.bool.isRequired,
+  setLoadError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isLoaded: getOffersLoadStatus(state)
+  isOffersLoaded: getOffersLoadedStatus(state),
+  isLoadFinished: getLoadFinishStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOffers() {
-    dispatch(getAllOffersData());
+    return dispatch(getAllOffersData());
+  },
+  setLoadError(err) {
+    dispatch(changeLoadFinishStatus(true));
+    dispatch(setErrorMessage(err.message));
   }
 });
 

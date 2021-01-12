@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {withErrorMessage} from "../../../hocs/with-error-message/with-error-message";
 
 const RatingValueToTitle = {
   "1": `terribly`,
@@ -11,7 +12,7 @@ const RatingValueToTitle = {
 
 
 const ReviewForm = (props) => {
-  const {onReviewFormSubmit, onFieldChange, review} = props;
+  const {onReviewFormSubmit, onFieldChange, review, isValid} = props;
   const submitBtnRef = React.createRef();
 
   const handleFormFieldChange = (evt) => {
@@ -21,8 +22,11 @@ const ReviewForm = (props) => {
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    onReviewFormSubmit();
-    submitBtnRef.current.disabled = true;
+
+    if (isValid) {
+      onReviewFormSubmit();
+      submitBtnRef.current.disabled = false;
+    }
   };
 
   return (
@@ -61,6 +65,8 @@ const ReviewForm = (props) => {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormFieldChange}
         value={review.comment}
+        minLength={50}
+        maxLength={300}
         required
       />
       <div className="reviews__button-wrapper">
@@ -71,6 +77,7 @@ const ReviewForm = (props) => {
           ref={submitBtnRef}
           className="reviews__submit form__submit button"
           type="submit"
+          disabled={isValid ? false : true}
         >
           Submit
         </button>
@@ -83,7 +90,8 @@ ReviewForm.propTypes = {
   onReviewFormSubmit: PropTypes.func.isRequired,
   onFieldChange: PropTypes.func.isRequired,
   review: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  isValid: PropTypes.bool.isRequired
 };
 
-export default ReviewForm;
+export default withErrorMessage(ReviewForm);

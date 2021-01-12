@@ -1,6 +1,7 @@
 import React from "react";
+import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
-import {OfferPageType} from "../../../const";
+import {OfferPageType, AppRoute, AuthorizationStatus} from "../../../const";
 import "./offer-favorite-btn.css";
 
 
@@ -25,21 +26,21 @@ const pageTypeToIconSize = {
   }
 };
 
-const favoriteStatusToNumber = {
-  [true]: 1,
-  [false]: 0
-};
 
 const OfferFavoriteBtn = (props) => {
-  const {id, pageType, onBtnClick, isActive, onActiveChange} = props;
+  const {id, pageType, onBtnClick, isActive, onActiveChange, authorizationStatus, history} = props;
+  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
   const btnClassName = pageTypeToBtnClassName[pageType];
   const iconClassName = pageTypeToIconClassName[pageType];
   const iconSize = pageTypeToIconSize[pageType];
 
   const handleClick = () => {
-    const statusNumber = favoriteStatusToNumber[!isActive];
-    onBtnClick(id, statusNumber);
-    onActiveChange();
+    if (isAuthorized) {
+      onBtnClick(id, Number(!isActive));
+      onActiveChange();
+    } else {
+      history.push(AppRoute.LOGIN);
+    }
   };
 
   return (
@@ -65,7 +66,9 @@ OfferFavoriteBtn.propTypes = {
   isActive: PropTypes.bool.isRequired,
   pageType: PropTypes.string.isRequired,
   onBtnClick: PropTypes.func.isRequired,
-  onActiveChange: PropTypes.func.isRequired
+  onActiveChange: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-export default OfferFavoriteBtn;
+export default withRouter(OfferFavoriteBtn);

@@ -2,22 +2,35 @@ import React, {PureComponent} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {offersPropTypes} from "../../offer/offer.prop";
 import UserNav from "../../user-menu/user-nav/user-nav";
 import FavoritesList from "../favorites-list/favorites-list";
+import FavoritesEmptyList from "../favorites-empty-list/favorites-empty-list";
+import Preloader from "../../preloader/preloader";
+import {changeLoadFinishStatus, loadFavoriteOffers, setErrorMessage} from "../../../store/action";
 import {fetchFavoriteOffers} from "../../../store/api-actions";
-import {getFavoritesLoadStatus} from "../../../store/selectors";
+import {getFavoritesLoadedStatus, getFavorites, getLoadFinishStatus} from "../../../store/selectors";
 import logo from "../../../../public/img/logo.svg";
 
 
 class Favorites extends PureComponent {
 
   componentDidMount() {
-    const {getFavoriteOffers} = this.props;
-    getFavoriteOffers();
+    const {isFavoritesLoaded, getFavoriteOffers, setLoadError} = this.props;
+
+    if (!isFavoritesLoaded) {
+      getFavoriteOffers()
+      .catch((err) => setLoadError(err));
+    }
   }
 
   render() {
-    const {isLoaded} = this.props;
+    const {isLoadFinished, isFavoritesLoaded, favorites} = this.props;
+
+
+    if (!isLoadFinished) {
+      return <Preloader />;
+    }
 
     return (
       <div className="page">
@@ -34,18 +47,12 @@ class Favorites extends PureComponent {
           </div>
         </header>
 
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              {isLoaded ?
-                <FavoritesList />
-                :
-                <p>Loading...</p>
-              }
-            </section>
-          </div>
-        </main>
+        {!isFavoritesLoaded || !favorites.length ?
+          <FavoritesEmptyList />
+          :
+          <FavoritesList favorites={favorites} />
+        }
+
         <footer className="footer container">
           <Link className="footer__logo-link" to="/">
             <img className="footer__logo" src={logo} alt="6 cities logo" width="64" height="33" />
@@ -57,17 +64,27 @@ class Favorites extends PureComponent {
 }
 
 Favorites.propTypes = {
-  isLoaded: PropTypes.bool.isRequired,
-  getFavoriteOffers: PropTypes.func.isRequired
+  isFavoritesLoaded: PropTypes.bool.isRequired,
+  isLoadFinished: PropTypes.bool.isRequired,
+  getFavoriteOffers: PropTypes.func.isRequired,
+  favorites: PropTypes.arrayOf(offersPropTypes),
+  setLoadError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isLoaded: getFavoritesLoadStatus(state)
+  isFavoritesLoaded: getFavoritesLoadedStatus(state),
+  isLoadFinished: getLoadFinishStatus(state),
+  favorites: getFavorites(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getFavoriteOffers() {
-    dispatch(fetchFavoriteOffers());
+    return dispatch(fetchFavoriteOffers());
+  },
+  setLoadError(err) {
+    dispatch(changeLoadFinishStatus(true));
+    dispatch(loadFavoriteOffers([]));
+    dispatch(setErrorMessage(err.message));
   }
 });
 

@@ -3,12 +3,14 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {offersPropTypes} from "../offer.prop";
+import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
+import withActiveState from "../../../hocs/with-active-state/with-active-state";
+import {setErrorMessage} from "../../../store/action";
+import {changeFavoriteStatus} from "../../../store/api-actions";
+import {getAuthorizationStatus} from "../../../store/selectors";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
 import {getRatingInPercent} from "../util";
 import {OfferType, AppRoute, OfferPageType} from "../../../const";
-import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
-import {changeFavoriteStatus} from "../../../store/api-actions";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import "./offer-card.css";
 
 const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
@@ -43,7 +45,7 @@ const offerTypeToImageSize = {
 
 
 const OfferCard = (props) => {
-  const {onCardHover, offer, offerType, changeStatus} = props;
+  const {onCardHover, offer, offerType, changeStatus, setError, authorizationStatus} = props;
   const {id, title, type, price, rating} = offer;
   const isPremial = offer.is_premium;
   const previewImage = offer.preview_image;
@@ -69,7 +71,8 @@ const OfferCard = (props) => {
   };
 
   const handleFavoriteBtnClick = (offerId, status) => {
-    changeStatus(offerId, status);
+    changeStatus(offerId, status)
+      .catch(() => setError(`A server error occurred.`));
   };
 
   return (
@@ -103,6 +106,7 @@ const OfferCard = (props) => {
             isActive={offer.is_favorite}
             pageType={OfferPageType.CARD}
             onBtnClick={handleFavoriteBtnClick}
+            authorizationStatus={authorizationStatus}
           />
 
         </div>
@@ -125,16 +129,25 @@ OfferCard.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
   offerType: PropTypes.string.isRequired,
-  changeStatus: PropTypes.func.isRequired
+  changeStatus: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  setError: PropTypes.func.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
 
 
 const mapDispatchToProps = (dispatch) => ({
   changeStatus(id, status) {
-    dispatch(changeFavoriteStatus(id, status));
+    return dispatch(changeFavoriteStatus(id, status));
+  },
+  setError(message) {
+    dispatch(setErrorMessage(message));
   }
 });
 
 
 export {OfferCard};
-export default connect(null, mapDispatchToProps)(OfferCard);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferCard);

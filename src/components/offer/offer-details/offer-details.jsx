@@ -2,30 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {offersPropTypes} from "../offer.prop";
-import {capitalize, getDescriptionSentences} from "../util";
-import {getRatingInPercent} from "../util";
-import {MapType, OfferType, OfferPageType} from "../../../const";
-import {updateCurrentOffer} from "../../../store/action";
-import {changeFavoriteStatus} from "../../../store/api-actions";
-import {getCurrentOffer, getNearbyOffers} from "../../../store/selectors";
 import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
 import OffersList from "../offers-list/offers-list";
 import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
 import withActiveState from "../../../hocs/with-active-state/with-active-state";
-
+import {setErrorMessage} from "../../../store/action";
+import {changeFavoriteStatus} from "../../../store/api-actions";
+import {getCurrentOffer, getNearbyOffers, getAuthorizationStatus} from "../../../store/selectors";
+import {capitalize, getDescriptionSentences} from "../util";
+import {getRatingInPercent} from "../util";
+import {MapType, OfferType, OfferPageType} from "../../../const";
 
 const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
-
 const OfferDetails = (props) => {
-  const {id, offer, nearbyOffers, changeStatus} = props;
+  const {id, offer, nearbyOffers, changeStatus, authorizationStatus, setError} = props;
   const {title, price, city, type, description, bedrooms, rating, images, goods, host} = offer;
   const guestsCount = offer.max_adults;
   const isPremial = offer.is_premium;
 
   const handleFavoriteBtnClick = (offerId, status) => {
-    changeStatus(offerId, status);
+    changeStatus(offerId, status)
+      .catch(() => setError(`A server error occurred.`));
   };
 
   return (
@@ -52,6 +51,7 @@ const OfferDetails = (props) => {
                 isActive={offer.is_favorite}
                 pageType={OfferPageType.DETAILS}
                 onBtnClick={handleFavoriteBtnClick}
+                authorizationStatus={authorizationStatus}
               />
             </div>
             <div className="property__rating rating">
@@ -132,20 +132,23 @@ OfferDetails.propTypes = {
   id: PropTypes.number.isRequired,
   offer: offersPropTypes.isRequired,
   nearbyOffers: PropTypes.arrayOf(offersPropTypes),
-  changeStatus: PropTypes.func.isRequired
+  changeStatus: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   offer: getCurrentOffer(state),
   nearbyOffers: getNearbyOffers(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeStatus(id, status) {
-    dispatch(changeFavoriteStatus(id, status));
-    dispatch(updateCurrentOffer({
-      [`is_favorite`]: Boolean(status)
-    }));
+    return dispatch(changeFavoriteStatus(id, status));
+  },
+  setError(message) {
+    dispatch(setErrorMessage(message));
   }
 });
 

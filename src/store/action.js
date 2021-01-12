@@ -5,18 +5,20 @@ export const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   UPDATE_OFFERS: `UPDATE_OFFERS`,
   LOAD_CURRENT_OFFER: `LOAD_CURRENT_OFFER`,
-  UPDATE_CURRENT_OFFER: `UPDATE_CURRENT_OFFER`,
+  RESET_CURRENT_OFFER: `RESET_CURRENT_OFFER`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
-  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   GET_USER_INFO: `GET_USER_INFO`,
   LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`,
-  UPDATE_NEARBY_OFFERS: `UPDATE_NEARBY_OFFERS`,
   LOAD_OFFER_REVIEWS: `LOAD_OFFER_REVIEWS`,
   LOAD_FAVORITE_OFFERS: `LOAD_FAVORITE_OFFERS`,
   UPDATE_FAVORITE_OFFERS: `UPDATE_FAVORITE_OFFERS`,
-  CHANGE_OFFERS_LOADING_STATUS: `CHANGE_OFFERS_LOADING_STATUS`,
-  CHANGE_FAVORITES_LOADING_STATUS: `CHANGE_FAVORITES_LOADING_STATUS`,
-  CHANGE_CURRENT_OFFER_LOADING_STATUS: `CHANGE_CURRENT_OFFER_LOADING_STATUS`,
+  CHANGE_OFFERS_LOADED_STATUS: `CHANGE_OFFERS_LOADED_STATUS`,
+  CHANGE_FAVORITES_LOADED_STATUS: `CHANGE_FAVORITES_LOADED_STATUS`,
+  CHANGE_CURRENT_OFFER_LOADED_STATUS: `CHANGE_CURRENT_OFFER_LOADED_STATUS`,
+  SET_ERROR_MESSAGE: `SET_ERROR_MESSAGE`,
+  CLOSE_ERROR_MESSAGE: `CLOSE_ERROR_MESSAGE`,
+  CHANGE_LOAD_FINISH_STATUS: `CHANGE_LOAD_FINISH_STATUS`,
+  CHANGE_AUTH_REQUEST_COMPLETE_STATUS: `CHANGE_AUTH_REQUEST_COMPLETE_STATUS`
 };
 
 
@@ -59,28 +61,18 @@ export const loadNearbyOffers = (offers) => ({
   payload: offers
 });
 
-export const updateNearbyOffers = (offers) => ({
-  type: ActionType.UPDATE_NEARBY_OFFERS,
-  payload: offers
-});
-
 export const loadOfferReviews = (reviews) => ({
   type: ActionType.LOAD_OFFER_REVIEWS,
   payload: reviews
 });
 
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
-  payload: url
-});
-
-export const changeCurrentOfferLoadingStatus = (status) => ({
-  type: ActionType.CHANGE_CURRENT_OFFER_LOADING_STATUS,
+export const changeCurrentOfferLoadedStatus = (status) => ({
+  type: ActionType.CHANGE_CURRENT_OFFER_LOADED_STATUS,
   payload: status
 });
 
-export const changeOffersLoadingStatus = (status) => ({
-  type: ActionType.CHANGE_OFFERS_LOADING_STATUS,
+export const changeOffersLoadedStatus = (status) => ({
+  type: ActionType.CHANGE_OFFERS_LOADED_STATUS,
   payload: status
 });
 
@@ -94,8 +86,8 @@ export const updateFavoriteOffers = (offer) => ({
   payload: offer
 });
 
-export const changeFavoritesLoadingStatus = (status) => ({
-  type: ActionType.CHANGE_FAVORITES_LOADING_STATUS,
+export const changeFavoritesLoadedStatus = (status) => ({
+  type: ActionType.CHANGE_FAVORITES_LOADED_STATUS,
   payload: status
 });
 
@@ -104,7 +96,25 @@ export const loadCurrentOffer = (offer) => ({
   payload: offer
 });
 
-export const updateCurrentOffer = (update) => ({
-  type: ActionType.UPDATE_CURRENT_OFFER,
-  payload: update
+export const setErrorMessage = (message) => ({
+  type: ActionType.SET_ERROR_MESSAGE,
+  payload: message
+});
+
+export const closeErrorMessage = () => ({
+  type: ActionType.CLOSE_ERROR_MESSAGE
+});
+
+export const resetCurrentOffer = () => ({
+  type: ActionType.RESET_CURRENT_OFFER
+});
+
+export const changeLoadFinishStatus = (status) => ({
+  type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+  payload: status
+});
+
+export const changeAuthRequestCompleteStatus = (status) => ({
+  type: ActionType.CHANGE_AUTH_REQUEST_COMPLETE_STATUS,
+  payload: status
 });

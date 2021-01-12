@@ -5,8 +5,9 @@ import {cityPropTypes} from "../../cities/city.prop";
 import Map from "../../map/map";
 import OffersList from "../../offer/offers-list/offers-list";
 import SortSection from "../../sort/sort-section/sort-section";
-import {OfferType, MapType} from "../../../const";
 import withActiveState from "../../../hocs/with-active-state/with-active-state";
+import {OfferType, MapType} from "../../../const";
+
 
 const SortSectionWrapped = withActiveState(SortSection);
 
