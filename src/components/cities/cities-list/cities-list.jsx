@@ -7,9 +7,7 @@ import {changeCity} from "../../../store/action";
 import {getCities} from "../../../store/selectors";
 
 
-const CitiesList = (props) => {
-  const {cities, currentCity, onCityChange} = props;
-
+const CitiesList = ({cities, currentCity, onCityChange}) => {
   const handleCityChange = (newCity) => {
     onCityChange(newCity);
   };

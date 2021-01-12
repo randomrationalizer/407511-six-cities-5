@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 import {cityPropTypes} from "../city.prop";
 
 
-const City = (props) => {
-  const {city, isActive, onCityClick} = props;
-
+const City = ({city, isActive, onCityClick}) => {
   const handleCityClick = () => {
     if (isActive) {
       return;

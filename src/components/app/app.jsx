@@ -18,8 +18,7 @@ const MainPageWrapped = withErrorMessage(MainPage);
 const FavoritesPageWrapped = withErrorMessage(FavoritesPage);
 const LoginPageWrapped = withErrorMessage(LoginPage);
 
-const App = (props) => {
-  const {checkAuthorization, setAuthRequestComplete} = props;
+const App = ({checkAuthorization, setAuthRequestComplete}) => {
   checkAuthorization()
     .catch(() => {
       setAuthRequestComplete();

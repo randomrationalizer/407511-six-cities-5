@@ -4,9 +4,7 @@ import {sortTypeToTitle} from "../util";
 import {checkKeyDownEvent} from "../../../utils";
 
 
-const SortItem = (props) => {
-  const {isActive, sortType, onSortItemClick} = props;
-
+const SortItem = ({isActive, sortType, onSortItemClick}) => {
   const handleSortClick = () => {
     if (isActive) {
       return;

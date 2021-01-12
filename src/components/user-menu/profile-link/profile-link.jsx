@@ -10,9 +10,7 @@ const avatarSize = {
   height: 54
 };
 
-const ProfileLink = (props) => {
-  const {userInfo} = props;
-
+const ProfileLink = ({userInfo}) => {
   return (
     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
       <div className="header__avatar-wrapper user__avatar-wrapper">

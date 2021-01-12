@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offer/offer.prop";
-import {OfferType} from "../../../const";
 import OffersList from "../../offer/offers-list/offers-list";
+import {getCitiesFromOffers} from "../util";
+import {OfferType} from "../../../const";
 
 
-const FavoritesList = (props) => {
-  const {favorites} = props;
-  const cities = favorites.slice().map((offer) => offer.city.name).sort();
-  const uniqueCities = [...new Set(cities)];
+const FavoritesList = ({favorites}) => {
+  const cities = getCitiesFromOffers(favorites);
 
   return (
     <main className="page__main page__main--favorites">
@@ -16,7 +15,7 @@ const FavoritesList = (props) => {
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
-            {uniqueCities.map((city) =>
+            {cities.map((city) =>
               <li key={city} className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">

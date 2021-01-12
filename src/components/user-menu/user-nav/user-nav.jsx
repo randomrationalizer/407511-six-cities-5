@@ -7,8 +7,7 @@ import {AuthorizationStatus} from "../../../const";
 import {getAuthorizationStatus} from "../../../store/selectors";
 
 
-const UserNav = (props) => {
-  const {authorizationStatus} = props;
+const UserNav = ({authorizationStatus}) => {
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
 
   return (

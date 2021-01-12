@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 
-const OffersEmptyContainer = (props) => {
-  const {city} = props;
-
+const OffersEmptyContainer = ({city}) => {
   return (
     <div className="cities">
       <div className="cities__places-container cities__places-container--empty container">

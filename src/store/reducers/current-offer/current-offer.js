@@ -9,11 +9,11 @@ const initialState = {
 };
 
 
-const currentOffer = (state = initialState, action) => {
-  switch (action.type) {
+const currentOffer = (state = initialState, {type, payload}) => {
+  switch (type) {
     case ActionType.LOAD_CURRENT_OFFER:
       return extend(state, {
-        offer: action.payload
+        offer: payload
       });
 
     case ActionType.RESET_CURRENT_OFFER:
@@ -21,12 +21,12 @@ const currentOffer = (state = initialState, action) => {
 
     case ActionType.LOAD_NEARBY_OFFERS:
       return extend(state, {
-        nearbyOffers: action.payload
+        nearbyOffers: payload
       });
 
     case ActionType.LOAD_OFFER_REVIEWS:
       return extend(state, {
-        reviews: action.payload
+        reviews: payload
       });
   }
 

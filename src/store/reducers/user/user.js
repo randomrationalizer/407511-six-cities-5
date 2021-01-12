@@ -11,32 +11,32 @@ const initialState = {
   favorites: []
 };
 
-const user = (state = initialState, action) => {
-  switch (action.type) {
+const user = (state = initialState, {type, payload}) => {
+  switch (type) {
     case ActionType.REQUIRE_AUTHORIZATION:
       return extend(state, {
-        authorizationStatus: action.payload
+        authorizationStatus: payload
       });
 
     case ActionType.GET_USER_INFO:
       return extend(state, {
-        userInfo: action.payload
+        userInfo: payload
       });
 
     case ActionType.LOAD_FAVORITE_OFFERS:
       return extend(state, {
-        favorites: action.payload
+        favorites: payload
       });
 
     case ActionType.UPDATE_FAVORITE_OFFERS:
-      const updatedOffer = action.payload;
+      const updatedOffer = payload;
       return extend(state, {
         favorites: updateFavorites(updatedOffer, state.favorites)
       });
 
     case ActionType.CHANGE_AUTH_REQUEST_COMPLETE_STATUS:
       return extend(state, {
-        isAuthRequestComplete: action.payload
+        isAuthRequestComplete: payload
       });
   }
 

@@ -4,9 +4,7 @@ import {offersPropTypes} from "../offer.prop";
 import OfferCard from "../offer-card/offer-card";
 
 
-const OffersList = (props) => {
-  const {offers, onOfferHover, offerType} = props;
-
+const OffersList = ({offers, onOfferHover, offerType}) => {
   const handleCardHover = (newActiveCardId) => {
     onOfferHover(newActiveCardId);
   };

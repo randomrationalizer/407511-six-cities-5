@@ -14,8 +14,8 @@ const initialState = {
 };
 
 
-const appData = (state = initialState, action) => {
-  switch (action.type) {
+const appData = (state = initialState, {type, payload}) => {
+  switch (type) {
     case ActionType.GET_CITIES:
       const citiesData = getCitiesData(state.allOffers, cities);
       return extend(state, {
@@ -23,7 +23,7 @@ const appData = (state = initialState, action) => {
       });
 
     case ActionType.CHANGE_CITY:
-      const cityName = action.payload;
+      const cityName = payload;
       const newCity = cityName ? state.cities.find((city) => city.name === cityName) : state.cities[defaultCityIndex];
 
       return extend(state, {
@@ -32,16 +32,16 @@ const appData = (state = initialState, action) => {
 
     case ActionType.CHANGE_SORT_TYPE:
       return extend(state, {
-        currentSort: action.payload
+        currentSort: payload
       });
 
     case ActionType.LOAD_OFFERS:
       return extend(state, {
-        allOffers: action.payload
+        allOffers: payload
       });
 
     case ActionType.UPDATE_OFFERS:
-      const updatedOffer = action.payload;
+      const updatedOffer = payload;
       return extend(state, {
         allOffers: updateOffer(updatedOffer, state.allOffers)
       });

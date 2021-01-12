@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import "./error-message.css";
 
 
-const ErrorMessage = (props) => {
-  const {message, onClose} = props;
-
+const ErrorMessage = ({message, onClose}) => {
   const handleCloseBtnClick = () => {
     onClose();
   };
