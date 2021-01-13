@@ -1,15 +1,14 @@
 import React, {PureComponent} from "react";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import UserNav from "../../user-menu/user-nav/user-nav";
+import Header from "../../header/header";
 import OfferDetails from "../offer-details/offer-details";
 import Preloader from "../../preloader/preloader";
 import {getOfferDetails, getPartialOfferDetails} from "../../../store/api-actions";
 import {resetCurrentOffer, changeCurrentOfferLoadedStatus, setErrorMessage, loadCurrentOffer, changeLoadFinishStatus} from "../../../store/action";
 import {getCurrentOfferLoadedStatus, getOffersLoadedStatus, getLoadFinishStatus} from "../../../store/selectors";
 import {AppRoute, HttpCode} from "../../../const";
-import logo from "../../../../public/img/logo.svg";
 
 
 class OfferPage extends PureComponent {
@@ -64,18 +63,7 @@ class OfferPage extends PureComponent {
 
     return (
       <div className="page">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <Link className="header__logo-link" to="/">
-                  <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
-                </Link>
-              </div>
-              <UserNav />
-            </div>
-          </div>
-        </header>
+        <Header />
 
         {isCurrentOfferLoaded &&
           <OfferDetails id={this.id}/>

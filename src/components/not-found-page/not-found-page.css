@@ -1,0 +1,32 @@
+.not-found-page__wrapper {
+  width: 420px;
+  margin-top: 16.7vh;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 62px;
+  padding-bottom: 93px;
+  text-align: center;
+  background-image: url(../../../public/img/ico-no-results.svg);
+  background-size: 45px 47px;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.not-found-page__title {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 32px;
+  line-height: 1.1875;
+}
+
+.not-found-page__description {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 45px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.not-found-page__link {
+  text-decoration:underline dotted;
+}

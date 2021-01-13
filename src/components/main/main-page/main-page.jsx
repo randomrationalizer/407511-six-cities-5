@@ -1,15 +1,13 @@
 import React, {PureComponent} from "react";
-import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import MainOffersSection from "../main-offers-section/main-offers-section";
-import UserNav from "../../user-menu/user-nav/user-nav";
+import Header from "../../header/header";
 import Preloader from "../../preloader/preloader";
 import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 import {getAllOffersData} from "../../../store/api-actions";
 import {changeLoadFinishStatus, setErrorMessage} from "../../../store/action";
 import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
-import logo from "../../../../public/img/logo.svg";
 
 const MainOffersSectionWrapped = withActiveItem(MainOffersSection);
 
@@ -33,18 +31,7 @@ class MainPage extends PureComponent {
 
     return (
       <div className="page page--gray page--main">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <Link to="/" className="header__logo-link header__logo-link--active">
-                  <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
-                </Link>
-              </div>
-              <UserNav />
-            </div>
-          </div>
-        </header>
+        <Header />
 
         {isOffersLoaded &&
           <MainOffersSectionWrapped/>

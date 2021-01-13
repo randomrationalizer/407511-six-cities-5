@@ -1,11 +1,9 @@
 import React, {PureComponent, createRef} from "react";
-import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import UserNav from "../user-menu/user-nav/user-nav";
+import Header from "../header/header";
 import {login} from "../../store/api-actions";
 import {setErrorMessage} from "../../store/action";
-import logo from "../../../public/img/logo.svg";
 
 
 class LoginPage extends PureComponent {
@@ -32,18 +30,7 @@ class LoginPage extends PureComponent {
   render() {
     return (
       <div className="page page--gray page--login">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <Link className="header__logo-link" to="/">
-                  <img className="header__logo" src={logo} alt="6 cities logo" width="81" height="41" />
-                </Link>
-              </div>
-              <UserNav />
-            </div>
-          </div>
-        </header>
+        <Header />
 
         <main className="page__main page__main--login">
           <div className="page__login-container container">

@@ -1,12 +1,13 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Route, Switch, Link, BrowserRouter} from "react-router-dom";
+import {Route, Switch, BrowserRouter} from "react-router-dom";
 import MainPage from "../main/main-page/main-page";
 import FavoritesPage from "../favorites/favorites-page/favorites-page";
 import LoginPage from "../login/login";
 import OfferPage from "../offer/offer-page/offer-page";
 import PrivateRoute from "../private-route/private-route";
+import NotFoundPage from "../not-found-page/not-found-page";
 import withErrorMessage from "../../hocs/with-error-message/with-error-message";
 import {checkAuth} from "../../store/api-actions";
 import {changeAuthRequestCompleteStatus} from "../../store/action";
@@ -45,14 +46,7 @@ const App = ({checkAuthorization, setAuthRequestComplete}) => {
         </Route>
         <Route
           render={() => (
-            <Fragment>
-              <h1>
-                  404.
-                <br />
-                <small>Page not found</small>
-              </h1>
-              <Link to="/">Go to main page</Link>
-            </Fragment>
+            <NotFoundPage />
           )}
         />
       </Switch>
