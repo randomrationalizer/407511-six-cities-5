@@ -19,6 +19,14 @@ const withErrorMessage = (Component) => {
       closeErrorModal();
     }
 
+    componentWillUnmount() {
+      const {message, closeErrorModal} = this.props;
+
+      if (message) {
+        closeErrorModal();
+      }
+    }
+
     render() {
       const {message} = this.props;
 
