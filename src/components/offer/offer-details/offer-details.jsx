@@ -14,6 +14,8 @@ import {capitalize, getDescriptionSentences} from "../util";
 import {getRatingInPercent} from "../util";
 import {MapType, OfferType, OfferPageType} from "../../../const";
 
+const MAX_PHOTOS_COUNT = 6;
+
 const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
 const OfferDetails = (props) => {
@@ -32,7 +34,7 @@ const OfferDetails = (props) => {
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {images.length !== 0 && images.map((image, i) =>
+            {images.length !== 0 && images.slice(0, MAX_PHOTOS_COUNT).map((image, i) =>
               <div key={image} className="property__image-wrapper">
                 <img className="property__image" src={image} alt={`Property photo ${i}`} />
               </div>
