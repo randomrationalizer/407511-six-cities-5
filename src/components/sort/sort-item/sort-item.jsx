@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {sortTypeToTitle} from "../util";
-import {checkKeyDownEvent} from "../../../utils";
+import {checkKeyDownEvent} from "../../../utils/common";
 
 
 const SortItem = ({isActive, sortType, onSortItemClick}) => {

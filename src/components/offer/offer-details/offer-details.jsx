@@ -20,9 +20,7 @@ const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
 const OfferDetails = (props) => {
   const {id, offer, nearbyOffers, changeStatus, authorizationStatus, setError} = props;
-  const {title, price, city, type, description, bedrooms, rating, images, goods, host} = offer;
-  const guestsCount = offer.max_adults;
-  const isPremial = offer.is_premium;
+  const {title, price, city, type, description, bedrooms, rating, images, goods, host, isFavorite, isPremium, guestsCount} = offer;
 
   const handleFavoriteBtnClick = (offerId, status) => {
     changeStatus(offerId, status)
@@ -43,14 +41,14 @@ const OfferDetails = (props) => {
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            {isPremial && <div className="property__mark">
+            {isPremium && <div className="property__mark">
               <span>Premium</span>
             </div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{title}</h1>
               <OfferFavoriteBtnWrapped
                 id={id}
-                isActive={offer.is_favorite}
+                isActive={isFavorite}
                 pageType={OfferPageType.DETAILS}
                 onBtnClick={handleFavoriteBtnClick}
                 authorizationStatus={authorizationStatus}
@@ -89,8 +87,8 @@ const OfferDetails = (props) => {
             <div className="property__host">
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
-                <div className={`property__avatar-wrapper ${host.is_pro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
-                  <img className="property__avatar user__avatar" src={host.avatar_url} width="74" height="74" alt="Host avatar" />
+                <div className={`property__avatar-wrapper ${host.isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
+                  <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="property__user-name">
                   {host.name}

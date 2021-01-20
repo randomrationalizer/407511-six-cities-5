@@ -46,10 +46,7 @@ const offerTypeToImageSize = {
 
 const OfferCard = (props) => {
   const {onCardHover, offer, offerType, changeStatus, setError, authorizationStatus} = props;
-  const {id, title, type, price, rating} = offer;
-  const isPremial = offer.is_premium;
-  const previewImage = offer.preview_image;
-
+  const {id, title, type, price, rating, isFavorite, isPremium, previewImage} = offer;
   const imageSize = offerTypeToImageSize[offerType];
   const articleClassName = offerTypeToArticleClassName[offerType];
   const cardClassName = offerTypeToCardClassName[offerType];
@@ -59,7 +56,7 @@ const OfferCard = (props) => {
       return;
     }
 
-    onCardHover(offer.id);
+    onCardHover(id);
   };
 
   const handleMouseLeave = () => {
@@ -80,7 +77,7 @@ const OfferCard = (props) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isPremial && <div className="place-card__mark">
+      {isPremium && <div className="place-card__mark">
         <span>Premium</span>
       </div>}
       <div className={`${offerType}__image-wrapper place-card__image-wrapper`}>
@@ -103,7 +100,7 @@ const OfferCard = (props) => {
 
           <OfferFavoriteBtnWrapped
             id={id}
-            isActive={offer.is_favorite}
+            isActive={isFavorite}
             pageType={OfferPageType.CARD}
             onBtnClick={handleFavoriteBtnClick}
             authorizationStatus={authorizationStatus}

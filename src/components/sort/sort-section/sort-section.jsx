@@ -5,7 +5,7 @@ import SortList from "../sort-list/sort-list";
 import {sortTypeToTitle} from "../util";
 import {changeSort} from "../../../store/action";
 import {getCurrentSort} from "../../../store/selectors";
-import {checkKeyDownEvent} from "../../../utils";
+import {checkKeyDownEvent} from "../../../utils/common";
 
 
 const SortSection = (props) => {

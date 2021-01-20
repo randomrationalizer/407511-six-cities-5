@@ -1,4 +1,4 @@
-import {extend} from "../../../utils";
+import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
 import {AuthorizationStatus} from "../../../const";
 import {updateFavorites} from "../../../core";

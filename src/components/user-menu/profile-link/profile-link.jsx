@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
+import {userProfilePropTypes} from "../user-profile.prop";
 import {AppRoute} from "../../../const";
 import {getUserInfo} from "../../../store/selectors";
 
@@ -11,24 +11,26 @@ const avatarSize = {
 };
 
 const ProfileLink = ({userInfo}) => {
+  const {avatarUrl, email} = userInfo;
+
   return (
     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
       <div className="header__avatar-wrapper user__avatar-wrapper">
         <img
           className="user__avatar"
-          src={userInfo.avatar_url}
+          src={avatarUrl}
           width={avatarSize.width}
           height={avatarSize.height}
           alt="User avatar"
         />
       </div>
-      <span className="header__user-name user__name">{userInfo.email}</span>
+      <span className="header__user-name user__name">{email}</span>
     </Link>
   );
 };
 
 ProfileLink.propTypes = {
-  userInfo: PropTypes.object.isRequired
+  userInfo: userProfilePropTypes.isRequired
 };
 
 const mapStateToProps = (state) => ({

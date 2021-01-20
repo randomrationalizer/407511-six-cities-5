@@ -32,7 +32,7 @@ const ReviewsSection = (props) => {
       {isAnyReviews && <ul className="reviews__list">
         {offerReviews.sort(sortByDate).map((review) =>
           <Review
-            key={`${review.user.name}-${review.comment}`}
+            key={`${review.user.name}-${review.comment}-${review.date}`}
             review={review}
           />
         )}

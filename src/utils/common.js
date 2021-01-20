@@ -1,4 +1,4 @@
-import {KeyCode} from "./const";
+import {KeyCode} from "../const";
 
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
