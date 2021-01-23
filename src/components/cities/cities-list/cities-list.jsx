@@ -3,23 +3,18 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import City from "../city/city";
 import {cityPropTypes} from "../city.prop";
-import {changeCity} from "../../../store/action";
 import {getCities} from "../../../store/selectors";
 
 
-const CitiesList = ({cities, currentCity, onCityChange}) => {
-  const handleCityChange = (newCity) => {
-    onCityChange(newCity);
-  };
+const CitiesList = ({cities, currentCity}) => {
 
   return (
     <ul className="locations__list tabs__list">
       {cities.map((city) =>
         <City
           key={city.name}
-          city={city}
-          isActive={city.name === currentCity.name}
-          onCityClick={handleCityChange}
+          city={city.name}
+          isActive={city.name === currentCity}
         />
       )}
     </ul>
@@ -28,8 +23,7 @@ const CitiesList = ({cities, currentCity, onCityChange}) => {
 
 CitiesList.propTypes = {
   cities: PropTypes.arrayOf(cityPropTypes).isRequired,
-  currentCity: cityPropTypes.isRequired,
-  onCityChange: PropTypes.func.isRequired
+  currentCity: PropTypes.string.isRequired
 };
 
 
@@ -37,11 +31,6 @@ const mapStateToProps = (state) => ({
   cities: getCities(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onCityChange(city) {
-    dispatch(changeCity(city));
-  }
-});
 
 export {CitiesList};
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default connect(mapStateToProps, null)(CitiesList);

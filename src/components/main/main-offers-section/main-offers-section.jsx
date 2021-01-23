@@ -6,7 +6,7 @@ import {cityPropTypes} from "../../cities/city.prop";
 import MainOffersList from "../main-offers-list/main-offers-list";
 import MainOffersEmptyList from "../main-offers-empty-list/main-offers-empty-list";
 import CitiesList from "../../cities/cities-list/cities-list";
-import {getCurrentCity, getCurrentSort, getCityOffers} from "../../../store/selectors";
+import {getCurrentSort, getCityOffers, getCurrentCityData} from "../../../store/selectors";
 
 
 const MainOffersSection = (props) => {
@@ -19,7 +19,7 @@ const MainOffersSection = (props) => {
       <div className="tabs">
         <section className="locations container">
           <CitiesList
-            currentCity={currentCity}
+            currentCity={currentCity.name}
           />
         </section>
       </div>
@@ -47,7 +47,7 @@ MainOffersSection.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentCity: getCurrentCity(state),
+  currentCity: getCurrentCityData(state),
   currentSort: getCurrentSort(state),
   cityOffers: getCityOffers(state)
 });

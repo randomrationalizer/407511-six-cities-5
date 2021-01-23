@@ -1,7 +1,7 @@
 import {SortType} from "./const";
 
 export const filterOffers = (allOffers, city) => {
-  return allOffers.filter((offer) => offer.city.name === city.name);
+  return allOffers.filter((offer) => offer.city.name === city);
 };
 
 export const getOfferById = (allOffers, id) => {
@@ -35,8 +35,12 @@ export const sortOffers = (offers, currentSort) => {
   }
 };
 
-export const getCitiesData = (offers, cityNames) => {
-  return cityNames.map((cityName) => offers.find((offer) => offer.city.name === cityName).city);
+export const getCityData = (offers, cityName) => {
+  return offers.find((offer) => offer.city.name === cityName).city;
+};
+
+export const getCitiesData = (offers, cities) => {
+  return cities.map((city) => getCityData(offers, city));
 };
 
 export const updateOffer = (updatedOffer, allOffers) => {

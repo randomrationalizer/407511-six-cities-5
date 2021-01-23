@@ -1,6 +1,5 @@
 import {
   getCities,
-  changeCity,
   loadOffers,
   requireAuthorization,
   getUserInfo,
@@ -14,9 +13,10 @@ import {
   changeFavoritesLoadedStatus,
   changeCurrentOfferLoadedStatus,
   changeLoadFinishStatus,
-  changeAuthRequestCompleteStatus
+  changeAuthRequestCompleteStatus,
+  setDefaultCity
 } from "./action";
-import {getOffers} from "../store/selectors";
+import {getCurrentCity, getOffers} from "../store/selectors";
 import {getOfferById} from "../core";
 import {adaptUserInfoToClient, adaptOfferToClient, adaptReviewToClient} from "../utils/adapter";
 import {AuthorizationStatus, APIRoute} from "../const";
@@ -25,8 +25,8 @@ import {AuthorizationStatus, APIRoute} from "../const";
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(({data}) => {
-      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(getUserInfo(adaptUserInfoToClient(data)));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(changeAuthRequestCompleteStatus(true));
     })
 );
@@ -92,14 +92,17 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadOffers(data.map(adaptOfferToClient))))
 );
 
-export const getAllOffersData = () => (dispatch, _getState, _api) => (
+export const getAllOffersData = () => (dispatch, getState, _api) => (
   Promise.all([
     dispatch(changeLoadFinishStatus(false)),
     dispatch(fetchOffers())
   ])
   .then(() => {
     dispatch(getCities());
-    dispatch(changeCity());
+    const currentCity = getCurrentCity(getState());
+    if (!currentCity) {
+      dispatch(setDefaultCity());
+    }
   })
     .then(() => {
       dispatch(changeLoadFinishStatus(true));

@@ -7,7 +7,7 @@ const defaultCityIndex = 0;
 const defaultSort = SortType.DEFAULT;
 
 const initialState = {
-  currentCity: {},
+  currentCity: null,
   allOffers: [],
   cities: [],
   currentSort: defaultSort
@@ -23,11 +23,13 @@ const appData = (state = initialState, {type, payload}) => {
       });
 
     case ActionType.CHANGE_CITY:
-      const cityName = payload;
-      const newCity = cityName ? state.cities.find((city) => city.name === cityName) : state.cities[defaultCityIndex];
-
       return extend(state, {
-        currentCity: newCity
+        currentCity: payload
+      });
+
+    case ActionType.SET_DEFAULT_CITY:
+      return extend(state, {
+        currentCity: cities[defaultCityIndex]
       });
 
     case ActionType.CHANGE_SORT_TYPE:

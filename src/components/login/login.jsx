@@ -2,8 +2,10 @@ import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import Header from "../header/header";
+import CityLink from "../cities/city-link/city-link";
 import {login} from "../../store/api-actions";
 import {setErrorMessage} from "../../store/action";
+import {CityLinkType} from "../../const";
 
 
 class LoginPage extends PureComponent {
@@ -69,9 +71,10 @@ class LoginPage extends PureComponent {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <a className="locations__item-link" href="#">
-                  <span>Amsterdam</span>
-                </a>
+                <CityLink
+                  linkType={CityLinkType.INNER_PAGE}
+                  city={`Amsterdam`}
+                />
               </div>
             </section>
           </div>

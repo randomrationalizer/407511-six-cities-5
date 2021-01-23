@@ -11,6 +11,11 @@ export const OfferPageType = {
   DETAILS: `DETAILS`
 };
 
+export const CityLinkType = {
+  MAIN_PAGE: `MAIN_PAGE`,
+  INNER_PAGE: `INNER_PAGE`
+};
+
 export const MapType = {
   MAIN: `cities`,
   PROPERTY: `property`

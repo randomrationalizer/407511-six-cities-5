@@ -1,6 +1,7 @@
 export const ActionType = {
   GET_CITIES: `GET_CITIES`,
   CHANGE_CITY: `CHANGE_CITY`,
+  SET_DEFAULT_CITY: `SET_DEFAULT_CITY`,
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   UPDATE_OFFERS: `UPDATE_OFFERS`,
@@ -25,6 +26,10 @@ export const ActionType = {
 export const changeCity = (city) => ({
   type: ActionType.CHANGE_CITY,
   payload: city
+});
+
+export const setDefaultCity = () => ({
+  type: ActionType.SET_DEFAULT_CITY
 });
 
 export const changeSort = (sort) => ({

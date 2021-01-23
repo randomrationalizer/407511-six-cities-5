@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offer/offer.prop";
+import CityLink from "../../cities/city-link/city-link";
 import OffersList from "../../offer/offers-list/offers-list";
 import {getCitiesFromOffers} from "../util";
-import {OfferType} from "../../../const";
+import {CityLinkType, OfferType} from "../../../const";
 
 
 const FavoritesList = ({favorites}) => {
@@ -19,9 +20,10 @@ const FavoritesList = ({favorites}) => {
               <li key={city} className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>{city}</span>
-                    </a>
+                    <CityLink
+                      linkType={CityLinkType.INNER_PAGE}
+                      city={city}
+                    />
                   </div>
                 </div>
                 <div className="favorites__places">
