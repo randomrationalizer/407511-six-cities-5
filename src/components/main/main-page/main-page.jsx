@@ -1,15 +1,15 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import PropTypes from "prop-types";
 import MainOffersSection from "../main-offers-section/main-offers-section";
 import Header from "../../header/header";
 import Preloader from "../../preloader/preloader";
-import withActiveItem from "../../../hocs/with-active-item/with-active-item";
+import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {getAllOffersData} from "../../../store/api-actions";
 import {changeLoadFinishStatus, setErrorMessage} from "../../../store/action";
 import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
 
-const MainOffersSectionWrapped = withActiveItem(MainOffersSection);
 
 class MainPage extends PureComponent {
 
@@ -34,7 +34,7 @@ class MainPage extends PureComponent {
         <Header />
 
         {isOffersLoaded &&
-          <MainOffersSectionWrapped/>
+          <MainOffersSection/>
         }
       </div>
     );
@@ -65,4 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export {MainPage};
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withErrorMessage
+)(MainPage);

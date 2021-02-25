@@ -1,5 +1,6 @@
-export default
-[
+import {adaptReviewToClient} from "../../utils/adapter";
+
+const reviews = [
   {
     "id": 1,
     "user": {
@@ -24,4 +25,8 @@ export default
     "comment": "What an amazing view! The house is stunning and in an amazing location. The large glass wall had an amazing view of the river!",
     "date": "2020-11-02T13:38:44.752Z"
   }
-]
+];
+
+const mockReviews = reviews.map(adaptReviewToClient);
+
+export default mockReviews;

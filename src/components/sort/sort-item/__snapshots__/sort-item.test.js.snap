@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortItem component renders correctly with active state 1`] = `
+<li
+  className="places__option places__option--active"
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  tabIndex="0"
+>
+  Popular
+</li>
+`;
+
+exports[`SortItem component renders correctly without active state 1`] = `
+<li
+  className="places__option "
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  tabIndex="0"
+>
+  Popular
+</li>
+`;

@@ -4,9 +4,9 @@ const RATING_MIN = 1;
 const RATING_MAX = 5;
 
 export const checkCommentValidity = (comment) => {
-  return comment.length >= REVIEW_MIN_LENGTH && comment.length <= REVIEW_MAX_LENGTH ? true : false;
+  return comment.length >= REVIEW_MIN_LENGTH && comment.length <= REVIEW_MAX_LENGTH;
 };
 
 export const checkRatingValidity = (rating) => {
-  return rating >= RATING_MIN && rating <= RATING_MAX ? true : false;
+  return rating >= RATING_MIN && rating <= RATING_MAX;
 };

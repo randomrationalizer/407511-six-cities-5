@@ -1,12 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offer/offer.prop";
 import {cityPropTypes} from "../../cities/city.prop";
 import MainOffersList from "../main-offers-list/main-offers-list";
 import MainOffersEmptyList from "../main-offers-empty-list/main-offers-empty-list";
 import CitiesList from "../../cities/cities-list/cities-list";
-import {getCurrentSort, getCityOffers, getCurrentCityData} from "../../../store/selectors";
+import withActiveItem from "../../../hocs/with-active-item/with-active-item";
+import {getCityOffers, getCurrentCityData} from "../../../store/selectors";
 
 
 const MainOffersSection = (props) => {
@@ -48,9 +50,11 @@ MainOffersSection.propTypes = {
 
 const mapStateToProps = (state) => ({
   currentCity: getCurrentCityData(state),
-  currentSort: getCurrentSort(state),
   cityOffers: getCityOffers(state)
 });
 
 export {MainOffersSection};
-export default connect(mapStateToProps, null)(MainOffersSection);
+export default compose(
+    connect(mapStateToProps, null),
+    withActiveItem
+)(MainOffersSection);

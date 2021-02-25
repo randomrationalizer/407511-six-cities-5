@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileLinkUnauthorized component renders correctly 1`] = `
+<a
+  className="header__nav-link header__nav-link--profile"
+  href="/login"
+  onClick={[Function]}
+>
+  <div
+    className="header__avatar-wrapper user__avatar-wrapper"
+  />
+  <span
+    className="header__login"
+  >
+    Sign in
+  </span>
+</a>
+`;

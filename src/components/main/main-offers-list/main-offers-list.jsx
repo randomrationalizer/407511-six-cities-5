@@ -5,11 +5,7 @@ import {cityPropTypes} from "../../cities/city.prop";
 import OffersMap from "../../map/map";
 import OffersList from "../../offer/offers-list/offers-list";
 import SortSection from "../../sort/sort-section/sort-section";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {OfferType, MapType} from "../../../const";
-
-
-const SortSectionWrapped = withActiveState(SortSection);
 
 
 const MainOffersList = (props) => {
@@ -22,7 +18,7 @@ const MainOffersList = (props) => {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{offers.length} place{suffix} to stay in {city.name}</b>
-          <SortSectionWrapped
+          <SortSection
             isActive={false}
           />
           <div className="cities__places-list places__list tabs__content">

@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should UserNav component renders correctly if user has been authenticate 1`] = `
+<nav
+  className="header__nav"
+>
+  <ul
+    className="header__nav-list"
+  >
+    <li
+      className="header__nav-item user"
+    >
+      <a
+        className="header__nav-link header__nav-link--profile"
+        href="/favorite"
+        onClick={[Function]}
+      >
+        <div
+          className="header__avatar-wrapper user__avatar-wrapper"
+        >
+          <img
+            alt="User avatar"
+            className="user__avatar"
+            height={54}
+            src="https://assets.htmlacademy.ru/intensives/javascript-3/avatar/7.jpg"
+            width={54}
+          />
+        </div>
+        <span
+          className="header__user-name user__name"
+        >
+          Oliver.conner@gmail.com
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`Should UserNav component renders correctly if user is not authenticated 1`] = `
+<nav
+  className="header__nav"
+>
+  <ul
+    className="header__nav-list"
+  >
+    <li
+      className="header__nav-item user"
+    >
+      <a
+        className="header__nav-link header__nav-link--profile"
+        href="/login"
+        onClick={[Function]}
+      >
+        <div
+          className="header__avatar-wrapper user__avatar-wrapper"
+        />
+        <span
+          className="header__login"
+        >
+          Sign in
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>
+`;

@@ -1,7 +1,9 @@
 import React from "react";
+import {compose} from "redux";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import SortList from "../sort-list/sort-list";
+import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {sortTypeToTitle} from "../util";
 import {changeSort} from "../../../store/action";
 import {getCurrentSort} from "../../../store/selectors";
@@ -61,4 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {SortSection};
-export default connect(mapStateToProps, mapDispatchToProps)(SortSection);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withActiveState
+)(SortSection);

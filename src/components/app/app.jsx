@@ -8,16 +8,10 @@ import LoginPage from "../login/login";
 import OfferPage from "../offer/offer-page/offer-page";
 import PrivateRoute from "../private-route/private-route";
 import NotFoundPage from "../not-found-page/not-found-page";
-import withErrorMessage from "../../hocs/with-error-message/with-error-message";
 import {checkAuth} from "../../store/api-actions";
 import {changeAuthRequestCompleteStatus} from "../../store/action";
 import {AppRoute} from "../../const";
 
-
-const OfferPageWrapped = withErrorMessage(OfferPage);
-const MainPageWrapped = withErrorMessage(MainPage);
-const FavoritesPageWrapped = withErrorMessage(FavoritesPage);
-const LoginPageWrapped = withErrorMessage(LoginPage);
 
 const App = ({checkAuthorization, setAuthRequestComplete}) => {
   checkAuthorization()
@@ -29,20 +23,20 @@ const App = ({checkAuthorization, setAuthRequestComplete}) => {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainPageWrapped />
+          <MainPage />
         </Route>
         <PrivateRoute exact path={AppRoute.LOGIN}
           render={() => (
-            <LoginPageWrapped />
+            <LoginPage />
           )}
         />
         <PrivateRoute exact path={AppRoute.FAVORITES}
           render={() => (
-            <FavoritesPageWrapped />
+            <FavoritesPage />
           )}
         />
         <Route exact path={`${AppRoute.OFFERS}/:id`}>
-          <OfferPageWrapped />
+          <OfferPage />
         </Route>
         <Route
           render={() => (

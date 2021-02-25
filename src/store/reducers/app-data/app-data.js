@@ -1,9 +1,8 @@
 import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
 import {getCitiesData, updateOffer} from "../../../core";
-import {cities, SortType} from "../../../const";
+import {cities, SortType, DEFAULT_CITY} from "../../../const";
 
-const defaultCityIndex = 0;
 const defaultSort = SortType.DEFAULT;
 
 const initialState = {
@@ -29,7 +28,7 @@ const appData = (state = initialState, {type, payload}) => {
 
     case ActionType.SET_DEFAULT_CITY:
       return extend(state, {
-        currentCity: cities[defaultCityIndex]
+        currentCity: DEFAULT_CITY
       });
 
     case ActionType.CHANGE_SORT_TYPE:

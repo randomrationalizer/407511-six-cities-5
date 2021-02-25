@@ -1,5 +1,6 @@
-export default
-[
+import {adaptOfferToClient} from "../../utils/adapter";
+
+const nearbyOffers = [
   {
     "city": {
       "name": "Cologne",
@@ -166,4 +167,8 @@ export default
     },
     "id": 44
   }
-]
+];
+
+const mockNearbyOffers = nearbyOffers.map(adaptOfferToClient);
+
+export default mockNearbyOffers;

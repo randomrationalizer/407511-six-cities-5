@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileLink component renders correctly 1`] = `
+<a
+  className="header__nav-link header__nav-link--profile"
+  href="/favorite"
+  onClick={[Function]}
+>
+  <div
+    className="header__avatar-wrapper user__avatar-wrapper"
+  >
+    <img
+      alt="User avatar"
+      className="user__avatar"
+      height={54}
+      src="https://assets.htmlacademy.ru/intensives/javascript-3/avatar/7.jpg"
+      width={54}
+    />
+  </div>
+  <span
+    className="header__user-name user__name"
+  >
+    Oliver.conner@gmail.com
+  </span>
+</a>
+`;

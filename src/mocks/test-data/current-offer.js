@@ -1,5 +1,6 @@
-export default
-{
+import {adaptOfferToClient} from "../../utils/adapter";
+
+const currentOffer = {
   "city": {
     "name": "Cologne",
     "location": {
@@ -55,4 +56,8 @@ export default
     "zoom": 16
   },
   "id": 1
-}
+};
+
+const mockCurrentOffer = adaptOfferToClient(currentOffer);
+
+export default mockCurrentOffer;

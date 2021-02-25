@@ -34,8 +34,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
-      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(getUserInfo(adaptUserInfoToClient(data)));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
     })
 );
 

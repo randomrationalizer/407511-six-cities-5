@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should error message component renders correctly 1`] = `
+<div
+  className="error"
+>
+  <h2>
+    Something went wrong:
+  </h2>
+  <p>
+    Error
+  </p>
+  <button
+    className="error-close"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      className="visually-hidden"
+    >
+      Close
+    </span>
+  </button>
+</div>
+`;

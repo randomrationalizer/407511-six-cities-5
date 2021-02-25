@@ -1,8 +1,10 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import Header from "../header/header";
 import CityLink from "../cities/city-link/city-link";
+import withErrorMessage from "../../hocs/with-error-message/with-error-message";
 import {login} from "../../store/api-actions";
 import {setErrorMessage} from "../../store/action";
 import {CityLinkType} from "../../const";
@@ -99,4 +101,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {LoginPage};
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default compose(
+    connect(null, mapDispatchToProps),
+    withErrorMessage
+)(LoginPage);

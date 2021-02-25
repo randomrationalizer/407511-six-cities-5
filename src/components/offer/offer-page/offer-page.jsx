@@ -2,9 +2,11 @@ import React, {PureComponent} from "react";
 import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import Header from "../../header/header";
 import OfferDetails from "../offer-details/offer-details";
 import Preloader from "../../preloader/preloader";
+import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {getOfferDetails, getPartialOfferDetails} from "../../../store/api-actions";
 import {resetCurrentOffer, changeCurrentOfferLoadedStatus, setErrorMessage, loadCurrentOffer, changeLoadFinishStatus} from "../../../store/action";
 import {getCurrentOfferLoadedStatus, getOffersLoadedStatus, getLoadFinishStatus} from "../../../store/selectors";
@@ -111,5 +113,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {OfferPage};
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OfferPage));
-
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    withErrorMessage
+)(OfferPage);

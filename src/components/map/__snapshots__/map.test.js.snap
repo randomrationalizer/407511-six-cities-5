@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Map component renders correctly for main page 1`] = `
+<section
+  className="cities__map map"
+>
+  <div
+    id="map"
+    style={
+      Object {
+        "height": "100%",
+      }
+    }
+  />
+</section>
+`;
+
+exports[`Should Map component renders correctly for property page 1`] = `
+<section
+  className="property__map map"
+>
+  <div
+    id="map"
+    style={
+      Object {
+        "height": "100%",
+      }
+    }
+  />
+</section>
+`;

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {reviewsPropTypes} from "../review.prop";
 import {formatDate, humanizeDate} from "../../offer/util";
 import {getRatingInPercent} from "../../offer/util";

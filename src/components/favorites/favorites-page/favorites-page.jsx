@@ -1,18 +1,20 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import {offersPropTypes} from "../../offer/offer.prop";
 import Header from "../../header/header";
 import FavoritesList from "../favorites-list/favorites-list";
 import FavoritesEmptyList from "../favorites-empty-list/favorites-empty-list";
 import Footer from "../../footer/footer";
 import Preloader from "../../preloader/preloader";
+import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {changeLoadFinishStatus, loadFavoriteOffers, setErrorMessage} from "../../../store/action";
 import {fetchFavoriteOffers} from "../../../store/api-actions";
 import {getFavoritesLoadedStatus, getFavorites, getLoadFinishStatus} from "../../../store/selectors";
 
 
-class Favorites extends PureComponent {
+class FavoritesPage extends PureComponent {
 
   componentDidMount() {
     const {isFavoritesLoaded, getFavoriteOffers, setLoadError} = this.props;
@@ -47,7 +49,7 @@ class Favorites extends PureComponent {
   }
 }
 
-Favorites.propTypes = {
+FavoritesPage.propTypes = {
   isFavoritesLoaded: PropTypes.bool.isRequired,
   isLoadFinished: PropTypes.bool.isRequired,
   getFavoriteOffers: PropTypes.func.isRequired,
@@ -73,5 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export {Favorites};
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export {FavoritesPage};
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withErrorMessage
+)(FavoritesPage);

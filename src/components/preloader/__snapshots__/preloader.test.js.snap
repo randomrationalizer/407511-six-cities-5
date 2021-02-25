@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Preloader component renders correctly 1`] = `
+<div
+  className="preloader"
+>
+  <div />
+  <div />
+  <div />
+  <div />
+</div>
+`;

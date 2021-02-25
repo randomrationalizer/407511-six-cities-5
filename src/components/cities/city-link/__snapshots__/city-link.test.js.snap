@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should City link component renders correctly for inner pages 1`] = `
+<a
+  className="locations__item-link"
+  href="/#paris"
+  onClick={[Function]}
+>
+  <span>
+    Paris
+  </span>
+</a>
+`;
+
+exports[`Should City link component renders correctly for main page with active link 1`] = `
+<a
+  className="locations__item-link tabs__item tabs__item--active"
+  href="/#paris"
+  onClick={[Function]}
+>
+  <span>
+    Paris
+  </span>
+</a>
+`;
+
+exports[`Should City link component renders correctly for main page with inactive link 1`] = `
+<a
+  className="locations__item-link tabs__item "
+  href="/#paris"
+  onClick={[Function]}
+>
+  <span>
+    Paris
+  </span>
+</a>
+`;

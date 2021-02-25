@@ -1,3 +1,4 @@
+import configureStore from "redux-mock-store";
 import {NameSpace} from "../../store/reducers/root-reducer";
 import mockOffers from "./offers";
 import mockReviews from "./reviews";
@@ -5,30 +6,27 @@ import mockNearbyOffers from "./nearby-offers";
 import mockCurrentOffer from "./current-offer";
 import mockUserInfo from "./user-info";
 import mockFavorites from "./favorites";
-import {adaptOfferToClient, adaptReviewToClient, adaptUserInfoToClient} from "../../utils/adapter";
-import {cities, SortType, AuthorizationStatus} from "../../const";
-import { getCitiesData } from "../../core";
+import mockCities from "./cities";
+import {SortType, AuthorizationStatus, DEFAULT_CITY} from "../../const";
 
-const offers = mockOffers.map(adaptOfferToClient);
-const allCities = getCitiesData(offers, cities);
 
-export const mockStore = {
+export default {
   [NameSpace.APP_DATA]: {
-    currentCity: `Cologne`,
-    allOffers: offers,
-    cities: allCities,
+    currentCity: DEFAULT_CITY,
+    allOffers: mockOffers,
+    cities: mockCities,
     currentSort: SortType.DEFAULT
   },
   [NameSpace.USER]: {
     authorizationStatus: AuthorizationStatus.AUTH,
     isAuthRequestComplete: true,
-    userInfo: adaptUserInfoToClient(mockUserInfo),
-    favorites: mockFavorites.map(adaptOfferToClient)
+    userInfo: mockUserInfo,
+    favorites: mockFavorites
   },
   [NameSpace.CURRENT_OFFER]: {
-    offer: adaptOfferToClient(mockCurrentOffer),
-    reviews: mockReviews.map(adaptReviewToClient),
-    nearbyOffers: mockNearbyOffers.map(adaptOfferToClient)
+    offer: mockCurrentOffer,
+    reviews: mockReviews,
+    nearbyOffers: mockNearbyOffers
   },
   [NameSpace.LOAD_STATUS]: {
     isOffersLoaded: true,

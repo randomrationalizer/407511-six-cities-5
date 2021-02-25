@@ -1,5 +1,6 @@
-export default
-[
+import {adaptOfferToClient} from "../../utils/adapter";
+
+const favorites = [
   {
     "city": {
       "name": "Paris",
@@ -221,4 +222,8 @@ export default
     },
     "id": 69
   }
-]
+];
+
+const mockFavorites = favorites.map(adaptOfferToClient);
+
+export default mockFavorites;

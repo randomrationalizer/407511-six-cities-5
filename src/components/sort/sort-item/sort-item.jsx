@@ -14,6 +14,10 @@ const SortItem = ({isActive, sortType, onSortItemClick}) => {
   };
 
   const handleKeyDown = (evt) => {
+    if (isActive) {
+      return;
+    }
+
     checkKeyDownEvent(evt, handleSortClick);
   };
 

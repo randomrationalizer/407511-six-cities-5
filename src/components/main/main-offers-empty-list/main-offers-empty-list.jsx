@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 
-const OffersEmptyContainer = ({city}) => {
+const MainOffersEmptyList = ({city}) => {
   return (
     <div className="cities">
       <div className="cities__places-container cities__places-container--empty container">
@@ -18,8 +18,8 @@ const OffersEmptyContainer = ({city}) => {
   );
 };
 
-OffersEmptyContainer.propTypes = {
+MainOffersEmptyList.propTypes = {
   city: PropTypes.string.isRequired
 };
 
-export default OffersEmptyContainer;
+export default MainOffersEmptyList;

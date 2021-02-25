@@ -43,7 +43,7 @@ const ReviewForm = (props) => {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              checked={review.rating === value ? true : ``}
+              checked={review.rating && review.rating.toString() === value ? true : false}
               required
             />
             <label
