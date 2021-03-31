@@ -10,4 +10,5 @@ const userInfo = {
 
 const mockUserInfo = adaptUserInfoToClient(userInfo);
 
+export {userInfo};
 export default mockUserInfo;

@@ -171,4 +171,5 @@ const nearbyOffers = [
 
 const mockNearbyOffers = nearbyOffers.map(adaptOfferToClient);
 
+export {nearbyOffers};
 export default mockNearbyOffers;

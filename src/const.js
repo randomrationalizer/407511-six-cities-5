@@ -37,6 +37,7 @@ export const KeyCode = {
 };
 
 export const HttpCode = {
+  OK: 200,
   UNAUTHORIZED: 401,
   BAD_REQUEST: 400,
   NOT_FOUND: 404

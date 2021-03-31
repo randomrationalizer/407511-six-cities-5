@@ -51,4 +51,4 @@ const appData = (state = initialState, {type, payload}) => {
   return state;
 };
 
-export {appData};
+export {appData, initialState};

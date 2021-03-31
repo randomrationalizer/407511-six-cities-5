@@ -33,5 +33,4 @@ const currentOffer = (state = initialState, {type, payload}) => {
   return state;
 };
 
-export {currentOffer};
-
+export {currentOffer, initialState};

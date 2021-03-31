@@ -28,7 +28,7 @@ const favorites = [
       "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg"
     ],
     "title": "The Pondhouse - A Magical Place",
-    "is_favorite": false,
+    "is_favorite": true,
     "is_premium": false,
     "rating": 2.2,
     "type": "house",
@@ -81,7 +81,7 @@ const favorites = [
       "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg"
     ],
     "title": "Penthouse, 4-5 rooms + 5 balconies",
-    "is_favorite": false,
+    "is_favorite": true,
     "is_premium": false,
     "rating": 3.1,
     "type": "room",
@@ -132,7 +132,7 @@ const favorites = [
       "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg"
     ],
     "title": "Loft Studio in the Central Area",
-    "is_favorite": false,
+    "is_favorite": true,
     "is_premium": true,
     "rating": 3.5,
     "type": "hotel",
@@ -190,7 +190,7 @@ const favorites = [
       "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg"
     ],
     "title": "Penthouse, 4-5 rooms + 5 balconies",
-    "is_favorite": false,
+    "is_favorite": true,
     "is_premium": true,
     "rating": 5,
     "type": "room",
@@ -226,4 +226,5 @@ const favorites = [
 
 const mockFavorites = favorites.map(adaptOfferToClient);
 
+export {favorites};
 export default mockFavorites;

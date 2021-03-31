@@ -60,4 +60,5 @@ const currentOffer = {
 
 const mockCurrentOffer = adaptOfferToClient(currentOffer);
 
+export {currentOffer};
 export default mockCurrentOffer;

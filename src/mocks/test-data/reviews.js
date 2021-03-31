@@ -29,4 +29,5 @@ const reviews = [
 
 const mockReviews = reviews.map(adaptReviewToClient);
 
+export {reviews};
 export default mockReviews;

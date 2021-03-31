@@ -39,45 +39,45 @@ export const login = ({email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-const fetchNearbyOffers = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${id}/${APIRoute.NEARBY}`)
-    .then(({data}) => dispatch(loadNearbyOffers(data.map(adaptOfferToClient))))
-    .catch(() => {
-      dispatch(loadNearbyOffers([]));
-    })
-);
-
-const fetchOfferReviews = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.REVIEWS}/${id}`)
-    .then(({data}) => dispatch(loadOfferReviews(data.map(adaptReviewToClient))))
-    .catch(() => {
-      dispatch(loadOfferReviews([]));
-    })
-);
-
-const fetchOfferById = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${id}`)
-    .then(({data}) => dispatch(loadCurrentOffer(adaptOfferToClient(data))))
-);
-
-export const getOfferDetails = (id) => (dispatch, _getState, _api) => (
+export const getOfferDetails = (id) => (dispatch, _getState, api) => (
   Promise.all([
     dispatch(changeLoadFinishStatus(false)),
-    dispatch(fetchOfferById(id))
+    api.get(`${APIRoute.OFFERS}/${id}`)
+    .then(({data}) => dispatch(loadCurrentOffer(adaptOfferToClient(data))))
   ])
-  .then(() => dispatch(fetchOfferReviews(id)))
-    .then(() => dispatch(fetchNearbyOffers(id)))
+  .then(() =>
+    api.get(`${APIRoute.REVIEWS}/${id}`)
+      .then(({data}) => dispatch(loadOfferReviews(data.map(adaptReviewToClient))))
+      .catch(() => {
+        dispatch(loadOfferReviews([]));
+      })
+  )
+    .then(() =>
+      api.get(`${APIRoute.OFFERS}/${id}/${APIRoute.NEARBY}`)
+      .then(({data}) => dispatch(loadNearbyOffers(data.map(adaptOfferToClient))))
+      .catch(() => {
+        dispatch(loadNearbyOffers([]));
+      })
+    )
       .then(() => {
         dispatch(changeLoadFinishStatus(true));
         dispatch(changeCurrentOfferLoadedStatus(true));
       })
 );
 
-export const getPartialOfferDetails = (id) => (dispatch, getState, _api) => (
+export const getPartialOfferDetails = (id) => (dispatch, getState, api) => (
   Promise.all([
     dispatch(changeLoadFinishStatus(false)),
-    dispatch(fetchOfferReviews(id)),
-    dispatch(fetchNearbyOffers(id))
+    api.get(`${APIRoute.REVIEWS}/${id}`)
+      .then(({data}) => dispatch(loadOfferReviews(data.map(adaptReviewToClient))))
+      .catch(() => {
+        dispatch(loadOfferReviews([]));
+      }),
+    api.get(`${APIRoute.OFFERS}/${id}/${APIRoute.NEARBY}`)
+      .then(({data}) => dispatch(loadNearbyOffers(data.map(adaptOfferToClient))))
+      .catch(() => {
+        dispatch(loadNearbyOffers([]));
+      })
   ])
   .then(() => {
     const offers = getOffers(getState());
@@ -87,15 +87,11 @@ export const getPartialOfferDetails = (id) => (dispatch, getState, _api) => (
   })
 );
 
-const fetchOffers = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.OFFERS)
-    .then(({data}) => dispatch(loadOffers(data.map(adaptOfferToClient))))
-);
-
-export const getAllOffersData = () => (dispatch, getState, _api) => (
+export const fetchOffers = () => (dispatch, getState, api) => (
   Promise.all([
     dispatch(changeLoadFinishStatus(false)),
-    dispatch(fetchOffers())
+    api.get(APIRoute.OFFERS)
+    .then(({data}) => dispatch(loadOffers(data.map(adaptOfferToClient))))
   ])
   .then(() => {
     dispatch(getCities());
@@ -125,8 +121,9 @@ export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
 export const changeFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITES}/${id}/${status}`)
     .then(({data}) => {
-      dispatch(updateOffers(adaptOfferToClient(data)));
-      dispatch(updateFavoriteOffers(adaptOfferToClient(data)));
+      const offer = adaptOfferToClient(data);
+      dispatch(updateOffers(offer));
+      dispatch(updateFavoriteOffers(offer));
     })
 );
 

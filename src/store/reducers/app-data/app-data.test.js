@@ -1,9 +1,15 @@
 import {appData, initialState} from "./app-data";
-import {getCities, changeCity, setDefaultCity, changeSort, loadOffers, updateOffers} from "../../action";
+import MockAdapter from "axios-mock-adapter";
+import {createAPI} from "../../../services/api";
+import {getCities, changeCity, setDefaultCity, changeSort, loadOffers, updateOffers, ActionType} from "../../action";
+import {fetchOffers} from "../../api-actions";
 import mockCities from "../../../mocks/test-data/cities";
-import mockOffers from "../../../mocks/test-data/offers";
-import {SortType, DEFAULT_CITY} from "../../../const";
+import mockOffers, {offers as mockRawOffers} from "../../../mocks/test-data/offers";
+import {NameSpace} from "../root-reducer";
+import {SortType, DEFAULT_CITY, APIRoute, HttpCode} from "../../../const";
 
+
+const api = createAPI(() => {});
 
 describe(`App Data reduser works correctly`, () => {
   it(`Reduser without additional parameters should return initial state`, () => {
@@ -40,5 +46,46 @@ describe(`App Data reduser works correctly`, () => {
     const updatedOffer = Object.assign({}, offerToUpdate, {title: `Mock`});
     expect(appData({allOffers: mockOffers}, updateOffers(updatedOffer)))
       .toEqual({allOffers: [updatedOffer, ...otherOffers]});
+  });
+});
+
+describe(`App Data async operations works correctly`, () => {
+  it(`Should make a correct API call to /hotels`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const offersLoader = fetchOffers();
+
+    const getState = () => ({
+      [NameSpace.APP_DATA]: {
+        currentCity: DEFAULT_CITY
+      }});
+
+    apiMock
+      .onGet(APIRoute.OFFERS)
+      .reply(HttpCode.OK, mockRawOffers);
+
+    return offersLoader(dispatch, getState, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(5);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          payload: false
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.LOAD_OFFERS,
+          payload: mockOffers
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: ActionType.GET_CITIES
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
+          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          payload: true
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(5, {
+          type: ActionType.CHANGE_OFFERS_LOADED_STATUS,
+          payload: true
+        });
+      });
   });
 });

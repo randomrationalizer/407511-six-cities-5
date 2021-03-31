@@ -4869,4 +4869,5 @@ const offers = [
 
 const mockOffers = offers.map(adaptOfferToClient);
 
+export {offers};
 export default mockOffers;

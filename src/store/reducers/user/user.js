@@ -43,4 +43,4 @@ const user = (state = initialState, {type, payload}) => {
   return state;
 };
 
-export {user};
+export {user, initialState};

@@ -6,7 +6,7 @@ import MainOffersSection from "../main-offers-section/main-offers-section";
 import Header from "../../header/header";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
-import {getAllOffersData} from "../../../store/api-actions";
+import {fetchOffers} from "../../../store/api-actions";
 import {changeLoadFinishStatus, setErrorMessage} from "../../../store/action";
 import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
 
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOffers() {
-    return dispatch(getAllOffersData());
+    return dispatch(fetchOffers());
   },
   setLoadError(err) {
     dispatch(changeLoadFinishStatus(true));
