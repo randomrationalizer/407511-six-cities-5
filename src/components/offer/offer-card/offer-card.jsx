@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {offersPropTypes} from "../offer.prop";
 import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
+import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {setErrorMessage} from "../../../store/action";
 import {changeFavoriteStatus} from "../../../store/api-actions";
 import {getAuthorizationStatus} from "../../../store/selectors";
@@ -12,6 +13,7 @@ import {getRatingInPercent} from "../util";
 import {OfferType, AppRoute, OfferPageType} from "../../../const";
 import "./offer-card.css";
 
+const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
 const offerTypeToArticleClassName = {
   [OfferType.MAIN]: `cities__place-card place-card`,
@@ -95,7 +97,7 @@ const OfferCard = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <OfferFavoriteBtn
+          <OfferFavoriteBtnWrapped
             id={id}
             isActive={isFavorite}
             pageType={OfferPageType.CARD}

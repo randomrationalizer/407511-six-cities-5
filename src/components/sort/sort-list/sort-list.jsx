@@ -4,7 +4,9 @@ import {SortType} from "../../../const";
 import SortItem from "../sort-item/sort-item";
 
 
-const SortList = ({isOpened, currentSort, onSortItemClick}) => {
+const SortList = (props) => {
+  const {isOpened, currentSort, onSortItemClick} = props;
+
   return (
     <ul className={`places__options places__options--custom ${isOpened ? `places__options--opened` : ``}`}>
       {Object.values(SortType).map((item) =>

@@ -6,6 +6,7 @@ import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
 import OffersList from "../offers-list/offers-list";
 import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
+import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {setErrorMessage} from "../../../store/action";
 import {changeFavoriteStatus} from "../../../store/api-actions";
 import {getCurrentOffer, getNearbyOffers, getAuthorizationStatus} from "../../../store/selectors";
@@ -15,6 +16,7 @@ import {MapType, OfferType, OfferPageType} from "../../../const";
 
 const MAX_PHOTOS_COUNT = 6;
 
+const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
 const OfferDetails = (props) => {
   const {id, offer, nearbyOffers, changeStatus, authorizationStatus, setError} = props;
@@ -44,7 +46,7 @@ const OfferDetails = (props) => {
             </div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{title}</h1>
-              <OfferFavoriteBtn
+              <OfferFavoriteBtnWrapped
                 id={id}
                 isActive={isFavorite}
                 pageType={OfferPageType.DETAILS}

@@ -10,6 +10,8 @@ import {setErrorMessage} from "../../store/action";
 import {CityLinkType} from "../../const";
 
 
+const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 class LoginPage extends PureComponent {
   constructor(props) {
     super(props);
@@ -24,11 +26,13 @@ class LoginPage extends PureComponent {
     const {onFormSubmit, setLoginError} = this.props;
     evt.preventDefault();
 
-    onFormSubmit({
-      email: this.loginRef.current.value,
-      password: this.passwordRef.current.value
-    })
-      .catch((err) => setLoginError(err));
+    if (EMAIL_REGEXP.test(this.loginRef.current.value) && this.passwordRef.current.value) {
+      onFormSubmit({
+        email: this.loginRef.current.value,
+        password: this.passwordRef.current.value
+      })
+        .catch((err) => setLoginError(err));
+    }
   }
 
   render() {

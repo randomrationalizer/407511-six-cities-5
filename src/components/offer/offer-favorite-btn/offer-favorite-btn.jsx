@@ -1,8 +1,6 @@
 import React from "react";
-import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {OfferPageType, AppRoute, AuthorizationStatus} from "../../../const";
 import "./offer-favorite-btn.css";
 
@@ -73,7 +71,4 @@ OfferFavoriteBtn.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default compose(
-    withRouter,
-    withActiveState
-)(OfferFavoriteBtn);
+export default withRouter(OfferFavoriteBtn);
