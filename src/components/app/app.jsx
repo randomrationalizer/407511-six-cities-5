@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Route, Switch, BrowserRouter} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import MainPage from "../main/main-page/main-page";
 import FavoritesPage from "../favorites/favorites-page/favorites-page";
 import LoginPage from "../login/login";
@@ -20,31 +20,29 @@ const App = ({checkAuthorization, setAuthRequestComplete}) => {
     });
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <MainPage />
-        </Route>
-        <PrivateRoute exact path={AppRoute.LOGIN}
-          render={() => (
-            <LoginPage />
-          )}
-        />
-        <PrivateRoute exact path={AppRoute.FAVORITES}
-          render={() => (
-            <FavoritesPage />
-          )}
-        />
-        <Route exact path={`${AppRoute.OFFERS}/:id`}>
-          <OfferPage />
-        </Route>
-        <Route
-          render={() => (
-            <NotFoundPage />
-          )}
-        />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path={AppRoute.MAIN}>
+        <MainPage />
+      </Route>
+      <PrivateRoute exact path={AppRoute.LOGIN}
+        render={() => (
+          <LoginPage />
+        )}
+      />
+      <PrivateRoute exact path={AppRoute.FAVORITES}
+        render={() => (
+          <FavoritesPage />
+        )}
+      />
+      <Route exact path={`${AppRoute.OFFERS}/:id`}>
+        <OfferPage />
+      </Route>
+      <Route
+        render={() => (
+          <NotFoundPage />
+        )}
+      />
+    </Switch>
   );
 };
 
