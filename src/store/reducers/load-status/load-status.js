@@ -46,4 +46,4 @@ const loadStatus = (state = initialState, {type, payload}) => {
   return state;
 };
 
-export {loadStatus};
+export {loadStatus, initialState};
