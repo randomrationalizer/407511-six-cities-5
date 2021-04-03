@@ -91,7 +91,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button  button"
+                    className="place-card__bookmark-button place-card__bookmark-button--active button"
                     onClick={[Function]}
                     type="button"
                   >
@@ -107,7 +107,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      To bookmarks
+                      In bookmarks
                     </span>
                   </button>
                 </div>
@@ -216,7 +216,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button  button"
+                    className="place-card__bookmark-button place-card__bookmark-button--active button"
                     onClick={[Function]}
                     type="button"
                   >
@@ -232,7 +232,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      To bookmarks
+                      In bookmarks
                     </span>
                   </button>
                 </div>
@@ -323,7 +323,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button  button"
+                    className="place-card__bookmark-button place-card__bookmark-button--active button"
                     onClick={[Function]}
                     type="button"
                   >
@@ -339,7 +339,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      To bookmarks
+                      In bookmarks
                     </span>
                   </button>
                 </div>
@@ -448,7 +448,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button  button"
+                    className="place-card__bookmark-button place-card__bookmark-button--active button"
                     onClick={[Function]}
                     type="button"
                   >
@@ -464,7 +464,7 @@ exports[`Should FavoritesList renders correctly 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      To bookmarks
+                      In bookmarks
                     </span>
                   </button>
                 </div>
