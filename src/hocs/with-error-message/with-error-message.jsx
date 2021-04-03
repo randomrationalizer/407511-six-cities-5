@@ -46,20 +46,19 @@ const withErrorMessage = (Component) => {
     closeErrorModal: PropTypes.func
   };
 
-  const mapStateToProps = (state) => ({
-    message: getErrorMessage(state)
-  });
-
-  const mapDispatchToProps = (dispatch) => ({
-    closeErrorModal() {
-      dispatch(closeErrorMessage());
-    }
-  });
-
-
-  return connect(mapStateToProps, mapDispatchToProps)(WithErrorMessage);
+  return WithErrorMessage;
 };
+
+const mapStateToProps = (state) => ({
+  message: getErrorMessage(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  closeErrorModal() {
+    dispatch(closeErrorMessage());
+  }
+});
 
 
 export {withErrorMessage};
-export default withErrorMessage;
+export default (Component) => connect(mapStateToProps, mapDispatchToProps)(withErrorMessage(Component));

@@ -1,3 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should withErrorMessage component renders correctly 1`] = `<div />`;
+exports[`Should withErrorMessage wrapped component connected to store renders correctly with error 1`] = `
+Array [
+  <div
+    className="error"
+  >
+    <h2>
+      Something went wrong:
+    </h2>
+    <p>
+      Error
+    </p>
+    <button
+      className="error-close"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="visually-hidden"
+      >
+        Close
+      </span>
+    </button>
+  </div>,
+  <div />,
+]
+`;
+
+exports[`Should withErrorMessage wrapped component connected to store renders correctly without error 1`] = `<div />`;
+
+exports[`Should withErrorMessage wrapped component renders correctly with error 1`] = `
+Array [
+  <div
+    className="error"
+  >
+    <h2>
+      Something went wrong:
+    </h2>
+    <p>
+      Error
+    </p>
+    <button
+      className="error-close"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="visually-hidden"
+      >
+        Close
+      </span>
+    </button>
+  </div>,
+  <div />,
+]
+`;
+
+exports[`Should withErrorMessage wrapped component renders correctly without error 1`] = `<div />`;
