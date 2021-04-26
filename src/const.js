@@ -63,3 +63,8 @@ export const APIRoute = {
   REVIEWS: `/comments`,
   LOGIN: `/login`
 };
+
+export const ErrorMessage = {
+  BAD_REQUEST: `Invalid data format`,
+  NETWORK_ERROR: `Network unavailable`
+};

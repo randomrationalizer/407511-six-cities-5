@@ -126,13 +126,15 @@ describe(`User async operations works correctly`, () => {
           payload: false
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.LOAD_FAVORITE_OFFERS,
-          payload: mockFavorites
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.CHANGE_LOAD_FINISH_STATUS,
           payload: true
         });
+
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: ActionType.LOAD_FAVORITE_OFFERS,
+          payload: mockFavorites
+        });
+
         expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: ActionType.CHANGE_FAVORITES_LOADED_STATUS,
           payload: true

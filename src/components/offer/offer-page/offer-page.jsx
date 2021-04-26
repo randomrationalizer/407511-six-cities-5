@@ -8,7 +8,7 @@ import OfferDetails from "../offer-details/offer-details";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {getOfferDetails, getPartialOfferDetails} from "../../../store/api-actions";
-import {resetCurrentOffer, changeCurrentOfferLoadedStatus, setErrorMessage, loadCurrentOffer, changeLoadFinishStatus} from "../../../store/action";
+import {resetCurrentOffer, changeCurrentOfferLoadedStatus, setErrorMessage, loadCurrentOffer} from "../../../store/action";
 import {getCurrentOfferLoadedStatus, getOffersLoadedStatus, getLoadFinishStatus} from "../../../store/selectors";
 import {AppRoute, HttpCode} from "../../../const";
 
@@ -36,7 +36,7 @@ class OfferPage extends PureComponent {
 
   handleLoadError(err) {
     const {history, setLoadError} = this.props;
-    if (err.response.status === HttpCode.NOT_FOUND) {
+    if (err.response && err.response.status === HttpCode.NOT_FOUND) {
       history.push(AppRoute.NOT_FOUND);
     } else {
       setLoadError(err);
@@ -106,7 +106,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(changeCurrentOfferLoadedStatus(false));
   },
   setLoadError(err) {
-    dispatch(changeLoadFinishStatus(true));
     dispatch(loadCurrentOffer({}));
     dispatch(setErrorMessage(err.message));
   }

@@ -9,7 +9,7 @@ import FavoritesEmptyList from "../favorites-empty-list/favorites-empty-list";
 import Footer from "../../footer/footer";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
-import {changeLoadFinishStatus, loadFavoriteOffers, setErrorMessage} from "../../../store/action";
+import {loadFavoriteOffers, setErrorMessage} from "../../../store/action";
 import {fetchFavoriteOffers} from "../../../store/api-actions";
 import {getFavoritesLoadedStatus, getFavorites, getLoadFinishStatus} from "../../../store/selectors";
 
@@ -68,7 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(fetchFavoriteOffers());
   },
   setLoadError(err) {
-    dispatch(changeLoadFinishStatus(true));
     dispatch(loadFavoriteOffers([]));
     dispatch(setErrorMessage(err.message));
   }

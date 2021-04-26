@@ -125,12 +125,12 @@ describe(`Current Offer async operations works correctly`, () => {
           payload: mockNearbyOffers
         });
         expect(dispatch).toHaveBeenNthCalledWith(4, {
-          type: ActionType.LOAD_CURRENT_OFFER,
-          payload: offer
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(5, {
           type: ActionType.CHANGE_LOAD_FINISH_STATUS,
           payload: true
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(5, {
+          type: ActionType.LOAD_CURRENT_OFFER,
+          payload: offer
         });
         expect(dispatch).toHaveBeenNthCalledWith(6, {
           type: ActionType.CHANGE_CURRENT_OFFER_LOADED_STATUS,

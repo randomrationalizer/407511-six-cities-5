@@ -7,7 +7,7 @@ import Header from "../../header/header";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {fetchOffers} from "../../../store/api-actions";
-import {changeLoadFinishStatus, setErrorMessage} from "../../../store/action";
+import {setErrorMessage} from "../../../store/action";
 import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
 
 
@@ -58,7 +58,6 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(fetchOffers());
   },
   setLoadError(err) {
-    dispatch(changeLoadFinishStatus(true));
     dispatch(setErrorMessage(err.message));
   }
 });
