@@ -1,13 +1,14 @@
 import {currentOffer, initialState} from "./current-offer";
 import MockAdapter from "axios-mock-adapter";
-import {createAPI} from "../../../services/api";
-import {ActionType, loadCurrentOffer, loadNearbyOffers, loadOfferReviews, resetCurrentOffer} from "../../action";
-import {getOfferDetails, getPartialOfferDetails, postNewReview} from "../../api-actions";
-import mockOffers from "../../../mocks/test-data/offers";
-import mockCurrentOffer, {currentOffer as mockRawCurrentOffer} from "../../../mocks/test-data/current-offer";
-import mockNearbyOffers, {nearbyOffers as mockRawNearbyOffers} from "../../../mocks/test-data/nearby-offers";
-import mockReviews, {reviews as mockRawReviews} from "../../../mocks/test-data/reviews";
-import {APIRoute, HttpCode} from "../../../const";
+import {createAPI} from "../../services/api";
+import {ActionType, loadCurrentOffer, loadNearbyOffers, loadOfferReviews, resetCurrentOffer} from "./action";
+import {ActionType as LoadStatusActionType} from "../load-status/action";
+import {fetchOffer, postNewReview} from "../api-actions";
+import mockOffers from "../../mocks/test-data/offers";
+import mockCurrentOffer, {currentOffer as mockRawCurrentOffer} from "../../mocks/test-data/current-offer";
+import mockNearbyOffers, {nearbyOffers as mockRawNearbyOffers} from "../../mocks/test-data/nearby-offers";
+import mockReviews, {reviews as mockRawReviews} from "../../mocks/test-data/reviews";
+import {APIRoute, HttpCode} from "../../const";
 import {NameSpace} from "../root-reducer";
 
 
@@ -54,7 +55,15 @@ describe(`Current Offer async operations works correctly`, () => {
 
   it(`Should make a correct API call to get full offer details`, () => {
     const id = 1;
-    const offerLoader = getOfferDetails(id);
+    const offerLoader = fetchOffer(id);
+    const getState = () => ({
+      [NameSpace.APP_DATA]: {
+        allOffers: []
+      },
+      [NameSpace.LOAD_STATUS]: {
+        isOffersLoaded: false
+      }
+    });
 
     apiMock
       .onGet(`${APIRoute.OFFERS}/${id}`)
@@ -64,11 +73,11 @@ describe(`Current Offer async operations works correctly`, () => {
       .onGet(`${APIRoute.OFFERS}/${id}/${APIRoute.NEARBY}`)
       .reply(HttpCode.OK, mockRawNearbyOffers);
 
-    return offerLoader(dispatch, () => {}, api)
+    return offerLoader(dispatch, getState, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(6);
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: false
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -84,11 +93,7 @@ describe(`Current Offer async operations works correctly`, () => {
           payload: mockNearbyOffers
         });
         expect(dispatch).toHaveBeenNthCalledWith(5, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
-          payload: true
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(6, {
-          type: ActionType.CHANGE_CURRENT_OFFER_LOADED_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: true
         });
       });
@@ -96,12 +101,16 @@ describe(`Current Offer async operations works correctly`, () => {
 
   it(`Should make a correct API call to get partial offer details`, () => {
     const id = 1;
-    const offerDetailsLoader = getPartialOfferDetails(id);
-    const offer = mockOffers[0];
+    const offerDetailsLoader = fetchOffer(id);
+    const expectedOffer = mockOffers[0];
     const getState = () => ({
       [NameSpace.APP_DATA]: {
         allOffers: mockOffers
-      }});
+      },
+      [NameSpace.LOAD_STATUS]: {
+        isOffersLoaded: true
+      }
+    });
 
     apiMock
       .onGet(`${APIRoute.REVIEWS}/${id}`)
@@ -111,29 +120,25 @@ describe(`Current Offer async operations works correctly`, () => {
 
     return offerDetailsLoader(dispatch, getState, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(6);
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: false
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.LOAD_CURRENT_OFFER,
+          payload: expectedOffer
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.LOAD_OFFER_REVIEWS,
           payload: mockReviews
         });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: ActionType.LOAD_NEARBY_OFFERS,
           payload: mockNearbyOffers
         });
-        expect(dispatch).toHaveBeenNthCalledWith(4, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
-          payload: true
-        });
         expect(dispatch).toHaveBeenNthCalledWith(5, {
-          type: ActionType.LOAD_CURRENT_OFFER,
-          payload: offer
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(6, {
-          type: ActionType.CHANGE_CURRENT_OFFER_LOADED_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: true
         });
       });

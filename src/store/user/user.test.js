@@ -1,19 +1,20 @@
 import {user, initialState} from "./user";
 import MockAdapter from "axios-mock-adapter";
-import {createAPI} from "../../../services/api";
+import {createAPI} from "../../services/api";
 import {
   ActionType,
-  changeAuthRequestCompleteStatus,
-  getUserInfo,
-  loadFavoriteOffers,
   requireAuthorization,
+  setAuthRequestCompleteStatus,
+  getUserInfo, loadFavoriteOffers,
   updateFavoriteOffers
-} from "../../action";
-import {checkAuth, fetchFavoriteOffers, login, changeFavoriteStatus} from "../../api-actions";
-import mockUserInfo, {userInfo as mockRawUserInfo} from "../../../mocks/test-data/user-info";
-import mockFavorites, {favorites as mockRawFavorites} from "../../../mocks/test-data/favorites";
-import mockCurrentOffer, {currentOffer as mockRawCurrentOffer} from "../../../mocks/test-data/current-offer";
-import {APIRoute, AuthorizationStatus, HttpCode} from "../../../const";
+} from "./action";
+import {ActionType as LoadStatusActionType} from "../load-status/action";
+import {ActionType as AppDataActionType} from "../app-data/action";
+import {checkAuth, fetchFavoriteOffers, login, changeFavoriteStatus} from "../api-actions";
+import mockUserInfo, {userInfo as mockRawUserInfo} from "../../mocks/test-data/user-info";
+import mockFavorites, {favorites as mockRawFavorites} from "../../mocks/test-data/favorites";
+import mockCurrentOffer, {currentOffer as mockRawCurrentOffer} from "../../mocks/test-data/current-offer";
+import {APIRoute, AuthorizationStatus, HttpCode} from "../../const";
 
 
 let apiMock;
@@ -53,7 +54,7 @@ describe(`User reduser works correctly`, () => {
   });
 
   it(`Reduser should change authorization request finish status to a new value`, () => {
-    expect(user({isAuthRequestComplete: false}, changeAuthRequestCompleteStatus(true)))
+    expect(user({isAuthRequestComplete: false}, setAuthRequestCompleteStatus(true)))
       .toEqual({isAuthRequestComplete: true});
   });
 });
@@ -83,7 +84,7 @@ describe(`User async operations works correctly`, () => {
           payload: AuthorizationStatus.AUTH
         });
         expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: ActionType.CHANGE_AUTH_REQUEST_COMPLETE_STATUS,
+          type: ActionType.SET_AUTH_REQUEST_COMPLETE_STATUS,
           payload: true
         });
       });
@@ -122,21 +123,19 @@ describe(`User async operations works correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: false
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.CHANGE_LOAD_FINISH_STATUS,
+          type: LoadStatusActionType.SET_LOAD_FINISH_STATUS,
           payload: true
         });
-
         expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.LOAD_FAVORITE_OFFERS,
           payload: mockFavorites
         });
-
         expect(dispatch).toHaveBeenNthCalledWith(4, {
-          type: ActionType.CHANGE_FAVORITES_LOADED_STATUS,
+          type: LoadStatusActionType.SET_FAVORITES_LOADED_STATUS,
           payload: true
         });
       });
@@ -155,7 +154,7 @@ describe(`User async operations works correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.UPDATE_OFFERS,
+          type: AppDataActionType.UPDATE_OFFERS,
           payload: mockCurrentOffer
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {

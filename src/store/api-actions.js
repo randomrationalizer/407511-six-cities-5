@@ -1,22 +1,9 @@
-import {
-  getCities,
-  loadOffers,
-  requireAuthorization,
-  getUserInfo,
-  loadNearbyOffers,
-  loadOfferReviews,
-  updateOffers,
-  loadCurrentOffer,
-  loadFavoriteOffers,
-  updateFavoriteOffers,
-  changeOffersLoadedStatus,
-  changeFavoritesLoadedStatus,
-  changeCurrentOfferLoadedStatus,
-  changeLoadFinishStatus,
-  changeAuthRequestCompleteStatus,
-  setDefaultCity
-} from "./action";
-import {getCurrentCity, getOffers} from "../store/selectors";
+import {loadOffers, updateOffers} from "./app-data/action";
+import {requireAuthorization, getUserInfo, loadFavoriteOffers, updateFavoriteOffers, setAuthRequestCompleteStatus} from "./user/action";
+import {setOffersLoadedStatus, setFavoritesLoadedStatus, setLoadFinishStatus} from "./load-status/action";
+import {loadNearbyOffers, loadOfferReviews, loadCurrentOffer} from "./current-offer/action";
+import {getOffersLoadedStatus} from "./load-status/selectors";
+import {getOffers} from "./app-data/selectors";
 import {getOfferById} from "../core";
 import {adaptUserInfoToClient, adaptOfferToClient, adaptReviewToClient} from "../utils/adapter";
 import {AuthorizationStatus, APIRoute} from "../const";
@@ -27,7 +14,7 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(getUserInfo(adaptUserInfoToClient(data)));
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(changeAuthRequestCompleteStatus(true));
+      dispatch(setAuthRequestCompleteStatus(true));
     })
 );
 
@@ -39,11 +26,17 @@ export const login = ({email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export const getOfferDetails = (id) => (dispatch, _getState, api) => {
-  dispatch(changeLoadFinishStatus(false));
+export const fetchOffer = (id) => (dispatch, getState, api) => {
+  dispatch(setLoadFinishStatus(false));
+  const isOffersLoaded = getOffersLoadedStatus(getState());
+  const offers = getOffers(getState());
+
   return Promise.all([
-    api.get(`${APIRoute.OFFERS}/${id}`)
-      .then(({data}) => dispatch(loadCurrentOffer(adaptOfferToClient(data)))),
+    isOffersLoaded ?
+      dispatch(loadCurrentOffer(getOfferById(offers, id)))
+      :
+      api.get(`${APIRoute.OFFERS}/${id}`)
+        .then(({data}) => dispatch(loadCurrentOffer(adaptOfferToClient(data)))),
     api.get(`${APIRoute.REVIEWS}/${id}`)
       .then(({data}) => dispatch(loadOfferReviews(data.map(adaptReviewToClient))))
       .catch(() => dispatch(loadOfferReviews([]))),
@@ -51,50 +44,26 @@ export const getOfferDetails = (id) => (dispatch, _getState, api) => {
       .then(({data}) => dispatch(loadNearbyOffers(data.map(adaptOfferToClient))))
       .catch(() => dispatch(loadNearbyOffers([])))
   ])
-  .finally(() => dispatch(changeLoadFinishStatus(true)))
-  .then(() => dispatch(changeCurrentOfferLoadedStatus(true)));
+  .finally(() => dispatch(setLoadFinishStatus(true)));
 };
 
-export const getPartialOfferDetails = (id) => (dispatch, getState, api) => {
-  dispatch(changeLoadFinishStatus(false));
-  return Promise.all([
-    api.get(`${APIRoute.REVIEWS}/${id}`)
-      .then(({data}) => dispatch(loadOfferReviews(data.map(adaptReviewToClient))))
-      .catch(() => dispatch(loadOfferReviews([]))),
-    api.get(`${APIRoute.OFFERS}/${id}/${APIRoute.NEARBY}`)
-      .then(({data}) => dispatch(loadNearbyOffers(data.map(adaptOfferToClient))))
-      .catch(() => dispatch(loadNearbyOffers([])))
-  ])
-  .finally(() => dispatch(changeLoadFinishStatus(true)))
-  .then(() => {
-    const offers = getOffers(getState());
-    dispatch(loadCurrentOffer(getOfferById(offers, id)));
-    dispatch(changeCurrentOfferLoadedStatus(true));
-  });
-};
-
-export const fetchOffers = () => (dispatch, getState, api) => {
-  dispatch(changeLoadFinishStatus(false));
+export const fetchOffers = () => (dispatch, _getState, api) => {
+  dispatch(setLoadFinishStatus(false));
   return api.get(APIRoute.OFFERS)
-    .finally(() => dispatch(changeLoadFinishStatus(true)))
+    .finally(() => dispatch(setLoadFinishStatus(true)))
     .then(({data}) => {
       dispatch(loadOffers(data.map(adaptOfferToClient)));
-      dispatch(getCities());
-      const currentCity = getCurrentCity(getState());
-      if (!currentCity) {
-        dispatch(setDefaultCity());
-      }
-      dispatch(changeOffersLoadedStatus(true));
+      dispatch(setOffersLoadedStatus(true));
     });
 };
 
 export const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
-  dispatch(changeLoadFinishStatus(false));
+  dispatch(setLoadFinishStatus(false));
   return api.get(APIRoute.FAVORITES)
-    .finally(() => dispatch(changeLoadFinishStatus(true)))
+    .finally(() => dispatch(setLoadFinishStatus(true)))
     .then(({data}) => {
       dispatch(loadFavoriteOffers(data.map(adaptOfferToClient)));
-      dispatch(changeFavoritesLoadedStatus(true));
+      dispatch(setFavoritesLoadedStatus(true));
     });
 };
 
