@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {withErrorMessage} from "../../../hocs/with-error-message/with-error-message";
+import {checkCommentValidity, checkRatingValidity} from "../util";
+import {extend} from "../../../utils/common";
 
 const RatingValueToTitle = {
   "1": `terribly`,
@@ -11,21 +12,43 @@ const RatingValueToTitle = {
 };
 
 
-const ReviewForm = (props) => {
-  const {onReviewFormSubmit, onFieldChange, review, isValid} = props;
-  const submitBtnRef = React.createRef();
+const ReviewForm = ({onFormSubmit, id}) => {
+  const [review, setReview] = useState({
+    value: ``,
+    isValid: false
+  });
+  const [rating, setRating] = useState({
+    value: 0,
+    isValid: false
+  });
 
   const handleFormFieldChange = (evt) => {
     const {name, value} = evt.target;
-    onFieldChange(name, value);
+
+    switch (name) {
+      case `review`:
+        setReview(extend(review, {
+          value,
+          isValid: checkCommentValidity(value)
+        }));
+        break;
+      case `rating`:
+        setRating(extend(rating, {
+          value,
+          isValid: checkRatingValidity(value)
+        }));
+        break;
+    }
   };
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
-    if (isValid) {
-      onReviewFormSubmit();
-      submitBtnRef.current.disabled = false;
+    if (rating.isValid && review.isValid) {
+      onFormSubmit(id, {
+        comment: review.value,
+        rating: Number(rating.value)
+      });
     }
   };
 
@@ -43,7 +66,7 @@ const ReviewForm = (props) => {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              checked={review.rating && review.rating.toString() === value ? true : false}
+              checked={rating.value === value ? true : false}
               required
             />
             <label
@@ -64,7 +87,7 @@ const ReviewForm = (props) => {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormFieldChange}
-        value={review.comment}
+        value={review.value}
         minLength={50}
         maxLength={300}
         required
@@ -74,10 +97,9 @@ const ReviewForm = (props) => {
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
-          ref={submitBtnRef}
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isValid ? false : true}
+          disabled={!(rating.isValid && review.isValid)}
         >
           Submit
         </button>
@@ -87,11 +109,8 @@ const ReviewForm = (props) => {
 };
 
 ReviewForm.propTypes = {
-  onReviewFormSubmit: PropTypes.func.isRequired,
-  onFieldChange: PropTypes.func.isRequired,
-  review: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired,
-  isValid: PropTypes.bool.isRequired
+  onFormSubmit: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired
 };
 
-export default withErrorMessage(ReviewForm);
+export default ReviewForm;

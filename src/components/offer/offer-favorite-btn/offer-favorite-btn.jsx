@@ -1,6 +1,11 @@
-import React from "react";
-import {withRouter} from "react-router-dom";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {compose} from "redux";
 import PropTypes from "prop-types";
+import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
+import {changeFavoriteStatus} from "../../../store/api-actions";
+import {getAuthorizationStatus} from "../../../store/user/selectors";
 import {OfferPageType, AppRoute, AuthorizationStatus} from "../../../const";
 import "./offer-favorite-btn.css";
 
@@ -28,16 +33,20 @@ const pageTypeToIconSize = {
 
 
 const OfferFavoriteBtn = (props) => {
-  const {id, pageType, onBtnClick, isActive, onActiveChange, authorizationStatus, history} = props;
+  const {id, pageType, changeStatus, isActive, authorizationStatus, showErrorMessage} = props;
+  const history = useHistory();
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
   const btnClassName = pageTypeToBtnClassName[pageType];
   const iconClassName = pageTypeToIconClassName[pageType];
   const iconSize = pageTypeToIconSize[pageType];
+  const [isBooked, setBookedState] = useState(isActive);
+
 
   const handleClick = () => {
     if (isAuthorized) {
-      onBtnClick(id, Number(!isActive));
-      onActiveChange();
+      changeStatus(id, Number(!isBooked))
+        .then(() => setBookedState(!isBooked))
+        .catch(() => showErrorMessage(`A server error occurred.`));
     } else {
       history.push(AppRoute.LOGIN);
     }
@@ -45,7 +54,7 @@ const OfferFavoriteBtn = (props) => {
 
   return (
     <button
-      className={`${btnClassName} ${isActive ? `${btnClassName}--active` : ``} button`}
+      className={`${btnClassName} ${isBooked ? `${btnClassName}--active` : ``} button`}
       type="button"
       onClick={handleClick}
     >
@@ -56,7 +65,7 @@ const OfferFavoriteBtn = (props) => {
       >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
-      <span className="visually-hidden">{`${isActive ? `In` : `To`} bookmarks`}</span>
+      <span className="visually-hidden">{`${isBooked ? `In` : `To`} bookmarks`}</span>
     </button>
   );
 };
@@ -65,10 +74,23 @@ OfferFavoriteBtn.propTypes = {
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   pageType: PropTypes.string.isRequired,
-  onBtnClick: PropTypes.func.isRequired,
-  onActiveChange: PropTypes.func.isRequired,
+  changeStatus: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired
+  showErrorMessage: PropTypes.func.isRequired
 };
 
-export default withRouter(OfferFavoriteBtn);
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeStatus(id, status) {
+    return dispatch(changeFavoriteStatus(id, status));
+  }
+});
+
+export {OfferFavoriteBtn};
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withErrorMessage
+)(OfferFavoriteBtn);

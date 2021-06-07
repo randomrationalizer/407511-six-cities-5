@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {userProfilePropTypes} from "../user-profile.prop";
+import {getUserInfo} from "../../../store/user/selectors";
 import {AppRoute} from "../../../const";
-import {getUserInfo} from "../../../store/selectors";
 
 const avatarSize = {
   width: 54,

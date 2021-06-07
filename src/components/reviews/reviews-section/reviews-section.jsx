@@ -1,46 +1,40 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {connect} from "react-redux";
+import {compose} from "redux";
 import PropTypes from "prop-types";
 import {reviewsPropTypes} from "../review.prop";
+import ReviewsList from "../reviews-list/reviews-list";
 import ReviewForm from "../review-form/review-form";
-import Review from "../review/review";
-import withReviewForm from "../../../hocs/with-review-form/with-review-form";
+import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {postNewReview} from "../../../store/api-actions";
-import {getOfferReviews, getAuthorizationStatus} from "../../../store/selectors";
-import {setErrorMessage} from "../../../store/action";
-import {sortByDate} from "../../offer/util";
+import {getOfferReviews} from "../../../store/current-offer/selectors";
+import {getAuthorizationStatus} from "../../../store/user/selectors";
 import {AuthorizationStatus} from "../../../const";
-
-const ReviewFormWrapped = withReviewForm(ReviewForm);
 
 
 const ReviewsSection = (props) => {
-  const {id, offerReviews, onFormSubmit, authorizationStatus, setError} = props;
+  const {id, reviews, onFormSubmit, authorizationStatus, showErrorMessage} = props;
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
-  const isAnyReviews = offerReviews.length ? true : false;
+  const isAnyReviews = reviews.length ? true : false;
 
-  const handleReviewAdd = (offerId, newReview) => {
+  const handleReviewAdd = useCallback((offerId, newReview) => {
     onFormSubmit(offerId, newReview)
-      .catch((err) => setError(err));
-  };
+      .catch((err) => showErrorMessage(err.message));
+  }, []);
 
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">
-        Reviews &middot; <span className="reviews__amount">{offerReviews.length}</span>
+        Reviews &middot; <span className="reviews__amount">{reviews.length}</span>
       </h2>
-      {isAnyReviews && <ul className="reviews__list">
-        {offerReviews.sort(sortByDate).map((review) =>
-          <Review
-            key={`${review.user.name}-${review.comment}-${review.date}`}
-            review={review}
-          />
-        )}
-      </ul>}
+
+      {isAnyReviews &&
+        <ReviewsList reviews={reviews}/>
+      }
 
       {isAuthorized &&
-        <ReviewFormWrapped
-          key={`${id}-${offerReviews.length}`}
+        <ReviewForm
+          key={`${id}-${reviews.length}`}
           onFormSubmit={handleReviewAdd}
           id={id}
         />
@@ -51,25 +45,25 @@ const ReviewsSection = (props) => {
 
 ReviewsSection.propTypes = {
   id: PropTypes.number.isRequired,
-  offerReviews: PropTypes.arrayOf(reviewsPropTypes),
+  reviews: PropTypes.arrayOf(reviewsPropTypes),
   onFormSubmit: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  setError: PropTypes.func.isRequired
+  showErrorMessage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  offerReviews: getOfferReviews(state),
+  reviews: getOfferReviews(state),
   authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onFormSubmit(id, review) {
     return dispatch(postNewReview(id, review));
-  },
-  setError(err) {
-    dispatch(setErrorMessage(err.message));
   }
 });
 
 export {ReviewsSection};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsSection);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withErrorMessage
+)(ReviewsSection);

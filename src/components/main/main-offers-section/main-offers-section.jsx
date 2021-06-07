@@ -1,19 +1,23 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import {connect} from "react-redux";
-import {compose} from "redux";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offer/offer.prop";
 import {cityPropTypes} from "../../cities/city.prop";
 import MainOffersList from "../main-offers-list/main-offers-list";
 import MainOffersEmptyList from "../main-offers-empty-list/main-offers-empty-list";
 import CitiesList from "../../cities/cities-list/cities-list";
-import withActiveItem from "../../../hocs/with-active-item/with-active-item";
-import {getCityOffers, getCurrentCityData} from "../../../store/selectors";
+import {getCities, getCityOffers, getCurrentCityData} from "../../../store/app-data/selectors";
 
 
 const MainOffersSection = (props) => {
-  const {currentCity, cityOffers, activeItem, onActiveItemChange} = props;
+  const {cities, currentCity, cityOffers} = props;
   const isAnyOffers = cityOffers.length ? true : false;
+  const [activeCardId, setActiveCard] = useState(null);
+
+  const handleActiveCardChange = useCallback((newCardId) => {
+    setActiveCard(newCardId);
+  }, []);
+
 
   return (
     <main className={`page__main page__main--index ${isAnyOffers ? `` : `page__main--index-empty`}`}>
@@ -22,14 +26,15 @@ const MainOffersSection = (props) => {
         <section className="locations container">
           <CitiesList
             currentCity={currentCity.name}
+            cities={cities}
           />
         </section>
       </div>
       {isAnyOffers ?
         <MainOffersList
           offers={cityOffers}
-          onOfferHover={onActiveItemChange}
-          activeCardId={activeItem}
+          onCardHover={handleActiveCardChange}
+          activeCardId={activeCardId}
           city={currentCity}
         />
         :
@@ -42,19 +47,16 @@ const MainOffersSection = (props) => {
 };
 
 MainOffersSection.propTypes = {
+  cities: PropTypes.arrayOf(cityPropTypes).isRequired,
   currentCity: cityPropTypes.isRequired,
-  cityOffers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  activeItem: PropTypes.number,
-  onActiveItemChange: PropTypes.func.isRequired
+  cityOffers: PropTypes.arrayOf(offersPropTypes).isRequired
 };
 
 const mapStateToProps = (state) => ({
+  cities: getCities(state),
   currentCity: getCurrentCityData(state),
   cityOffers: getCityOffers(state)
 });
 
 export {MainOffersSection};
-export default compose(
-    connect(mapStateToProps, null),
-    withActiveItem
-)(MainOffersSection);
+export default connect(mapStateToProps, null)(MainOffersSection);

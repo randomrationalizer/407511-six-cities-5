@@ -1,64 +1,39 @@
-import React, {PureComponent} from "react";
-import {connect} from "react-redux";
-import PropTypes from "prop-types";
+import React, {useCallback, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import ErrorMessage from "../../components/error-message/error-message";
-import {getErrorMessage} from "../../store/selectors";
-import {closeErrorMessage} from "../../store/action";
 
 
 const withErrorMessage = (Component) => {
-  class WithErrorMessage extends PureComponent {
-    constructor(props) {
-      super(props);
+  const WithErrorMessage = (props) => {
+    const location = useLocation();
+    const [error, setError] = useState(null);
 
-      this.handleErrorMessageClose = this.handleErrorMessageClose.bind(this);
-    }
+    const showErrorMessage = useCallback((err) => {
+      setError(err);
+    }, []);
 
-    handleErrorMessageClose() {
-      const {closeErrorModal} = this.props;
-      closeErrorModal();
-    }
+    const handleMessageClose = useCallback(() => {
+      setError(null);
+    }, []);
 
-    componentWillUnmount() {
-      const {message, closeErrorModal} = this.props;
-
-      if (message) {
-        closeErrorModal();
+    useEffect(() => {
+      if (error) {
+        setError(null);
       }
-    }
+    }, [location]);
 
-    render() {
-      const {message} = this.props;
-
-      return (
-        <>
-          {message && <ErrorMessage message={message} onClose={this.handleErrorMessageClose} />}
-          <Component
-            {...this.props}
-          />
-        </>
-      );
-    }
-  }
-
-  WithErrorMessage.propTypes = {
-    message: PropTypes.any,
-    closeErrorModal: PropTypes.func
+    return (
+      <>
+        {error && <ErrorMessage message={error} onClose={handleMessageClose} />}
+        <Component
+          {...props}
+          showErrorMessage={showErrorMessage}
+        />
+      </>
+    );
   };
 
   return WithErrorMessage;
 };
 
-const mapStateToProps = (state) => ({
-  message: getErrorMessage(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  closeErrorModal() {
-    dispatch(closeErrorMessage());
-  }
-});
-
-
-export {withErrorMessage};
-export default (Component) => connect(mapStateToProps, mapDispatchToProps)(withErrorMessage(Component));
+export default withErrorMessage;

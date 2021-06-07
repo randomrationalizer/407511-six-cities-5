@@ -9,3 +9,7 @@ export const checkKeyDownEvent = (evt, action, args) => {
     action(args);
   }
 };
+
+export const pluralize = (word, count) => {
+  return count === 1 ? word : `${word}s`;
+};

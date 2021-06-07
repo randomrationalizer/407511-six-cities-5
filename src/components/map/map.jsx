@@ -1,4 +1,4 @@
-import React, {createRef, PureComponent} from "react";
+import React, {createRef, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer/offer.prop";
 import {cityPropTypes} from "../cities/city.prop";
@@ -22,111 +22,66 @@ const activePin = leaflet.icon({
 });
 
 
-class OffersMap extends PureComponent {
-  constructor(props) {
-    super(props);
+const OffersMap = (props) => {
+  const {offers, activeCardId, city, mapType} = props;
+  const {latitude, longitude, zoom} = city.location;
+  const map = useRef(null);
+  const pins = useRef(leaflet.layerGroup());
+  const mapRef = createRef();
 
-    this.mapRef = createRef();
-  }
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
 
-  componentDidMount() {
-    this.renderMapLayer();
-    this.renderPins();
-  }
+  const prevCity = usePrevious(city);
 
-  componentDidUpdate(prevProps) {
-    const {activeCardId, city} = this.props;
-
-    if (activeCardId !== prevProps.activeCardId) {
-      this.updatePin(prevProps.activeCardId);
-      this.updatePin(activeCardId);
-    }
-
-    if (city.name !== prevProps.city.name) {
-      this.removePins();
-      this.updateMapLayer();
-      this.renderPins();
-    }
-  }
-
-  componentWillUnmount() {
-    this.removePins();
-    this.removeMapLayer();
-  }
-
-  renderMapLayer() {
-    const {latitude, longitude, zoom} = this.props.city.location;
-    const coordinates = [latitude, longitude];
-
-    this.map = leaflet.map(this.mapRef.current, {
-      center: coordinates,
+  useEffect(() => {
+    map.current = leaflet.map(mapRef.current, {
+      center: [latitude, longitude],
       zoom,
       scrollWheelZoom: false,
       zoomControl: true,
       marker: true
     });
-
     leaflet
       .tileLayer(MAP_LAYER, {
         attribution: MAP_ATTRIBUTION
       })
-      .addTo(this.map);
-  }
+      .addTo(map.current);
 
-  renderPins() {
-    const {activeCardId, offers} = this.props;
-    this.pins = new Map();
+    return () => {
+      map.current.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (prevCity) {
+      map.current.setView([latitude, longitude], zoom);
+    }
+  }, [city]);
+
+  useEffect(() => {
     offers.forEach((offer) => {
       const coords = [offer.location.latitude, offer.location.longitude];
       const marker = leaflet.marker(coords, {icon: offer.id === activeCardId ? activePin : pin});
-      this.pins.set(offer.id, {
-        offerMarker: marker,
-        coords
-      });
-      marker.addTo(this.map);
+      pins.current.addLayer(marker);
     });
-  }
+    pins.current.addTo(map.current);
 
-  updatePin(pinId) {
-    const {activeCardId} = this.props;
+    return () => pins.current.clearLayers();
+  }, [offers, activeCardId]);
 
-    if (pinId) {
-      const marker = this.pins.get(pinId);
-      this.map.removeLayer(marker.offerMarker);
-      const updatedPin = leaflet.marker(marker.coords, {icon: pinId === activeCardId ? activePin : pin});
-      this.pins.set(pinId, Object.assign(marker, {offerMarker: updatedPin}));
-      updatedPin.addTo(this.map);
-    }
-  }
 
-  updateMapLayer() {
-    const {latitude, longitude, zoom} = this.props.city.location;
-    const coordinates = [latitude, longitude];
-    this.map.setView(coordinates, zoom);
-  }
-
-  removePins() {
-    for (const marker of this.pins.values()) {
-      this.map.removeLayer(marker.offerMarker);
-    }
-    this.pins.clear();
-  }
-
-  removeMapLayer() {
-    this.map.remove();
-    this.map = null;
-  }
-
-  render() {
-    const {mapType} = this.props;
-
-    return (
-      <section className={`${mapType}__map map`}>
-        <div ref={this.mapRef} style={{height: `100%`}} id="map"></div>
-      </section>
-    );
-  }
-}
+  return (
+    <section className={`${mapType}__map map`}>
+      <div ref={mapRef} style={{height: `100%`}} id="map"></div>
+    </section>
+  );
+};
 
 OffersMap.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,

@@ -4,8 +4,8 @@ import {formatDate, humanizeDate} from "../../offer/util";
 import {getRatingInPercent} from "../../offer/util";
 
 
-const Review = (props) => {
-  const {comment, date, rating, user} = props.review;
+const Review = ({review}) => {
+  const {comment, date, rating, user} = review;
 
   return (
     <li className="reviews__item">

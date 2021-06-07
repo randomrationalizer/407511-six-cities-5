@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import Preloader from "../preloader/preloader";
-import {getAuthorizationStatus, getAuthRequestCompleteStatus} from "../../store/selectors";
+import {getAuthorizationStatus} from "../../store/user/selectors";
 import {AppRoute, AuthorizationStatus} from "../../const";
 
 
@@ -18,11 +17,7 @@ const redirectPath = {
 };
 
 const PrivateRoute = (props) => {
-  const {render, path, exact, authorizationStatus, isAuthRequestComplete} = props;
-
-  if (!isAuthRequestComplete) {
-    return <Preloader />;
-  }
+  const {render, path, exact, authorizationStatus} = props;
 
   return (
     <Route
@@ -43,13 +38,11 @@ PrivateRoute.propTypes = {
   render: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   exact: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  isAuthRequestComplete: PropTypes.bool.isRequired
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  isAuthRequestComplete: getAuthRequestCompleteStatus(state)
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 export {PrivateRoute};

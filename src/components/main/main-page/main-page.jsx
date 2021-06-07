@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, {useEffect, useMemo} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import PropTypes from "prop-types";
@@ -7,45 +7,40 @@ import Header from "../../header/header";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
 import {fetchOffers} from "../../../store/api-actions";
-import {setErrorMessage} from "../../../store/action";
-import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/selectors";
+import {getLoadFinishStatus, getOffersLoadedStatus} from "../../../store/load-status/selectors";
 
 
-class MainPage extends PureComponent {
+const MainPage = (props) => {
+  const {isOffersLoaded, isLoadFinished, getOffers, showErrorMessage} = props;
+  const header = useMemo(() => <Header />, []);
 
-  componentDidMount() {
-    const {getOffers, isOffersLoaded, setLoadError} = this.props;
-
+  useEffect(() => {
     if (!isOffersLoaded) {
       getOffers()
-      .catch((err) => setLoadError(err));
+        .catch((err) => showErrorMessage(err.message));
     }
+  }, [isOffersLoaded]);
+
+  if (!isLoadFinished) {
+    return <Preloader />;
   }
 
-  render() {
-    const {isOffersLoaded, isLoadFinished} = this.props;
+  return (
+    <div className="page page--gray page--main">
+      {header}
 
-    if (!isLoadFinished) {
-      return <Preloader />;
-    }
-
-    return (
-      <div className="page page--gray page--main">
-        <Header />
-
-        {isOffersLoaded &&
-          <MainOffersSection/>
-        }
-      </div>
-    );
-  }
-}
+      {isOffersLoaded &&
+        <MainOffersSection/>
+      }
+    </div>
+  );
+};
 
 MainPage.propTypes = {
   getOffers: PropTypes.func.isRequired,
   isOffersLoaded: PropTypes.bool.isRequired,
   isLoadFinished: PropTypes.bool.isRequired,
-  setLoadError: PropTypes.func.isRequired
+  showErrorMessage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -56,9 +51,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getOffers() {
     return dispatch(fetchOffers());
-  },
-  setLoadError(err) {
-    dispatch(setErrorMessage(err.message));
   }
 });
 

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {changeCity} from "../../../store/action";
+import {changeCity} from "../../../store/app-data/action";
 import {CityLinkType} from "../../../const";
 
 const getClassName = {
@@ -11,13 +11,14 @@ const getClassName = {
 };
 
 
-const CityLink = ({city, isActive, onCityChange, linkType}) => {
+const CityLink = (props) => {
+  const {city, isActive, onCityChange, linkType} = props;
   const isMainPageLink = linkType === CityLinkType.MAIN_PAGE;
   const linkClassName = isMainPageLink ? getClassName[linkType](isActive) : getClassName[linkType]();
 
-
-  const handleClick = () => {
+  const handleClick = (evt) => {
     if (isMainPageLink && isActive) {
+      evt.preventDefault();
       return;
     }
 

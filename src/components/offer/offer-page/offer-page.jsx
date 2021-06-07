@@ -1,119 +1,79 @@
-import React, {PureComponent} from "react";
-import {withRouter} from "react-router-dom";
+import React, {useEffect, useMemo} from "react";
+import {useHistory, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
+import {offersPropTypes} from "../offer.prop";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import Header from "../../header/header";
 import OfferDetails from "../offer-details/offer-details";
 import Preloader from "../../preloader/preloader";
 import withErrorMessage from "../../../hocs/with-error-message/with-error-message";
-import {getOfferDetails, getPartialOfferDetails} from "../../../store/api-actions";
-import {resetCurrentOffer, changeCurrentOfferLoadedStatus, setErrorMessage, loadCurrentOffer} from "../../../store/action";
-import {getCurrentOfferLoadedStatus, getOffersLoadedStatus, getLoadFinishStatus} from "../../../store/selectors";
+import {fetchOffer} from "../../../store/api-actions";
+import {resetCurrentOffer} from "../../../store/current-offer/action";
+import {getLoadFinishStatus} from "../../../store/load-status/selectors";
+import {getCurrentOffer} from "../../../store/current-offer/selectors";
 import {AppRoute, HttpCode} from "../../../const";
 
 
-class OfferPage extends PureComponent {
+const OfferPage = (props) => {
+  const {isLoadFinished, offer, getOfferInfo, resetOffer, showErrorMessage} = props;
+  let {id} = useParams();
+  id = parseInt(id, 10);
+  const history = useHistory();
+  const header = useMemo(() => <Header />, []);
 
-  componentDidMount() {
-    this.loadCurrentOffer();
-  }
-
-  componentDidUpdate(prevProps) {
-    const {resetOffer} = this.props;
-    const prevId = parseInt(prevProps.match.params.id, 10);
-
-    if (this.id !== prevId) {
-      resetOffer();
-      this.loadCurrentOffer();
-    }
-  }
-
-  componentWillUnmount() {
-    const {resetOffer} = this.props;
-    resetOffer();
-  }
-
-  handleLoadError(err) {
-    const {history, setLoadError} = this.props;
-    if (err.response && err.response.status === HttpCode.NOT_FOUND) {
-      history.push(AppRoute.NOT_FOUND);
-    } else {
-      setLoadError(err);
-    }
-  }
-
-  loadCurrentOffer() {
-    const {isAllOffersLoaded, getPatchOfferInfo, getOfferInfo} = this.props;
-
-    if (isAllOffersLoaded) {
-      getPatchOfferInfo(this.id)
-      .catch((err) => this.handleLoadError(err));
-    } else {
-      getOfferInfo(this.id)
-      .catch((err) => this.handleLoadError(err));
-    }
-  }
-
-  render() {
-    const {match, isLoadFinished, isCurrentOfferLoaded} = this.props;
-    this.id = parseInt(match.params.id, 10);
-
-    if (!isLoadFinished) {
-      return <Preloader />;
-    }
-
-    return (
-      <div className="page">
-        <Header />
-
-        {isCurrentOfferLoaded &&
-          <OfferDetails id={this.id}/>
+  useEffect(() => {
+    getOfferInfo(id)
+      .catch((err) => {
+        if (err.response && err.response.status === HttpCode.NOT_FOUND) {
+          history.push(AppRoute.NOT_FOUND);
+        } else {
+          showErrorMessage(err.message);
         }
+      });
 
-      </div>
-    );
+    return () => resetOffer();
+  }, [id]);
+
+  if (!isLoadFinished) {
+    return <Preloader />;
   }
-}
+
+  return (
+    <div className="page">
+      {header}
+
+      {offer &&
+        <OfferDetails />
+      }
+    </div>
+  );
+};
 
 OfferPage.propTypes = {
-  match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  isCurrentOfferLoaded: PropTypes.bool.isRequired,
   isLoadFinished: PropTypes.bool.isRequired,
-  isAllOffersLoaded: PropTypes.bool.isRequired,
   getOfferInfo: PropTypes.func.isRequired,
-  getPatchOfferInfo: PropTypes.func.isRequired,
   resetOffer: PropTypes.func.isRequired,
-  setLoadError: PropTypes.func.isRequired
+  offer: offersPropTypes,
+  showErrorMessage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  isCurrentOfferLoaded: getCurrentOfferLoadedStatus(state),
-  isLoadFinished: getLoadFinishStatus(state),
-  isAllOffersLoaded: getOffersLoadedStatus(state)
+  offer: getCurrentOffer(state),
+  isLoadFinished: getLoadFinishStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOfferInfo(id) {
-    return dispatch(getOfferDetails(id));
-  },
-  getPatchOfferInfo(id) {
-    return dispatch(getPartialOfferDetails(id));
+    return dispatch(fetchOffer(id));
   },
   resetOffer() {
     dispatch(resetCurrentOffer());
-    dispatch(changeCurrentOfferLoadedStatus(false));
-  },
-  setLoadError(err) {
-    dispatch(loadCurrentOffer({}));
-    dispatch(setErrorMessage(err.message));
   }
 });
 
 export {OfferPage};
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withRouter,
     withErrorMessage
 )(OfferPage);

@@ -1,19 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {offersPropTypes} from "../offer.prop";
 import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
-import {setErrorMessage} from "../../../store/action";
-import {changeFavoriteStatus} from "../../../store/api-actions";
-import {getAuthorizationStatus} from "../../../store/selectors";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
 import {getRatingInPercent} from "../util";
 import {OfferType, AppRoute, OfferPageType} from "../../../const";
 import "./offer-card.css";
 
-const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
 const offerTypeToArticleClassName = {
   [OfferType.MAIN]: `cities__place-card place-card`,
@@ -44,7 +38,7 @@ const offerTypeToImageSize = {
 
 
 const OfferCard = (props) => {
-  const {onCardHover, offer, offerType, changeStatus, setError, authorizationStatus} = props;
+  const {onCardHover, offer, offerType} = props;
   const {id, title, type, price, rating, isFavorite, isPremium, previewImage} = offer;
   const imageSize = offerTypeToImageSize[offerType];
   const articleClassName = offerTypeToArticleClassName[offerType];
@@ -64,11 +58,6 @@ const OfferCard = (props) => {
     }
 
     onCardHover(null);
-  };
-
-  const handleFavoriteBtnClick = (offerId, status) => {
-    changeStatus(offerId, status)
-      .catch(() => setError(`A server error occurred.`));
   };
 
   return (
@@ -97,12 +86,10 @@ const OfferCard = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <OfferFavoriteBtnWrapped
+          <OfferFavoriteBtn
             id={id}
             isActive={isFavorite}
             pageType={OfferPageType.CARD}
-            onBtnClick={handleFavoriteBtnClick}
-            authorizationStatus={authorizationStatus}
           />
 
         </div>
@@ -124,26 +111,7 @@ const OfferCard = (props) => {
 OfferCard.propTypes = {
   onCardHover: PropTypes.func,
   offer: offersPropTypes.isRequired,
-  offerType: PropTypes.string.isRequired,
-  changeStatus: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  setError: PropTypes.func.isRequired
+  offerType: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state)
-});
-
-
-const mapDispatchToProps = (dispatch) => ({
-  changeStatus(id, status) {
-    return dispatch(changeFavoriteStatus(id, status));
-  },
-  setError(message) {
-    dispatch(setErrorMessage(message));
-  }
-});
-
-
-export {OfferCard};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferCard);
+export default OfferCard;

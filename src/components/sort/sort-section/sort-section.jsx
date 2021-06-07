@@ -1,34 +1,36 @@
-import React from "react";
-import {compose} from "redux";
+import React, {useCallback, useState} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import SortList from "../sort-list/sort-list";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
 import {sortTypeToTitle} from "../util";
-import {changeSort} from "../../../store/action";
-import {getCurrentSort} from "../../../store/selectors";
+import {changeSort} from "../../../store/app-data/action";
+import {getCurrentSort} from "../../../store/app-data/selectors";
 import {checkKeyDownEvent} from "../../../utils/common";
 
 
-const SortSection = (props) => {
-  const {onSortChange, currentSort, isActive, onActiveChange} = props;
+const SortSection = ({currentSort, onSortChange}) => {
+  const [isOpened, setOpened] = useState(false);
 
-  const handleSortItemClick = (newSort) => {
-    onSortChange(newSort);
-    onActiveChange();
+  const handleSortBtnClick = () => {
+    setOpened(!isOpened);
   };
 
   const handleKeyDown = (evt) => {
-    checkKeyDownEvent(evt, onActiveChange);
+    checkKeyDownEvent(evt, setOpened, !isOpened);
   };
+
+  const handleSortItemClick = useCallback((newSort) => {
+    onSortChange(newSort);
+    setOpened(!isOpened);
+  }, [isOpened]);
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span
         className="places__sorting-type"
         tabIndex="0"
-        onClick={onActiveChange}
+        onClick={handleSortBtnClick}
         onKeyDown={handleKeyDown}
       >
         {sortTypeToTitle[currentSort]}
@@ -37,7 +39,7 @@ const SortSection = (props) => {
         </svg>
       </span>
       <SortList
-        isOpened={isActive}
+        isOpened={isOpened}
         onSortItemClick={handleSortItemClick}
         currentSort={currentSort}
       />
@@ -47,9 +49,7 @@ const SortSection = (props) => {
 
 SortSection.propTypes = {
   currentSort: PropTypes.string.isRequired,
-  onSortChange: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  onActiveChange: PropTypes.func.isRequired
+  onSortChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (store) => ({
@@ -63,7 +63,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {SortSection};
-export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withActiveState
-)(SortSection);
+export default connect(mapStateToProps, mapDispatchToProps)(SortSection);

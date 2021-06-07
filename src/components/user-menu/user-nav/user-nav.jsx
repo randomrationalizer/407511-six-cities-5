@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ProfileLink from "../profile-link/profile-link";
 import ProfileLinkUnauthorized from "../profile-link-unauthorized/profile-link-unauthorized";
+import {getAuthorizationStatus} from "../../../store/user/selectors";
 import {AuthorizationStatus} from "../../../const";
-import {getAuthorizationStatus} from "../../../store/selectors";
 
 
 const UserNav = ({authorizationStatus}) => {

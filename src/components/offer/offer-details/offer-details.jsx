@@ -6,26 +6,16 @@ import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
 import OffersList from "../offers-list/offers-list";
 import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
-import withActiveState from "../../../hocs/with-active-state/with-active-state";
-import {setErrorMessage} from "../../../store/action";
-import {changeFavoriteStatus} from "../../../store/api-actions";
-import {getCurrentOffer, getNearbyOffers, getAuthorizationStatus} from "../../../store/selectors";
+import {getCurrentOffer, getNearbyOffers} from "../../../store/current-offer/selectors";
 import {capitalize, getDescriptionSentences} from "../util";
 import {getRatingInPercent} from "../util";
 import {MapType, OfferType, OfferPageType} from "../../../const";
 
 const MAX_PHOTOS_COUNT = 6;
 
-const OfferFavoriteBtnWrapped = withActiveState(OfferFavoriteBtn);
 
-const OfferDetails = (props) => {
-  const {id, offer, nearbyOffers, changeStatus, authorizationStatus, setError} = props;
-  const {title, price, city, type, description, bedrooms, rating, images, goods, host, isFavorite, isPremium, guestsCount} = offer;
-
-  const handleFavoriteBtnClick = (offerId, status) => {
-    changeStatus(offerId, status)
-      .catch(() => setError(`A server error occurred.`));
-  };
+const OfferDetails = ({offer, nearbyOffers}) => {
+  const {id, title, price, city, type, description, bedrooms, rating, images, goods, host, isFavorite, isPremium, guestsCount} = offer;
 
   return (
     <main className="page__main page__main--property">
@@ -46,12 +36,10 @@ const OfferDetails = (props) => {
             </div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{title}</h1>
-              <OfferFavoriteBtnWrapped
+              <OfferFavoriteBtn
                 id={id}
                 isActive={isFavorite}
                 pageType={OfferPageType.DETAILS}
-                onBtnClick={handleFavoriteBtnClick}
-                authorizationStatus={authorizationStatus}
               />
             </div>
             <div className="property__rating rating">
@@ -129,28 +117,15 @@ const OfferDetails = (props) => {
 };
 
 OfferDetails.propTypes = {
-  id: PropTypes.number.isRequired,
   offer: offersPropTypes.isRequired,
-  nearbyOffers: PropTypes.arrayOf(offersPropTypes),
-  changeStatus: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  nearbyOffers: PropTypes.arrayOf(offersPropTypes)
 };
 
 const mapStateToProps = (state) => ({
   offer: getCurrentOffer(state),
-  nearbyOffers: getNearbyOffers(state),
-  authorizationStatus: getAuthorizationStatus(state)
+  nearbyOffers: getNearbyOffers(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeStatus(id, status) {
-    return dispatch(changeFavoriteStatus(id, status));
-  },
-  setError(message) {
-    dispatch(setErrorMessage(message));
-  }
-});
 
 export {OfferDetails};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferDetails);
+export default connect(mapStateToProps, null)(OfferDetails);

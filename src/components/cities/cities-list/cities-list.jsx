@@ -1,13 +1,10 @@
 import React from "react";
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import City from "../city/city";
 import {cityPropTypes} from "../city.prop";
-import {getCities} from "../../../store/selectors";
 
 
 const CitiesList = ({cities, currentCity}) => {
-
   return (
     <ul className="locations__list tabs__list">
       {cities.map((city) =>
@@ -26,11 +23,4 @@ CitiesList.propTypes = {
   currentCity: PropTypes.string.isRequired
 };
 
-
-const mapStateToProps = (state) => ({
-  cities: getCities(state)
-});
-
-
-export {CitiesList};
-export default connect(mapStateToProps, null)(CitiesList);
+export default React.memo(CitiesList);

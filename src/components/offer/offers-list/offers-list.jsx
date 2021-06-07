@@ -4,10 +4,8 @@ import {offersPropTypes} from "../offer.prop";
 import OfferCard from "../offer-card/offer-card";
 
 
-const OffersList = ({offers, onOfferHover, offerType}) => {
-  const handleCardHover = (newActiveCardId) => {
-    onOfferHover(newActiveCardId);
-  };
+const OffersList = (props) => {
+  const {offers, onCardHover, offerType} = props;
 
   return (
     <Fragment>
@@ -16,7 +14,7 @@ const OffersList = ({offers, onOfferHover, offerType}) => {
           key={offer.id}
           offer={offer}
           offerType={offerType}
-          onCardHover={handleCardHover}
+          onCardHover={onCardHover}
         />
       )}
     </Fragment>
@@ -25,7 +23,7 @@ const OffersList = ({offers, onOfferHover, offerType}) => {
 
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
-  onOfferHover: PropTypes.func,
+  onCardHover: PropTypes.func,
   offerType: PropTypes.string.isRequired
 };
 
