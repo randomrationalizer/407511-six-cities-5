@@ -8,7 +8,7 @@ import store from "../../mocks/test-data/store";
 import {getMockStore} from "../../mocks/util";
 import {AppRoute, AuthorizationStatus} from "../../const";
 import {extend} from "../../utils/common";
-import {NameSpace} from "../../store/reducers/root-reducer";
+import {NameSpace} from "../../store/root-reducer";
 
 
 let history;

@@ -8,7 +8,7 @@ import {App} from "./app";
 import OfferPage from "../offer/offer-page/offer-page";
 import NotFoundPage from "../not-found-page/not-found-page";
 import store from "../../mocks/test-data/store";
-import {NameSpace} from "../../store/reducers/root-reducer";
+import {NameSpace} from "../../store/root-reducer";
 import {getMockStore, noop, nope} from "../../mocks/util";
 import {extend} from "../../utils/common";
 import {AppRoute, AuthorizationStatus} from "../../const";
@@ -27,22 +27,42 @@ const updatedStore = extend(store, {
 });
 const updatedMockStore = getMockStore(updatedStore);
 
+describe(`Should <App /> renders correctly`, () => {
+  it(`if load is finished`, () => {
+    history = createMemoryHistory();
+    const tree = renderer
+      .create(
+          <Provider store={mockStore}>
+            <Router history={history}>
+              <App
+                checkAuthorization={nope}
+                setAuthRequestComplete={noop}
+                isAuthRequestComplete={true}
+              />
+            </Router>
+          </Provider>
+      ).toJSON();
 
-it(`Should <App /> renders correctly`, () => {
-  history = createMemoryHistory();
-  const tree = renderer
-    .create(
-        <Provider store={mockStore}>
-          <Router history={history}>
-            <App
-              checkAuthorization={nope}
-              setAuthRequestComplete={noop}
-            />
-          </Router>
-        </Provider>
-    ).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
-  expect(tree).toMatchSnapshot();
+  it(`with spinner if load is not finshed`, () => {
+    history = createMemoryHistory();
+    const tree = renderer
+      .create(
+          <Provider store={mockStore}>
+            <Router history={history}>
+              <App
+                checkAuthorization={nope}
+                setAuthRequestComplete={noop}
+                isAuthRequestComplete={false}
+              />
+            </Router>
+          </Provider>
+      ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
 });
 
 describe(`Test App routing`, () => {
@@ -59,6 +79,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -76,6 +97,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -93,6 +115,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -110,6 +133,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -127,6 +151,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -146,6 +171,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>
@@ -164,6 +190,7 @@ describe(`Test App routing`, () => {
             <App
               checkAuthorization={nope}
               setAuthRequestComplete={noop}
+              isAuthRequestComplete={true}
             />
           </Router>
         </Provider>

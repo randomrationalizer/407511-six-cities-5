@@ -6,9 +6,11 @@ import CitiesList from "./cities-list";
 import {DEFAULT_CITY} from "../../../const";
 import store from "../../../mocks/test-data/store";
 import {getMockStore} from "../../../mocks/util";
+import mockCities from "../../../mocks/test-data/cities";
 
 
 const mockStore = getMockStore(store);
+const cities = mockCities;
 
 
 it(`Should CitiesList renders correctly`, () => {
@@ -17,6 +19,7 @@ it(`Should CitiesList renders correctly`, () => {
         <Provider store={mockStore}>
           <BrowserRouter>
             <CitiesList
+              cities={cities}
               currentCity={DEFAULT_CITY}
             />
           </BrowserRouter>

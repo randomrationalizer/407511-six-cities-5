@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should <App /> renders correctly 1`] = `
+exports[`Should <App /> renders correctly if load is finished 1`] = `
 <div
   className="page page--gray page--main"
 >
@@ -183,8 +183,8 @@ exports[`Should <App /> renders correctly 1`] = `
             className="places__found"
           >
             11
-             place
-            s
+             
+            places
              to stay in 
             Paris
           </b>
@@ -196,7 +196,7 @@ exports[`Should <App /> renders correctly 1`] = `
             <span
               className="places__sorting-caption"
             >
-              Sort by
+              Sort by 
             </span>
             <span
               className="places__sorting-type"
@@ -1372,5 +1372,16 @@ exports[`Should <App /> renders correctly 1`] = `
       </div>
     </div>
   </main>
+</div>
+`;
+
+exports[`Should <App /> renders correctly with spinner if load is not finshed 1`] = `
+<div
+  className="preloader"
+>
+  <div />
+  <div />
+  <div />
+  <div />
 </div>
 `;

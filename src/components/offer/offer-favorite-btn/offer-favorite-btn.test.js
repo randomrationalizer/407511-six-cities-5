@@ -1,27 +1,35 @@
 import React from "react";
-import {BrowserRouter, MemoryRouter} from "react-router-dom";
+import {Provider} from "react-redux";
 import renderer from "react-test-renderer";
 import OfferFavoriteBtn from "./offer-favorite-btn";
-import {AuthorizationStatus, OfferPageType} from "../../../const";
-import {noop} from "../../../mocks/util";
+import {OfferPageType} from "../../../const";
+import {getMockStore, noop} from "../../../mocks/util";
+import store from "../../../mocks/test-data/store";
 
+
+const mockStore = getMockStore(store);
+
+jest.mock(`react-router`, () => (Object.assign({},
+    jest.requireActual(`react-router-dom`),
+    {
+      useHistory: () => {},
+      useLocation: () => {}
+    }
+)));
 
 describe(`Should OfferFavoriteBtn component renders correctly`, () => {
   describe(`with active state`, () => {
     it(`for property page`, () => {
       const tree = renderer
         .create(
-            <BrowserRouter>
+            <Provider store={mockStore}>
               <OfferFavoriteBtn
                 id={1}
                 isActive={true}
                 pageType={OfferPageType.DETAILS}
-                onBtnClick={noop}
-                onActiveChange={noop}
-                authorizationStatus={AuthorizationStatus.AUTH}
-                history={{}}
+                showErrorMessage={noop}
               />
-            </BrowserRouter>
+            </Provider>
         ).toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -30,17 +38,14 @@ describe(`Should OfferFavoriteBtn component renders correctly`, () => {
     it(`for offer card`, () => {
       const tree = renderer
         .create(
-            <BrowserRouter>
+            <Provider store={mockStore}>
               <OfferFavoriteBtn
                 id={1}
                 isActive={true}
                 pageType={OfferPageType.CARD}
-                onBtnClick={noop}
-                onActiveChange={noop}
-                authorizationStatus={AuthorizationStatus.AUTH}
-                history={{}}
+                showErrorMessage={noop}
               />
-            </BrowserRouter>
+            </Provider>
         ).toJSON();
 
       expect(tree).toMatchSnapshot();
@@ -50,38 +55,32 @@ describe(`Should OfferFavoriteBtn component renders correctly`, () => {
   describe(`with inactive state`, () => {
     it(`for property page`, () => {
       const tree = renderer
-        .create(
-            <BrowserRouter>
-              <OfferFavoriteBtn
-                id={1}
-                isActive={false}
-                pageType={OfferPageType.DETAILS}
-                onBtnClick={noop}
-                onActiveChange={noop}
-                authorizationStatus={AuthorizationStatus.AUTH}
-                history={{}}
-              />
-            </BrowserRouter>
-        ).toJSON();
+      .create(
+          <Provider store={mockStore}>
+            <OfferFavoriteBtn
+              id={1}
+              isActive={false}
+              pageType={OfferPageType.DETAILS}
+              showErrorMessage={noop}
+            />
+          </Provider>
+      ).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
 
     it(`for offer card`, () => {
       const tree = renderer
-        .create(
-            <MemoryRouter>
-              <OfferFavoriteBtn
-                id={1}
-                isActive={false}
-                pageType={OfferPageType.CARD}
-                onBtnClick={noop}
-                onActiveChange={noop}
-                authorizationStatus={AuthorizationStatus.AUTH}
-                history={{}}
-              />
-            </MemoryRouter>
-        ).toJSON();
+      .create(
+          <Provider store={mockStore}>
+            <OfferFavoriteBtn
+              id={1}
+              isActive={false}
+              pageType={OfferPageType.CARD}
+              showErrorMessage={noop}
+            />
+          </Provider>
+      ).toJSON();
 
       expect(tree).toMatchSnapshot();
     });

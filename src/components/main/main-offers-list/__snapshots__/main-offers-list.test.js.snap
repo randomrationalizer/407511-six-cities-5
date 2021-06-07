@@ -19,8 +19,8 @@ exports[`Should MainOffersList component renders correctly 1`] = `
         className="places__found"
       >
         87
-         place
-        s
+         
+        places
          to stay in 
         Paris
       </b>
@@ -32,7 +32,7 @@ exports[`Should MainOffersList component renders correctly 1`] = `
         <span
           className="places__sorting-caption"
         >
-          Sort by
+          Sort by 
         </span>
         <span
           className="places__sorting-type"

@@ -1,5 +1,5 @@
 import configureStore from "redux-mock-store";
-import {NameSpace} from "../../store/reducers/root-reducer";
+import {NameSpace} from "../../store/root-reducer";
 import mockOffers from "./offers";
 import mockReviews from "./reviews";
 import mockNearbyOffers from "./nearby-offers";

@@ -117,8 +117,8 @@ exports[`Should MainOffersSection component renders correctly with offers 1`] = 
           className="places__found"
         >
           87
-           place
-          s
+           
+          places
            to stay in 
           Paris
         </b>
@@ -130,7 +130,7 @@ exports[`Should MainOffersSection component renders correctly with offers 1`] = 
           <span
             className="places__sorting-caption"
           >
-            Sort by
+            Sort by 
           </span>
           <span
             className="places__sorting-type"

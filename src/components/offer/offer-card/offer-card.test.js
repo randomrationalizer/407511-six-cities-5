@@ -1,6 +1,6 @@
 import React from "react";
 import {Provider} from 'react-redux';
-import {BrowserRouter} from "react-router-dom";
+import {MemoryRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
 import OfferCard from "./offer-card";
 import store from "../../../mocks/test-data/store";
@@ -17,13 +17,13 @@ describe(`Should OfferCard component renders correctly`, () => {
     const tree = renderer
       .create(
           <Provider store={mockStore}>
-            <BrowserRouter>
+            <MemoryRouter>
               <OfferCard
                 onCardHover={noop}
                 offer={mockCurrentOffer}
                 offerType={OfferType.MAIN}
               />
-            </BrowserRouter>
+            </MemoryRouter>
           </Provider>
       ).toJSON();
 
@@ -34,12 +34,12 @@ describe(`Should OfferCard component renders correctly`, () => {
     const tree = renderer
       .create(
           <Provider store={mockStore}>
-            <BrowserRouter>
+            <MemoryRouter>
               <OfferCard
                 offer={mockCurrentOffer}
                 offerType={OfferType.NEARBY}
               />
-            </BrowserRouter>
+            </MemoryRouter>
           </Provider>
       ).toJSON();
 
@@ -50,12 +50,12 @@ describe(`Should OfferCard component renders correctly`, () => {
     const tree = renderer
       .create(
           <Provider store={mockStore}>
-            <BrowserRouter>
+            <MemoryRouter>
               <OfferCard
                 offer={mockCurrentOffer}
                 offerType={OfferType.FAVORITES}
               />
-            </BrowserRouter>
+            </MemoryRouter>
           </Provider>
       ).toJSON();
 

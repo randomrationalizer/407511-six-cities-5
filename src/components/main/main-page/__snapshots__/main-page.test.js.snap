@@ -183,8 +183,8 @@ exports[`Should MainPage renders correctly with offers 1`] = `
             className="places__found"
           >
             11
-             place
-            s
+             
+            places
              to stay in 
             Paris
           </b>
@@ -196,7 +196,7 @@ exports[`Should MainPage renders correctly with offers 1`] = `
             <span
               className="places__sorting-caption"
             >
-              Sort by
+              Sort by 
             </span>
             <span
               className="places__sorting-type"
@@ -1383,6 +1383,17 @@ exports[`Should MainPage renders correctly with offers 1`] = `
       </div>
     </div>
   </main>
+</div>
+`;
+
+exports[`Should MainPage renders correctly with spinner if load is not finshed 1`] = `
+<div
+  className="preloader"
+>
+  <div />
+  <div />
+  <div />
+  <div />
 </div>
 `;
 

@@ -22,7 +22,7 @@ it(`Should MainOffersList component renders correctly`, () => {
           city={city}
           offers={mockOffers}
           activeCardId={1}
-          onOfferHover={noop}
+          onCardHover={noop}
         />
       </BrowserRouter>
     </Provider>

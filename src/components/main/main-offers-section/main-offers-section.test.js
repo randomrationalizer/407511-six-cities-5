@@ -6,9 +6,10 @@ import {MainOffersSection} from "./main-offers-section";
 import store from "../../../mocks/test-data/store";
 import mockOffers from "../../../mocks/test-data/offers";
 import mockCities from "../../../mocks/test-data/cities";
-import {getMockStore, noop} from "../../../mocks/util";
+import {getMockStore} from "../../../mocks/util";
 
 
+const cities = mockCities;
 const city = mockCities[0];
 const mockStore = getMockStore(store);
 
@@ -20,10 +21,9 @@ describe(`Should MainOffersSection component renders correctly`, () => {
       <Provider store={mockStore}>
         <BrowserRouter>
           <MainOffersSection
+            cities={cities}
             currentCity={city}
             cityOffers={mockOffers}
-            activeItem={1}
-            onActiveItemChange={noop}
           />
         </BrowserRouter>
       </Provider>
@@ -40,10 +40,9 @@ describe(`Should MainOffersSection component renders correctly`, () => {
         <Provider store={mockStore}>
           <BrowserRouter>
             <MainOffersSection
+              cities={cities}
               currentCity={city}
               cityOffers={[]}
-              activeItem={null}
-              onActiveItemChange={noop}
             />
           </BrowserRouter>
         </Provider>

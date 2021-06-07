@@ -20,7 +20,7 @@ describe(`Should MainPage renders correctly`, () => {
             getOffers={nope}
             isOffersLoaded={true}
             isLoadFinished={true}
-            setLoadError={noop}
+            showErrorMessage={noop}
           />
         </BrowserRouter>
       </Provider>
@@ -40,7 +40,25 @@ describe(`Should MainPage renders correctly`, () => {
               getOffers={nope}
               isOffersLoaded={false}
               isLoadFinished={true}
-              setLoadError={noop}
+              showErrorMessage={noop}
+            />
+          </BrowserRouter>
+        </Provider>
+    ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it(`with spinner if load is not finshed`, () => {
+    const tree = renderer
+    .create(
+        <Provider store={mockStore}>
+          <BrowserRouter>
+            <MainPage
+              getOffers={nope}
+              isOffersLoaded={false}
+              isLoadFinished={false}
+              showErrorMessage={noop}
             />
           </BrowserRouter>
         </Provider>

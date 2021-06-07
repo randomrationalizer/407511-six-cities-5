@@ -597,6 +597,17 @@ exports[`Should Favorites component renders correctly with saved offers 1`] = `
 </div>
 `;
 
+exports[`Should Favorites component renders correctly with spinner if load is not finshed 1`] = `
+<div
+  className="preloader"
+>
+  <div />
+  <div />
+  <div />
+  <div />
+</div>
+`;
+
 exports[`Should Favorites component renders correctly without saved offers 1`] = `
 <div
   className="page"

@@ -22,7 +22,7 @@ describe(`Login screen e2e testing`, () => {
           <MemoryRouter>
             <LoginPage
               onFormSubmit={handleFormSubmit}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </MemoryRouter>
         </Provider>
@@ -48,7 +48,7 @@ describe(`Login screen e2e testing`, () => {
           <MemoryRouter>
             <LoginPage
               onFormSubmit={handleFormSubmit}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </MemoryRouter>
         </Provider>
@@ -73,7 +73,7 @@ describe(`Login screen e2e testing`, () => {
           <MemoryRouter>
             <LoginPage
               onFormSubmit={handleFormSubmit}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </MemoryRouter>
         </Provider>
@@ -98,7 +98,7 @@ describe(`Login screen e2e testing`, () => {
           <MemoryRouter>
             <LoginPage
               onFormSubmit={handleFormSubmit}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </MemoryRouter>
         </Provider>
@@ -123,7 +123,7 @@ describe(`Login screen e2e testing`, () => {
           <MemoryRouter>
             <LoginPage
               onFormSubmit={handleFormSubmit}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </MemoryRouter>
         </Provider>

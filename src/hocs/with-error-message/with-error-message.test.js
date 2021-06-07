@@ -1,98 +1,35 @@
 import React from "react";
-import {Provider} from "react-redux";
-import PropTypes from "prop-types";
-import renderer from "react-test-renderer";
-import withErrorMessage, {withErrorMessage as withErrorMessageWithoutStore} from "./with-error-message";
-import store from "../../mocks/test-data/store";
-import {getMockStore, noop} from "../../mocks/util";
-import {NameSpace} from "../../store/reducers/root-reducer";
-import {extend} from "../../utils/common";
+import withErrorMessage from "./with-error-message";
+import {shallow} from "enzyme";
+import toJson from "enzyme-to-json";
 
 
-const message = `Error`;
-const mockStore = getMockStore(store);
-
-const MockComponent = (props) => {
-  const {children} = props;
-
-  return (
-    <div>
-      {children}
-    </div>
-  );
-};
-
-MockComponent.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired,
-};
-
+const MockComponent = () => <div></div>;
 const MockComponentWrapped = withErrorMessage(MockComponent);
-const MockComponentWrappedWithoutStore = withErrorMessageWithoutStore(MockComponent);
+
+jest.mock(`react-router`, () => (Object.assign({},
+    jest.requireActual(`react-router-dom`),
+    {
+      useLocation: () => {}
+    }
+)));
 
 describe(`Should withErrorMessage wrapped component renders correctly`, () => {
   it(`with error`, () => {
-    const tree = renderer
-      .create(
-          <MockComponentWrappedWithoutStore
-            message={message}
-            closeErrorModal={noop}
-          >
-            <React.Fragment />
-          </MockComponentWrappedWithoutStore>
-      ).toJSON();
+    const message = `Error`;
+    const wrapper = shallow(
+        <MockComponentWrapped />
+    );
 
-    expect(tree).toMatchSnapshot();
+    wrapper.find(MockComponent).props().showErrorMessage(message);
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it(`without error`, () => {
-    const tree = renderer
-      .create(
-          <MockComponentWrappedWithoutStore
-            message={null}
-            closeErrorModal={noop}
-          >
-            <React.Fragment />
-          </MockComponentWrappedWithoutStore>
-      ).toJSON();
+    const wrapper = shallow(
+        <MockComponentWrapped />
+    );
 
-    expect(tree).toMatchSnapshot();
-  });
-});
-
-describe(`Should withErrorMessage wrapped component connected to store renders correctly`, () => {
-  it(`without error`, () => {
-    const tree = renderer
-      .create(
-          <Provider store={mockStore}>
-            <MockComponentWrapped>
-              <React.Fragment />
-            </MockComponentWrapped>
-          </Provider>
-      ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it(`with error`, () => {
-    const updatedStore = extend(store, {
-      [NameSpace.LOAD_STATUS]: extend(store[NameSpace.LOAD_STATUS], {
-        errorMessage: message
-      })
-    });
-    const updatedMockStore = getMockStore(updatedStore);
-
-    const tree = renderer
-      .create(
-          <Provider store={updatedMockStore}>
-            <MockComponentWrapped>
-              <React.Fragment />
-            </MockComponentWrapped>
-          </Provider>
-      ).toJSON();
-
-    expect(tree).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

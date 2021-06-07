@@ -5,32 +5,14 @@ import {noop} from "../../../mocks/util";
 import {SortType} from "../../../const";
 
 
-describe(`SortSection component renders correctly`, () => {
-  it(`with opened class`, () => {
-    const tree = renderer
-      .create(
-          <SortSection
-            currentSort={SortType.DEFAULT}
-            onSortChange={noop}
-            isActive={true}
-            onActiveChange={noop}
-          />
-      ).toJSON();
+test(`SortSection component renders correctly`, () => {
+  const tree = renderer
+    .create(
+        <SortSection
+          currentSort={SortType.DEFAULT}
+          onSortChange={noop}
+        />
+    ).toJSON();
 
-    expect(tree).toMatchSnapshot();
-  });
-
-  it(`with closed class`, () => {
-    const tree = renderer
-      .create(
-          <SortSection
-            currentSort={SortType.DEFAULT}
-            onSortChange={noop}
-            isActive={false}
-            onActiveChange={noop}
-          />
-      ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
+  expect(tree).toMatchSnapshot();
 });

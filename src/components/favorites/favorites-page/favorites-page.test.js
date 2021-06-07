@@ -22,7 +22,7 @@ describe(`Should Favorites component renders correctly`, () => {
                 isFavoritesLoaded={true}
                 isLoadFinished={true}
                 getFavoriteOffers={nope}
-                setLoadError={noop}
+                showErrorMessage={noop}
               />
             </BrowserRouter>
           </Provider>
@@ -41,7 +41,26 @@ describe(`Should Favorites component renders correctly`, () => {
                 isFavoritesLoaded={false}
                 isLoadFinished={true}
                 getFavoriteOffers={nope}
-                setLoadError={noop}
+                showErrorMessage={noop}
+              />
+            </BrowserRouter>
+          </Provider>
+      ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it(`with spinner if load is not finshed`, () => {
+    const tree = renderer
+      .create(
+          <Provider store={mockStore}>
+            <BrowserRouter>
+              <FavoritesPage
+                favorites={[]}
+                isFavoritesLoaded={false}
+                isLoadFinished={false}
+                getFavoriteOffers={nope}
+                showErrorMessage={noop}
               />
             </BrowserRouter>
           </Provider>

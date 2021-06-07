@@ -17,7 +17,7 @@ it(`Should Login screen renders correctly`, () => {
           <BrowserRouter>
             <LoginPage
               onFormSubmit={noop}
-              setLoginError={noop}
+              showErrorMessage={noop}
             />
           </BrowserRouter>
         </Provider>
