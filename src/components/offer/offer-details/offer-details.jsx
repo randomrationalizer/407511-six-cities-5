@@ -5,7 +5,7 @@ import {offersPropTypes} from "../offer.prop";
 import Map from "../../map/map";
 import ReviewsSection from "../../reviews/reviews-section/reviews-section";
 import OffersList from "../offers-list/offers-list";
-import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
+import FavoriteButton from "../../favorites/favorite-button/favorite-button";
 import {getCurrentOffer, getNearbyOffers} from "../../../store/current-offer/selectors";
 import {capitalize, getDescriptionSentences} from "../util";
 import {getRatingInPercent} from "../util";
@@ -36,7 +36,7 @@ const OfferDetails = ({offer, nearbyOffers}) => {
             </div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{title}</h1>
-              <OfferFavoriteBtn
+              <FavoriteButton
                 id={id}
                 isActive={isFavorite}
                 pageType={OfferPageType.DETAILS}

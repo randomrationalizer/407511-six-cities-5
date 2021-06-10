@@ -24,11 +24,11 @@ const OfferPage = (props) => {
 
   useEffect(() => {
     getOfferInfo(id)
-      .catch((err) => {
-        if (err.response && err.response.status === HttpCode.NOT_FOUND) {
+      .catch((error) => {
+        if (error.response && error.response.status === HttpCode.NOT_FOUND) {
           history.push(AppRoute.NOT_FOUND);
         } else {
-          showErrorMessage(err.message);
+          showErrorMessage(error.message);
         }
       });
 

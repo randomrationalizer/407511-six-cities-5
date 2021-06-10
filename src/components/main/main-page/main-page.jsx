@@ -17,7 +17,7 @@ const MainPage = (props) => {
   useEffect(() => {
     if (!isOffersLoaded) {
       getOffers()
-        .catch((err) => showErrorMessage(err.message));
+        .catch((error) => showErrorMessage(error.message));
     }
   }, [isOffersLoaded]);
 

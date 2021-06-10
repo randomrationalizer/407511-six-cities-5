@@ -22,7 +22,7 @@ const activePin = leaflet.icon({
 });
 
 
-const OffersMap = (props) => {
+const Map = (props) => {
   const {offers, activeCardId, city, mapType} = props;
   const {latitude, longitude, zoom} = city.location;
   const map = useRef(null);
@@ -83,11 +83,11 @@ const OffersMap = (props) => {
   );
 };
 
-OffersMap.propTypes = {
+Map.propTypes = {
   offers: PropTypes.arrayOf(offersPropTypes).isRequired,
   mapType: PropTypes.string.isRequired,
   activeCardId: PropTypes.number,
   city: cityPropTypes.isRequired
 };
 
-export default OffersMap;
+export default Map;

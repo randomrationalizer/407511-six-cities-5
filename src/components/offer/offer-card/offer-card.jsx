@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../offer.prop";
-import OfferFavoriteBtn from "../offer-favorite-btn/offer-favorite-btn";
+import FavoriteButton from "../../favorites/favorite-button/favorite-button";
 import {capitalize, isFavoritesCard, isMainPageCard} from "../util";
 import {getRatingInPercent} from "../util";
 import {OfferType, AppRoute, OfferPageType} from "../../../const";
@@ -86,7 +86,7 @@ const OfferCard = (props) => {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <OfferFavoriteBtn
+          <FavoriteButton
             id={id}
             isActive={isFavorite}
             pageType={OfferPageType.CARD}

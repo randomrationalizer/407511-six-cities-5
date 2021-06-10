@@ -4,15 +4,15 @@ import ErrorMessage from "./error-message";
 
 
 test(`Should close button be pressed and callback has been called`, () => {
-  const handleCloseBtnClick = jest.fn();
+  const handleCloseButtonClick = jest.fn();
   const wrapper = shallow(
       <ErrorMessage
         message={`Error`}
-        onClose={handleCloseBtnClick}
+        onClose={handleCloseButtonClick}
       />
   );
 
   const button = wrapper.find(`.error-close`);
   button.simulate(`click`);
-  expect(handleCloseBtnClick).toHaveBeenCalledTimes(1);
+  expect(handleCloseButtonClick).toHaveBeenCalledTimes(1);
 });

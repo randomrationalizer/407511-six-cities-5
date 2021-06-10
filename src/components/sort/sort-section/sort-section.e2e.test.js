@@ -34,10 +34,10 @@ describe(`SortSection e2e testing`, () => {
         />
     );
 
-    const openBtn = wrapper.find(`.places__sorting-type`);
-    const sortBtn = wrapper.findWhere((n) => n.prop(`sortType`) === SortType.PRICE_DOWN);
-    openBtn.simulate(`click`);
-    sortBtn.simulate(`click`);
+    const openButton = wrapper.find(`.places__sorting-type`);
+    const sortButton = wrapper.findWhere((n) => n.prop(`sortType`) === SortType.PRICE_DOWN);
+    openButton.simulate(`click`);
+    sortButton.simulate(`click`);
     expect(handleSortChange).toHaveBeenCalledWith(SortType.PRICE_DOWN);
     expect(wrapper.find(`.places__options`).hasClass(`places__options--opened`)).toBe(false);
   });
@@ -54,10 +54,10 @@ describe(`SortSection e2e testing`, () => {
         />
     );
 
-    const openBtn = wrapper.find(`.places__sorting-type`);
-    const activeSortBtn = wrapper.find(`.places__option--active`);
-    openBtn.simulate(`click`);
-    activeSortBtn.simulate(`click`);
+    const openButton = wrapper.find(`.places__sorting-type`);
+    const activeSortButton = wrapper.find(`.places__option--active`);
+    openButton.simulate(`click`);
+    activeSortButton.simulate(`click`);
     expect(handleSortChange).toHaveBeenCalledTimes(0);
     expect(wrapper.find(`.places__options`).hasClass(`places__options--opened`)).toBe(true);
   });

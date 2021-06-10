@@ -7,10 +7,10 @@ import withErrorMessage from "../../../hocs/with-error-message/with-error-messag
 import {changeFavoriteStatus} from "../../../store/api-actions";
 import {getAuthorizationStatus} from "../../../store/user/selectors";
 import {OfferPageType, AppRoute, AuthorizationStatus} from "../../../const";
-import "./offer-favorite-btn.css";
+import "./favorite-button.css";
 
 
-const pageTypeToBtnClassName = {
+const pageTypeToButtonClassName = {
   [OfferPageType.CARD]: `place-card__bookmark-button`,
   [OfferPageType.DETAILS]: `property__bookmark-button`
 };
@@ -32,15 +32,14 @@ const pageTypeToIconSize = {
 };
 
 
-const OfferFavoriteBtn = (props) => {
+const FavoriteButton = (props) => {
   const {id, pageType, changeStatus, isActive, authorizationStatus, showErrorMessage} = props;
   const history = useHistory();
   const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
-  const btnClassName = pageTypeToBtnClassName[pageType];
+  const buttonClassName = pageTypeToButtonClassName[pageType];
   const iconClassName = pageTypeToIconClassName[pageType];
   const iconSize = pageTypeToIconSize[pageType];
   const [isBooked, setBookedState] = useState(isActive);
-
 
   const handleClick = () => {
     if (isAuthorized) {
@@ -54,7 +53,7 @@ const OfferFavoriteBtn = (props) => {
 
   return (
     <button
-      className={`${btnClassName} ${isBooked ? `${btnClassName}--active` : ``} button`}
+      className={`${buttonClassName} ${isBooked ? `${buttonClassName}--active` : ``} button`}
       type="button"
       onClick={handleClick}
     >
@@ -70,7 +69,7 @@ const OfferFavoriteBtn = (props) => {
   );
 };
 
-OfferFavoriteBtn.propTypes = {
+FavoriteButton.propTypes = {
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   pageType: PropTypes.string.isRequired,
@@ -89,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export {OfferFavoriteBtn};
+export {FavoriteButton};
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withErrorMessage
-)(OfferFavoriteBtn);
+)(FavoriteButton);

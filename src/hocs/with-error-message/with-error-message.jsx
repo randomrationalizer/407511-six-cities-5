@@ -6,25 +6,25 @@ import ErrorMessage from "../../components/error-message/error-message";
 const withErrorMessage = (Component) => {
   const WithErrorMessage = (props) => {
     const location = useLocation();
-    const [error, setError] = useState(null);
+    const [message, setMessage] = useState(null);
 
-    const showErrorMessage = useCallback((err) => {
-      setError(err);
+    const showErrorMessage = useCallback((errorMessage) => {
+      setMessage(errorMessage);
     }, []);
 
     const handleMessageClose = useCallback(() => {
-      setError(null);
+      setMessage(null);
     }, []);
 
     useEffect(() => {
-      if (error) {
-        setError(null);
+      if (message) {
+        setMessage(null);
       }
     }, [location]);
 
     return (
       <>
-        {error && <ErrorMessage message={error} onClose={handleMessageClose} />}
+        {message && <ErrorMessage message={message} onClose={handleMessageClose} />}
         <Component
           {...props}
           showErrorMessage={showErrorMessage}

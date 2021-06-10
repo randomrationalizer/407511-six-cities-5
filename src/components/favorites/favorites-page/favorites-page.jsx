@@ -22,8 +22,8 @@ const FavoritesPage = (props) => {
   useEffect(() => {
     if (!isFavoritesLoaded) {
       getFavoriteOffers()
-        .catch((err) => {
-          showErrorMessage(err.message);
+        .catch((error) => {
+          showErrorMessage(error.message);
         });
     }
   }, []);

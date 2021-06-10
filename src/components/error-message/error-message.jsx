@@ -4,7 +4,7 @@ import "./error-message.css";
 
 
 const ErrorMessage = ({message, onClose}) => {
-  const handleCloseBtnClick = () => {
+  const handleCloseButtonClick = () => {
     onClose();
   };
 
@@ -12,7 +12,7 @@ const ErrorMessage = ({message, onClose}) => {
     <div className="error">
       <h2>Something went wrong:</h2>
       <p>{message}</p>
-      <button onClick={handleCloseBtnClick} className="error-close" type="button">
+      <button onClick={handleCloseButtonClick} className="error-close" type="button">
         <span className="visually-hidden">Close</span>
       </button>
     </div>

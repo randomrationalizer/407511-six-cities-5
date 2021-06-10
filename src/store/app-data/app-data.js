@@ -1,5 +1,5 @@
 import {createReducer} from "@reduxjs/toolkit";
-import {getCitiesData, updateOffer} from "../../core";
+import {getCitiesData, updateAllOffers} from "../../core";
 import {cities, SortType, DEFAULT_CITY} from "../../const";
 import {changeCity, changeSort, loadOffers, updateOffers} from "./action";
 
@@ -23,7 +23,7 @@ const appData = createReducer(initialState, (builder) => {
     state.cities = getCitiesData(action.payload, cities);
   });
   builder.addCase(updateOffers, (state, action) => {
-    state.allOffers = updateOffer(action.payload, state.allOffers);
+    state.allOffers = updateAllOffers(action.payload, state.allOffers);
   });
 });
 

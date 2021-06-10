@@ -24,7 +24,7 @@ const LoginPage = ({onFormSubmit, showErrorMessage}) => {
         email: loginRef.current.value,
         password: passwordRef.current.value
       })
-        .catch((err) => showErrorMessage(err.message));
+        .catch((error) => showErrorMessage(error.message));
     }
   };
 

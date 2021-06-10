@@ -5,7 +5,7 @@ import {Route, Switch} from "react-router-dom";
 import Preloader from "../preloader/preloader";
 import MainPage from "../main/main-page/main-page";
 import FavoritesPage from "../favorites/favorites-page/favorites-page";
-import LoginPage from "../login/login";
+import LoginPage from "../login-page/login-page";
 import OfferPage from "../offer/offer-page/offer-page";
 import PrivateRoute from "../private-route/private-route";
 import NotFoundPage from "../not-found-page/not-found-page";

@@ -2,7 +2,7 @@ import React from "react";
 import {Provider} from 'react-redux';
 import {BrowserRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
-import LoginPage from "./login";
+import LoginPage from "./login-page";
 import store from "../../mocks/test-data/store";
 import {getMockStore, noop} from "../../mocks/util";
 

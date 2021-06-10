@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import OffersMap from "./map";
+import Map from "./map";
 import mockOffers from "../../mocks/test-data/offers";
 import mockCities from "../../mocks/test-data/cities";
 import {MapType} from "../../const";
@@ -13,7 +13,7 @@ describe(`Should Map component renders correctly`, () => {
   it(`for main page`, () => {
     const tree = renderer
     .create((
-      <OffersMap
+      <Map
         offers={mockOffers}
         mapType={MapType.MAIN}
         activeCardId={null}
@@ -29,7 +29,7 @@ describe(`Should Map component renders correctly`, () => {
   it(`for property page`, () => {
     const tree = renderer
     .create((
-      <OffersMap
+      <Map
         offers={mockOffers}
         mapType={MapType.PROPERTY}
         activeCardId={1}

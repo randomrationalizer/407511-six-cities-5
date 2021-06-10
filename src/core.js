@@ -43,36 +43,29 @@ export const getCitiesData = (offers, cities) => {
   return cities.map((city) => getCityData(offers, city));
 };
 
-export const updateOffer = (updatedOffer, allOffers) => {
+export const updateAllOffers = (updatedOffer, allOffers) => {
   const index = allOffers.findIndex((offer) => offer.id === updatedOffer.id);
-  let updatedOffers = {};
 
   if (index === -1) {
-    updatedOffers = allOffers;
+    return allOffers;
   } else {
-    updatedOffers = [
+    return [
       ...allOffers.slice(0, index),
       updatedOffer,
       ...allOffers.slice(index + 1)
     ];
   }
-
-  return updatedOffers;
 };
 
 export const updateFavorites = (updatedOffer, favorites) => {
   const index = favorites.findIndex((offer) => offer.id === updatedOffer.id);
 
-  let updatedFavorites = {};
-
   if (index === -1) {
-    updatedFavorites = [...favorites, updatedOffer];
+    return [...favorites, updatedOffer];
   } else {
-    updatedFavorites = [
+    return [
       ...favorites.slice(0, index),
       ...favorites.slice(index + 1)
     ];
   }
-
-  return updatedFavorites;
 };

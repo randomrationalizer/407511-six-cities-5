@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {offersPropTypes} from "../../offer/offer.prop";
 import {cityPropTypes} from "../../cities/city.prop";
-import OffersMap from "../../map/map";
+import Map from "../../map/map";
 import OffersList from "../../offer/offers-list/offers-list";
 import SortSection from "../../sort/sort-section/sort-section";
 import {OfferType, MapType} from "../../../const";
@@ -29,7 +29,7 @@ const MainOffersList = (props) => {
           </div>
         </section>
         <div className="cities__right-section">
-          <OffersMap
+          <Map
             activeCardId={activeCardId}
             mapType={MapType.MAIN}
             city={city}

@@ -1,7 +1,7 @@
 import React from "react";
 import {Provider} from "react-redux";
 import renderer from "react-test-renderer";
-import OfferFavoriteBtn from "./offer-favorite-btn";
+import FavoriteButton from "./favorite-button";
 import {OfferPageType} from "../../../const";
 import {getMockStore, noop} from "../../../mocks/util";
 import store from "../../../mocks/test-data/store";
@@ -17,13 +17,13 @@ jest.mock(`react-router`, () => (Object.assign({},
     }
 )));
 
-describe(`Should OfferFavoriteBtn component renders correctly`, () => {
+describe(`Should FavoriteButton component renders correctly`, () => {
   describe(`with active state`, () => {
     it(`for property page`, () => {
       const tree = renderer
         .create(
             <Provider store={mockStore}>
-              <OfferFavoriteBtn
+              <FavoriteButton
                 id={1}
                 isActive={true}
                 pageType={OfferPageType.DETAILS}
@@ -39,7 +39,7 @@ describe(`Should OfferFavoriteBtn component renders correctly`, () => {
       const tree = renderer
         .create(
             <Provider store={mockStore}>
-              <OfferFavoriteBtn
+              <FavoriteButton
                 id={1}
                 isActive={true}
                 pageType={OfferPageType.CARD}
@@ -57,7 +57,7 @@ describe(`Should OfferFavoriteBtn component renders correctly`, () => {
       const tree = renderer
       .create(
           <Provider store={mockStore}>
-            <OfferFavoriteBtn
+            <FavoriteButton
               id={1}
               isActive={false}
               pageType={OfferPageType.DETAILS}
@@ -73,7 +73,7 @@ describe(`Should OfferFavoriteBtn component renders correctly`, () => {
       const tree = renderer
       .create(
           <Provider store={mockStore}>
-            <OfferFavoriteBtn
+            <FavoriteButton
               id={1}
               isActive={false}
               pageType={OfferPageType.CARD}

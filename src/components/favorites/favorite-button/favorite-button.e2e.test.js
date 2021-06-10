@@ -1,7 +1,7 @@
 import React from "react";
 import {Provider} from 'react-redux';
 import {mount} from "enzyme";
-import {OfferFavoriteBtn} from "./offer-favorite-btn";
+import {FavoriteButton} from "./favorite-button";
 import store from "../../../mocks/test-data/store";
 import {getMockStore, noop} from "../../../mocks/util";
 import {AppRoute, AuthorizationStatus, OfferPageType} from "../../../const";
@@ -29,15 +29,15 @@ jest.mock(`react`, () => (Object.assign({},
 
 describe(`Should Favorite button be pressed`, () => {
   it(`by authorized user and callback has been called`, () => {
-    const handleFavoriteBtnClick = jest.fn(() => Promise.resolve());
+    const handleFavoriteButtonClick = jest.fn(() => Promise.resolve());
 
     const wrapper = mount(
         <Provider store={mockStore}>
-          <OfferFavoriteBtn
+          <FavoriteButton
             id={mockId}
             isActive={false}
             pageType={OfferPageType.DETAILS}
-            changeStatus={handleFavoriteBtnClick}
+            changeStatus={handleFavoriteButtonClick}
             authorizationStatus={AuthorizationStatus.AUTH}
             showErrorMessage={noop}
           />
@@ -47,8 +47,8 @@ describe(`Should Favorite button be pressed`, () => {
     const button = wrapper.find(`button`);
     button.simulate(`click`);
     setTimeout(() => {
-      expect(handleFavoriteBtnClick).toHaveBeenCalledTimes(1);
-      expect(handleFavoriteBtnClick).toHaveBeenCalledWith(mockId, 1);
+      expect(handleFavoriteButtonClick).toHaveBeenCalledTimes(1);
+      expect(handleFavoriteButtonClick).toHaveBeenCalledWith(mockId, 1);
       expect(mockSetState).toHaveBeenCalledTimes(1);
       expect(mockSetState).toHaveBeenCalledWith(true);
     }, 1);
@@ -56,15 +56,15 @@ describe(`Should Favorite button be pressed`, () => {
 
   it(`by unauthorized user and callback hasn't been called, user should be redirected to Login screen`, () => {
     jest.resetAllMocks();
-    const handleFavoriteBtnClick = jest.fn();
+    const handleFavoriteButtonClick = jest.fn();
 
     const wrapper = mount(
         <Provider store={mockStore}>
-          <OfferFavoriteBtn
+          <FavoriteButton
             id={1}
             isActive={false}
             pageType={OfferPageType.DETAILS}
-            changeStatus={handleFavoriteBtnClick}
+            changeStatus={handleFavoriteButtonClick}
             authorizationStatus={AuthorizationStatus.NO_AUTH}
             showErrorMessage={noop}
           />
@@ -73,7 +73,7 @@ describe(`Should Favorite button be pressed`, () => {
 
     const button = wrapper.find(`button`);
     button.simulate(`click`);
-    expect(handleFavoriteBtnClick).toHaveBeenCalledTimes(0);
+    expect(handleFavoriteButtonClick).toHaveBeenCalledTimes(0);
     expect(mockSetState).toHaveBeenCalledTimes(0);
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith(AppRoute.LOGIN);

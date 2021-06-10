@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should OfferFavoriteBtn component renders correctly with active state for offer card 1`] = `
+exports[`Should FavoriteButton component renders correctly with active state for offer card 1`] = `
 <button
   className="place-card__bookmark-button place-card__bookmark-button--active button"
   onClick={[Function]}
@@ -23,7 +23,7 @@ exports[`Should OfferFavoriteBtn component renders correctly with active state f
 </button>
 `;
 
-exports[`Should OfferFavoriteBtn component renders correctly with active state for property page 1`] = `
+exports[`Should FavoriteButton component renders correctly with active state for property page 1`] = `
 <button
   className="property__bookmark-button property__bookmark-button--active button"
   onClick={[Function]}
@@ -46,7 +46,7 @@ exports[`Should OfferFavoriteBtn component renders correctly with active state f
 </button>
 `;
 
-exports[`Should OfferFavoriteBtn component renders correctly with inactive state for offer card 1`] = `
+exports[`Should FavoriteButton component renders correctly with inactive state for offer card 1`] = `
 <button
   className="place-card__bookmark-button  button"
   onClick={[Function]}
@@ -69,7 +69,7 @@ exports[`Should OfferFavoriteBtn component renders correctly with inactive state
 </button>
 `;
 
-exports[`Should OfferFavoriteBtn component renders correctly with inactive state for property page 1`] = `
+exports[`Should FavoriteButton component renders correctly with inactive state for property page 1`] = `
 <button
   className="property__bookmark-button  button"
   onClick={[Function]}

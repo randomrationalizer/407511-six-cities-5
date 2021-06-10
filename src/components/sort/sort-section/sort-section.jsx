@@ -11,7 +11,7 @@ import {checkKeyDownEvent} from "../../../utils/common";
 const SortSection = ({currentSort, onSortChange}) => {
   const [isOpened, setOpened] = useState(false);
 
-  const handleSortBtnClick = () => {
+  const handleSortButtonClick = () => {
     setOpened(!isOpened);
   };
 
@@ -30,7 +30,7 @@ const SortSection = ({currentSort, onSortChange}) => {
       <span
         className="places__sorting-type"
         tabIndex="0"
-        onClick={handleSortBtnClick}
+        onClick={handleSortButtonClick}
         onKeyDown={handleKeyDown}
       >
         {sortTypeToTitle[currentSort]}

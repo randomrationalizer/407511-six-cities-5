@@ -2,7 +2,7 @@ import React from "react";
 import {Provider} from 'react-redux';
 import {mount} from "enzyme";
 import {MemoryRouter} from "react-router-dom";
-import {LoginPage} from "./login";
+import {LoginPage} from "./login-page";
 import store from "../../mocks/test-data/store";
 import {getMockStore, noop} from "../../mocks/util";
 

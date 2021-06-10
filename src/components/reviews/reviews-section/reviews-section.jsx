@@ -19,7 +19,7 @@ const ReviewsSection = (props) => {
 
   const handleReviewAdd = useCallback((offerId, newReview) => {
     onFormSubmit(offerId, newReview)
-      .catch((err) => showErrorMessage(err.message));
+      .catch((error) => showErrorMessage(error.message));
   }, []);
 
   return (

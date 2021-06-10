@@ -1,6 +1,6 @@
 import {SortType} from "./const";
 import {
-  updateOffer,
+  updateAllOffers,
   updateFavorites,
   getOfferById,
   sortOffers,
@@ -43,7 +43,7 @@ describe(`Test updateFavorites function`, () => {
   });
 });
 
-describe(`Test updateOffer function`, () => {
+describe(`Test updateAllOffers function`, () => {
   it(`Should update offer object in the offer list`, () => {
     const updatedOffer = {id: 3, isFavorite: true};
     const offers = [
@@ -57,7 +57,7 @@ describe(`Test updateOffer function`, () => {
       {id: 3, isFavorite: true}
     ];
 
-    expect(updateOffer(updatedOffer, offers)).toEqual(expected);
+    expect(updateAllOffers(updatedOffer, offers)).toEqual(expected);
   });
 
   it(`Should return unchanged offer list if the offer is not in offers list`, () => {
@@ -68,7 +68,7 @@ describe(`Test updateOffer function`, () => {
       {id: 3, isFavorite: false}
     ];
 
-    expect(updateOffer(updatedOffer, offers)).toEqual(offers);
+    expect(updateAllOffers(updatedOffer, offers)).toEqual(offers);
   });
 });
 
