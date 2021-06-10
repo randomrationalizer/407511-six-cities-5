@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "redux";
@@ -40,11 +40,19 @@ const FavoriteButton = (props) => {
   const iconClassName = pageTypeToIconClassName[pageType];
   const iconSize = pageTypeToIconSize[pageType];
   const [isBooked, setBookedState] = useState(isActive);
+  let isMounted = true;
+
+  useEffect(() => {
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
 
   const handleClick = () => {
     if (isAuthorized) {
       changeStatus(id, Number(!isBooked))
-        .then(() => setBookedState(!isBooked))
+        .then(() => isMounted && setBookedState(!isBooked))
         .catch(() => showErrorMessage(`A server error occurred.`));
     } else {
       history.push(AppRoute.LOGIN);
